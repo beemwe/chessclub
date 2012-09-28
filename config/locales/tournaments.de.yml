@@ -1,0 +1,14 @@
+de:
+  activerecord:
+    models:
+      tournament:
+        one: Turnier
+        other: Turniere
+    attributes:
+      tournament:
+        title: Titel
+        modus: Modus
+        rounds: Rundenanz.
+        state: Status
+        referee: Turnierleiter
+        created_at: erstellt

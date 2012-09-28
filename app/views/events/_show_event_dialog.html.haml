@@ -1,0 +1,10 @@
+%div#desc_dialog{:style => "display:none;"}
+  %div#event_time
+  %div#event_location
+  %div#event_desc
+  %br
+  %br
+  %div#event_actions
+    - if can? :modify, Event
+      %span#edit_event
+      %span#delete_event

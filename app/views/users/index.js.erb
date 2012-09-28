@@ -1,0 +1,3 @@
+alert('Hallo');
+$('table#user-table').html(<%= escape_javascript(render(:partial => 'user_table', :locals => {:users => @users})) %>);
+$('#paginator').hide();

@@ -1,0 +1,3 @@
+%p= t('salutation', 'devise.mailer.unlock_instructions', :user => @resource.username)
+%p= t('intro', 'devise.mailer.unlock_instructions')
+%p= link_to t('link', 'devise.mailer.unlock_instructions'), unlock_url(@resource, :unlock_token => @resource.unlock_token)

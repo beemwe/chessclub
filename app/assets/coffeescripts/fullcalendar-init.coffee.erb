@@ -1,0 +1,105 @@
+<% require CanCan:Ability %>
+$(document).ready ->
+  $(".date-picker").datepicker()
+  $("#calendar").fullCalendar({
+    editable: <%= can?(:modify, Event) ? 'true' : 'false' %>,
+    selectable: <%= can?(:modify, Event) ? 'true' : 'false' %>,
+    firstDay: 1,
+    aspectRatio: 1.8,
+    weekMode: 'liqid',
+    header: {
+      left: 'prev,next today'
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    defaultView: 'agendaWeek',
+    slotMinutes: 60,
+    loading: (bool) ->
+      if bool then $('#loading').show else $('#loading').hide
+    ,
+    events: "/events/index",
+    timeFormat: {agenda: 'HH:mm { - HH:mm}', '': 'H:mm  { - HH:mm}' }
+    dragOpacity: "0.5",
+    eventAfterRender: (event, element, view) ->
+      element.addClass("event-category-#{event.category}").removeClass('fc-event-hori').removeClass('fc-event-vert')
+    ,
+    eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc) ->
+      moveEvent(event, dayDelta, minuteDelta, allDay)
+    ,
+    eventResize: (event, dayDelta, minuteDelta, revertFunc) ->
+      resizeEvent(event, dayDelta, minuteDelta)
+    ,
+    eventClick: (event, jsEvent, view) ->
+      showEventDetails(event)
+    ,
+    select: (startDate, endDate, allDay) ->
+      newFullCalendarEvent(startDate, endDate, allDay)
+  })
+
+editFullCalendarEvent = (event_id) ->
+  $.ajax({
+    dataType: 'script',
+    type: 'get',
+    url: "/events/" + event_id + "/edit"
+  })
+
+newFullCalendarEvent = (startDate, endDate, allDay) ->
+  $('#desc_dialog').dialog({
+    title: 'neuen Termin anlegen',
+    modal: true,
+    width: 500,
+    close: (event, ui) -> $('#desc_dialog').dialog('destroy')
+  })
+  $.ajax({
+    data: 'start_time=' + startDate + '&end_time=' + endDate + '&all_day=' + allDay,
+    dataType: 'script',
+    type: 'get',
+    url: "/events/new"
+  })
+
+deleteFullCalendarEvent = (event_id, delete_all = false) ->
+  if window.confirm "Diese Veranstaltung endgültig löschen?"
+    $.ajax({
+      data: 'delete_all' + delete_all,
+      dataType: 'script',
+      type: 'delete',
+      url: '/events/' + event_id
+    })
+
+showEventDetails = (event, jsEvent, view) ->
+  $('#event_time').html("#{event.start} - #{event.end}")
+  $('#event_location').html(event.place)
+  $('#event_desc').html(event.description)
+  $('#edit_event').html("<a class='btn' id='edit_event_button' href='#'>Bearbeiten</a>")
+  if (event.recurring)
+    title = event.title
+    $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + false + ")'>Delete Only This Occurrence</a>")
+    $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + true + ")'>gesamte Terminserie Löschen</a>")
+    $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", \"future\")'>Alle zukünftigen Löschen</a>")
+  else
+    title = event.title
+    $('#delete_event').html("<a class='btn btn-danger' id='delete_event_button' href = '#'>Löschen</a>")
+  $(document).on('click', '#edit_event_button', ( -> editFullCalendarEvent(event.id) ))
+  $(document).on('click', '#delete_event_button', ( -> deleteFullCalendarEvent(event.id) ))
+  $('#desc_dialog').dialog({
+    title: title,
+    modal: true,
+    width: 500,
+    close: (event, ui) -> $('#desc_dialog').dialog('destroy')
+  })
+
+resizeEvent = (event, dayDelta, minuteDelta, revertFunc) ->
+  $.ajax({
+    data: 'title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta,
+    dataType: 'script',
+    type: 'post',
+    url: "/events/" + event.id + "/resize"
+  })
+
+moveEvent = (event, dayDelta, minuteDelta, allDay) ->
+  $.ajax({
+      data: 'title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&all_day=' + allDay,
+      dataType: 'script',
+      type: 'post',
+      url: "/events/" + event.id + "/move"
+  });

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  board_count: 1
+  subs_bench: 1
+  league: MyString
+  gender: MyString
+  age_limit: MyString
+
+two:
+  name: MyString
+  board_count: 1
+  subs_bench: 1
+  league: MyString
+  gender: MyString
+  age_limit: MyString

@@ -1,0 +1,26 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_directory .
+ *= require datetimeentry/jquery.datetimeentry
+ *= require_self
+ */
+
+#flash-messages {position:fixed; margin-left:-335px; left: 50%; top: 80px; }
+
+.table {
+    table-layout: fixed;
+}
+table.table th {text-align: center;}
+table.table td, table.table th {overflow: hidden; white-space: nowrap;}
+table.table td.numeric {text-align: right;}
+
+input.numeric {text-align: right;}
+

@@ -1,0 +1,12 @@
+.page-header
+  = form_tag users_path, :method => 'get' do |f|
+    = select_tag 'selection_type', raw("<option value=\"user\" #{@sel_type == 0 ? "selected=\"selected\"" : ""}>Webseitenbenutzer</option><option value=\"members\"#{@sel_type == 1 ? "selected=\"selected\"" : ""}>Mitglieder</option><option value=\"players\"#{@sel_type == 2 ? " selected=\"selected\"" : ""}>Vereinsspieler</option>")
+    = submit_tag "Anzeigen", :name => nil
+%table.table.table-striped{:id => 'user-table'}
+
+  = render :partial => 'user_table', :locals => {:users => @users}
+.row
+  .span2= link_to t('.new', :default => t("helpers.links.new")), new_user_path, :class => 'btn btn-primary'
+  - options = {:window => 2}
+  - options[:substitutes] = User.get_pagination_abrevs if @sel_type == 1
+  .span9{:id => 'paginator'}= paginate @users, options

@@ -1,0 +1,26 @@
+de:
+  activerecord:
+    models:
+      league:
+        one: Liga
+        other: Verbandsligen
+    attributes:
+      league:
+        name: Bezeichnung
+        season: Saison
+        boards: Brettanzahl
+        subs_bench: Ersatzspieler
+        state: Status
+        girls_only: Damen/Mädchenliga?
+        age_limit: Altersgrenze
+        created_at: erstellt
+        team_sizes: Mannschaftsgröße
+  leagues:
+    index:
+      title: Alle Verbandsligen
+    show:
+      title: '%{league}'
+    new:
+      title: 'Neue Liga anlegen'
+    edit:
+      title: 'Liga bearbeiten'

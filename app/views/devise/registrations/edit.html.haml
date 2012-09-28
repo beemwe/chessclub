@@ -1,0 +1,16 @@
+%h2
+  #{resource_name.to_s.humanize} bearbeiten
+= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :username, :required => true, :autofocus => true
+    = f.input :email, :required => true
+    = f.input :password, :autocomplete => "off", :hint => "nicht ausfüllen, wenn keine Änderung erfolgen soll", :required => false
+    = f.input :password_confirmation, :required => false
+    = f.input :current_password, :hint => "Zur Bestätigung brauchen wir Dein aktuelles Passwort", :required => true
+  .form-actions
+    = f.button :submit, "Speichern"
+%h3 Benutzerkonto löschen
+%p
+  Unzufrieden? #{link_to "Benutzerkonto löschen", registration_path(resource_name), :class => 'btn', :data => { :confirm => "Bist Du sicher?" }, :method => :delete}.
+= link_to "Zurück", :back

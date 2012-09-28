@@ -1,0 +1,3 @@
+%h3= t('devise.mailer.confirmation_instructions.salutation', :user => @resource.username)
+%p= t('content')
+%p= link_to t('devise.mailer.confirmation_instructions.link'), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)

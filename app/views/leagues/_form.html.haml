@@ -1,0 +1,10 @@
+= simple_form_for @league, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name
+  = f.input :scraper_link
+  = f.input :boards
+  = f.input :subs_bench
+  = f.input :age_limit
+  = f.input :girls_only
+  .form-actions
+    = f.button :submit, :class => 'btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), leagues_path, :class => 'btn'

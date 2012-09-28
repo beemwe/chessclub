@@ -1,0 +1,31 @@
+de:
+  activerecord:
+    models:
+      team:
+        one: Mannschaft
+        other: Mannschaften
+    attributes:
+      team:
+        name: Bezeichnung
+        season: Saison
+        board_count: Brettanzahl
+        subs_bench: Ersatzspieler
+        state: Status
+        league: Liga
+        gender: Damen/Mädchenmannschaft?
+        age_limit: Altersgrenze
+        created_at: erstellt
+        leader_id: Mannschaftsführer
+        team_sizes: Mannschaftsgröße
+  teams:
+    index:
+      title: Alle Mannschaften
+      announce: Mannschaftsmeldung
+      confirm_announce: 'ACHTUNG! Diese Aktion wird nicht beim Verband gemeldet.'
+    show:
+      title: '%{team} (%{league})'
+    new:
+      title: 'Neue Mannschaft anlegen'
+    edit:
+      title: 'Mannschaft bearbeiten'
+    announce: Mannschaftsmeldung

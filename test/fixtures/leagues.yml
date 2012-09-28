@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  scraper_link: MyString
+  boards: 1
+  subs_bench: 1
+  age_limit: 1
+  girls_only: false
+
+two:
+  name: MyString
+  scraper_link: MyString
+  boards: 1
+  subs_bench: 1
+  age_limit: 1
+  girls_only: false

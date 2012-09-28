@@ -1,0 +1,144 @@
+#= require fullcalendar
+<% require 'cancan/ability' %>
+
+$(document).ready ->
+  $(".date-picker").datepicker()
+  $("#calendar").fullCalendar({
+    editable: true,
+    selectable: true,
+    firstDay: 1,
+    aspectRatio: 1.8,
+    weekMode: 'liqid',
+    header: {
+      left: 'prev,next today'
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    defaultView: 'agendaWeek',
+    slotMinutes: 60,
+    loading: (bool) ->
+      if bool then $('#loading').show else $('#loading').hide
+    ,
+    events: "/events/index",
+    timeFormat: {agenda: 'HH:mm { - HH:mm}', '': 'H:mm  { - HH:mm}' }
+    dragOpacity: "0.5",
+    eventAfterRender: (event, element, view) ->
+      element.addClass("event-category-#{event.category}").removeClass('fc-event-hori').removeClass('fc-event-vert')
+    ,
+    eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc) ->
+      moveEvent(event, dayDelta, minuteDelta, allDay)
+    ,
+    eventResize: (event, dayDelta, minuteDelta, revertFunc) ->
+      resizeEvent(event, dayDelta, minuteDelta)
+    ,
+    eventClick: (event, jsEvent, view) ->
+      showEventDetails(event)
+    ,
+    select: (startDate, endDate, allDay) ->
+      newFullCalendarEvent(startDate, endDate, allDay)
+  })
+
+editFullCalendarEvent = (event_id) ->
+  $.ajax({
+    dataType: 'script',
+    type: 'get',
+    url: "/events/" + event_id + "/edit"
+  })
+
+newFullCalendarEvent = (startDate, endDate, allDay) ->
+  $.ajax({
+    data: 'start_time=' + startDate + '&end_time=' + endDate + '&all_day=' + allDay,
+    dataType: 'script',
+    type: 'get',
+    url: "/events/new"
+
+  })
+
+deleteFullCalendarEvent = (event) ->
+  $('#desc_dialog').dialog('destroy')
+  if event.recurring
+    $('#event_type_selector > form').attr({'method': 'delete', 'action': "events/#{event.id}"})
+    $('#event_type_selector > form input[name*="commit"]').val('Auswahl löschen')
+    $("#event_type_selector").dialog({
+      title: "#{event.title} löschen",
+      modal: true,
+      width: 500
+      resizable: false,
+      closeText: 'Schließen'
+      close: (event, ui) ->
+        $(this).dialog('destroy')
+        $('#calendar').fullCalendar('render');
+    })
+  else
+    if window.confirm "Diese Veranstaltung ##{event.id} endgültig löschen?"
+      $.ajax({
+        data: 'event[delete_all]=this',
+        dataType: 'script',
+        type: 'delete',
+        url: '/events/' + event.id
+      })
+
+showEventDetails = (event, jsEvent, view) ->
+  title = event.title
+  $('#event_time').html("Beginn: #{$.fullCalendar.formatDate( event.start, 'dd.MM.yyyy - HH:mm')}  <br/>Ende: #{$.fullCalendar.formatDate( event.end, 'dd.MM.yyyy - HH:mm')}")
+  place = 'kein Ort hinterlegt.'
+  if ((event.place != null) || (event.place == '')) then place = event.place
+  $('#event_location').html("Ort: " + place)
+  $('#event_desc').html(event.description)
+  $('#edit_event').html("<a class='btn' id='edit_event_button' href='#'>Bearbeiten</a>")
+  $('#delete_event').html("<a class='btn btn-danger' id='delete_event_button' href = '#'>Löschen</a>")
+  $(document).on('click', '#edit_event_button', ( -> editFullCalendarEvent(event.id) ))
+  $(document).on('click', '#delete_event_button', ( -> deleteFullCalendarEvent(event) ))
+  $('#desc_dialog').dialog({
+    title: title,
+    modal: true,
+    width: 500,
+    resizable: false,
+    closeText: 'Schließen'
+    close: (event, ui) -> $('#desc_dialog').dialog('destroy')
+  })
+
+resizeEvent = (event, dayDelta, minuteDelta, revertFunc) ->
+  if event.recurring
+    $('#event_type_selector > form').attr({'method': 'post', 'action': "events/#{event.id}/resize"})
+    $('#event_type_selector > form input[name*="commit"]').val('Auswahl verändern')
+    $("#event_type_selector").dialog({
+      title: "#{event.title} verändern",
+      modal: true,
+      width: 500
+      resizable: false,
+      closeText: 'Schließen'
+      close: (event, ui) ->
+        $(this).dialog('destroy')
+        $('#calendar').fullCalendar('refetchEvents')
+    })
+  else
+    $.ajax({
+      data: "title=#{event.title}&day_delta=#{dayDelta}&minute_delta=#{minuteDelta}",
+      dataType: 'script',
+      type: 'post',
+      url: "/events/#{event.id}/resize"
+    })
+
+moveEvent = (event, dayDelta, minuteDelta, allDay) ->
+  if event.recurring
+    $('#event_type_selector > form').attr({'method': 'post', 'action': "events/#{event.id}/move"})
+    $('#event_type_selector > form input[name*="commit"]').val('Auswahl verschieben')
+    $("#event_type_selector").dialog({
+      title: "#{event.title} verschieben",
+      modal: true,
+      width: 500
+      resizable: false,
+      closeText: 'Schließen'
+      close: (event, ui) ->
+        $(this).dialog('destroy')
+        $('#calendar').fullCalendar('refetchEvents')
+    })
+  else
+    $.ajax({
+        data: "title=#{event.title}&day_delta=#{dayDelta}&minute_delta=#{minuteDelta}&all_day=#{allDay}",
+        dataType: 'script',
+        type: 'post',
+        url: "/events/#{event.id}/move"
+    });
+

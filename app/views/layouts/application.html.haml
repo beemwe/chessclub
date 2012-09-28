@@ -1,0 +1,95 @@
+!!! 5
+%html{:lang => "de"}
+  %head
+    %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}/
+    %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title= content_for?(:title) ? yield(:title) : "Schachclub"
+    = csrf_meta_tag
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      %script{:src=>"http://html5shim.googlecode.com/svn/trunk/html5.js", :type=>"text/javascript"}
+    = stylesheet_link_tag "application", :media => "all"
+    / For third-generation iPad with high-resolution Retina display:
+    / Size should be 144 x 144 pixels
+    = favicon_link_tag 'images/apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
+    / For iPhone with high-resolution Retina display:
+    / Size should be 114 x 114 pixels
+    = favicon_link_tag 'images/apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
+    / For first- and second-generation iPad:
+    / Size should be 72 x 72 pixels
+    = favicon_link_tag 'images/apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
+    / For non-Retina iPhone, iPod Touch, and Android 2.1+ devices:
+    / Size should be 57 x 57 pixels
+    = favicon_link_tag 'images/apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
+    / For all other devices
+    / Size should be 32 x 32 pixels
+    = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+    = javascript_include_tag "application"
+    = javascript_include_tag "partial_loaded/#{params[:controller]}"
+  %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "#"} TuS FFB::Abt. Schach
+          .container.nav-collapse
+            %ul.nav
+              %li= link_to "Willkommen", "/"
+              %li.dropdown
+                = link_to raw('Spielbetrieb<b class="caret"></b>'), "#", {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                %ul.dropdown-menu
+                  - Tournament.actives.each do |t|
+                    %li= link_to t.title, tournament_path(t.id)
+                  %li.dropdown
+                    = link_to raw('Archiv <i class="icon-arrow-right"></i>'), "#"
+                    %ul{:class => 'dropdown-menu sub-menu'}
+                      - Tournament.archive.each do |t|
+                        %li= link_to t.title, tournament_path(t.id)
+              %li.dropdown
+                = link_to raw('Mannschaften<b class="caret"></b>'), "#", {class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                %ul.dropdown-menu
+                  - Team.actives.each do |t|
+                    %li= link_to t.name, team_path(t.id)
+                  - if Team.archive.count > 0
+                    %li.dropdown
+                      = link_to raw('Archiv <i class="icon-arrow-right"></i>'), '#'
+                      %ul.dropdown-menu
+                        - Team.archive.each do |t_archived|
+                          %li= link_to t_archived.name, team_path(t_archived.id)
+              %li= link_to "Kalender", "/kalender"
+              %li= link_to "Kurzweil", "#"
+              %li= link_to "Impressum", "/impressum"
+              - if can?(:modify, User) || can?(:modify, Blog) || can?(:manage, League)
+                %li.dropdown
+                  = link_to "Verwaltung<b class=\"caret\"></b>".html_safe, '#', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                  %ul.dropdown-menu
+                    %li= link_to "Benutzerverwaltung", users_path if can?(:manage, User)
+                    %li= link_to "Ligaverwaltung", leagues_path if can?(:manage, League)
+                    %li= link_to "Blogverwaltung", blogs_path if can?(:manage, Blog)
+            - if !user_signed_in?
+              = form_for(resource, :as => resource_name, :url => user_session_path, :html => {:class => 'navbar-form pull-right'}) do |f|
+                = f.text_field :login, :class => 'span1', :style => "font-size: 8pt; height: 10px;"
+                = f.password_field :password, :class => 'span1', :style => "font-size: 6pt; height: 10px;"
+                = f.submit 'Anmelden', :class => 'btn btn-mini'
+                = link_to "Registrieren", new_user_registration_path, :class => 'btn btn-mini'
+            - else
+              %div.navbar-form.pull-right
+                = link_to "#{current_user.first_last_name}", edit_user_registration_path
+                = link_to "Abmelden", destroy_user_session_path, :method => "delete", :class => 'btn btn-mini'
+          / /.nav-collapse
+    .container
+      %section#flash-messages.span7
+        - unless notice.blank?
+          .alert.alert-success= notice
+        - unless alert.blank?
+          .alert.alert-error= alert
+      .content
+        .row
+          %div{:class => "span12"}
+            = yield
+      %footer
+        %p &copy; Walter Dienstleistungen 2012

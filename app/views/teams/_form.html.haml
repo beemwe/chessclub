@@ -1,0 +1,11 @@
+= simple_form_for @team, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :season
+  = f.input :leader_id, as: :select, :collection => User.player.map{|l| [l.last_first_name, l.id]}
+  = f.input :board_count
+  = f.input :subs_bench
+  = f.input :league
+  = f.input :gender, :as => :boolean, :value => "Damen", :label => 'Damen?'
+  = f.input :age_limit, :collection => ['U12', 'U14', 'U16', 'U18', 'Senioren']
+  .form-actions
+    = f.button :submit, :class => 'btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn'

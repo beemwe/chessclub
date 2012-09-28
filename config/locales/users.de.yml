@@ -1,0 +1,27 @@
+de:
+  activerecord:
+    model:
+      user: Benutzer
+    attributes:
+      user:
+        full_name: Name
+        first_name: Vorname
+        last_name: Nachname
+        dsb_id: Spielernummer (DSB)
+        username: Benutzername
+        email: Email
+        password: Passwort
+        password_confirmation: Passwortbestätigung
+        remember_me: Daten speichern
+        birth_date: Geburtsdatum
+        member_since: Mitglied seit
+        dwz: aktuelle DWZ
+        title: FIDE Titel
+        avatar: Avatar
+        address: Adresse
+        zip: PLZ
+        location: Ort
+        phone: Telefon
+        mobile: Handy
+        gender: Geschlecht
+        status: Spielerstatus

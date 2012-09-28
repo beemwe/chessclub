@@ -1,0 +1,8 @@
+de:
+  views:
+    pagination:
+      previous: '&#8592; Zurück'
+      next: 'Weiter &#8594;'
+      first: '&#8647; Erste'
+      last: 'Letzte &#8649;'
+      truncate: '...'
