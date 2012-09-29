@@ -11,6 +11,7 @@
  *= require_directory .
  *= require datetimeentry/jquery.datetimeentry
  *= require_self
+ *= require bootstrap_and_overrides
  */
 
 #flash-messages {position:fixed; margin-left:-335px; left: 50%; top: 80px; }
