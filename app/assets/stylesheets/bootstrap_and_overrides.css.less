@@ -1,7 +1,14 @@
 @import "twitter/bootstrap/bootstrap";
 
-body {
-	padding-top: 40px;
+@media (min-width: 979px) {
+  body {
+  	padding-top: 40px;
+  }
+}
+
+.content strong > a:before {
+  content:"\27B2";
+  display: inline;
 }
 
 .dropdown-menu .sub-menu {

@@ -8,10 +8,10 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require bootstrap_and_overrides
  *= require_directory .
  *= require datetimeentry/jquery.datetimeentry
  *= require_self
- *= require bootstrap_and_overrides
  */
 
 #flash-messages {position:fixed; margin-left:-335px; left: 50%; top: 80px; }
@@ -25,3 +25,21 @@ table.table td.numeric {text-align: right;}
 
 input.numeric {text-align: right;}
 
+#diashow {
+    position: relative;
+    height: 250px;
+}
+
+#diashow IMG {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:8;
+}
+
+#diashow IMG.active {
+    z-index: 10;
+}
+#diashow IMG.last-active {
+    z-index: 9;
+}

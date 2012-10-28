@@ -14,7 +14,8 @@
   %tbody
     - @tournaments.each do |tournament|
       %tr
-        %td= link_to tournament.title, tournament_path(tournament)
+        %td
+          %strong= link_to tournament.title, tournament_path(tournament)
         %td= tournament.modus
         %td= tournament.rounds
         %td= tournament.state_name

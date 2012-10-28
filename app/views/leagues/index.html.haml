@@ -13,7 +13,8 @@
   %tbody
     - @leagues.each do |league|
       %tr
-        %td= link_to league.name, league_path(league)
+        %td
+          %strong= link_to league.name, league_path(league)
         %td.numeric= league.boards
         %td.numeric= league.subs_bench
         %td= league.age_limit.blank? || league.age_limit == 0 ? 'keine' : league.age_limit < 60 ? "U#{league.age_limit}" : 'Senioren'

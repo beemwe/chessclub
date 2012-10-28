@@ -14,7 +14,8 @@
   %tbody
     - @teams.each do |team|
       %tr
-        %td= link_to team.name, team_path(team)
+        %td
+          %strong= link_to team.name, team_path(team)
         %td= team.league
         %td= User.find(team.leader_id).first_last_name unless team.leader_id.blank?
         %td= "#{team.board_count}/#{team.subs_bench}"

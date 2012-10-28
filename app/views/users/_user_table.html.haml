@@ -10,7 +10,8 @@
 %tbody
   - users.each do |user|
     %tr
-      %td= link_to "#{user.last_name}, #{user.first_name}", user_path(user)
+      %td
+        %strong= link_to "#{user.last_name}, #{user.first_name}", user_path(user)
       %td= user.email
       %td= user.sign_in_count
       %td= user.dwz == 0 ? 'noch kein Wert vorhanden' : user.dwz unless user.dwz.blank?

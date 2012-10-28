@@ -61,7 +61,6 @@
                         - Team.archive.each do |t_archived|
                           %li= link_to t_archived.name, team_path(t_archived.id)
               %li= link_to "Kalender", "/kalender"
-              %li= link_to "Kurzweil", "#"
               %li= link_to "Impressum", "/impressum"
               - if can?(:modify, User) || can?(:modify, Blog) || can?(:manage, League)
                 %li.dropdown

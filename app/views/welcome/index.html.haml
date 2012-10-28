@@ -1,52 +1,44 @@
-%header#header{:class => "header hero-unit page-header hidden-phone"}
+%header#header{:class => "header hero-unit page-header hidden-phone", :style => "background-image: url(/assets/tus-logo.png); background-repeat: no-repeat; background-position: 90% 50%;"}
   %div.row-fluid
     %div.span8
       %h1#logo= link_to 'TuS Fürstenfeldbruck', root_path
       %h3{:style => 'font-size:48px; line-height: 60px; text-align:center;'} - Abteilung Schach -
-    %div.span4{:style => 'text-align:center;'}
-      = image_tag "koenig-dame-springer.png", :style => 'height: 120px;'
 %div.row
   %div.span9
     %h1{:style => 'text-align: center;'} Willkommen auf unserer Seite
-    %p
-      Wir freuen uns, dass Du zu unserem Webangebot gefunden hast. Wir bieten hier alle wichtigen Informationen, die unsere Abteilung im
-      %strong= link_to 'TuS Fürstenfeldbruck', url: 'http//www.tus-ffb.de'
-      zu bieten hat.
-    %p
-      Wir treffen uns natürlich auch offline zum Spielen, Trainieren und geselligem Beisammensein:
-      %ul
-        %li allgemeiner Spiel- und Trainingsabend, jeden Donnerstag ab 20:00 Uhr
-        %li Jugend-/Anfängertraining, jeden Donnstag, von 17:00 -19:00 Uhr
-        %li Jugend-/Fortgesrittenentraining, jeden Freitag, von 15:00 - 16:30 Uhr
-        %li
-          weitere Veranstaltungen, Ligakämpfe etc. findest Du im
-          %strong=link_to 'Terminkalender', kalender_path
-      im Vereinsheim des TuS Fürstenfeldbruck, Auf der Lände 2, 82256 Fürstenfeldbruck
+    %div.row-fluid
+      %div.span7
+        %p
+          Wir freuen uns, dass Du zu unserem Webangebot gefunden hast. Wir berichten auf diesen Seiten über alles Wichtige (und unwichtige), das unsere Abteilung im
+          %strong= link_to 'TuS Fürstenfeldbruck', url: 'http//www.tus-ffb.de'
+          zu bieten hat.
+        %p Wir treffen uns natürlich auch offline zum Spielen, Trainieren und geselligem Beisammensein:
+        %ul
+          %li allgemeiner Spiel- und Trainingsabend, jeden Donnerstag ab 20:00 Uhr
+          %li Jugend-/Anfängertraining, jeden Donnstag, von 17:00 -19:00 Uhr
+          %li Jugend-/Fortgesrittenentraining, jeden Freitag, von 15:00 - 16:30 Uhr
+          %li
+            weitere Veranstaltungen, Ligakämpfe etc. findest Du im
+            %strong=link_to 'Terminkalender', kalender_path
+        im Vereinsheim des TuS Fürstenfeldbruck,
+        %br
+        Auf der Lände 2, 82256 Fürstenfeldbruck
+      %div#diashow.span5
+        = image_tag 'vereinsheim_th.jpg', :class => 'active', :style => 'width: 349px; height: 250px;'
+        = image_tag 'spielsaal_th.jpg', :style => 'width: 349px; height: 250px;'
+        = image_tag 'gesamtjugend1_th.jpg', :style => 'width: 349px; height: 250px;'
+
   %div.span3
     %h2 Twitterbox
 - if @blogs.size > 0
   %div.row{style: 'margin-top:15px;padding-top:15px;border-top:2px solid #ccc;'}
-    %div.span3
-      %h4= @blogs[0].title
-      %p= @blogs[0].subtitle
-      %small= "von #{User.find(@blogs[0].author_id).first_last_name}"
-      %p= link_to "weiterlesen...", blog_path(@blogs[0]), :class => 'btn btn-mini'
-    %div.span3
-      - if @blogs.size > 1
-        %h4= @blogs[1].title
-        %p= @blogs[1].subtitle
-        %p= "von #{User.find(@blogs[1].author_id).first_last_name}"
-        %p= link_to "weiterlesen...", blog_path(@blogs[1]), :class => 'btn btn-mini'
-    %div.span3
-      - if @blogs.size > 2
-        %h4= @blogs[2].title
-        %p= @blogs[2].subtitle
-        %p= "von #{User.find(@blogs[2].author_id).first_last_name}"
-        %p= link_to "weiterlesen...", blog_path(@blogs[2]), :class => 'btn btn-mini'
-    %div.span3
-      - if @blogs.size > 3
-        %h4= @blogs[3].title
-        %p= @blogs[3].subtitle
-        %p= "von #{User.find(@blogs[3].author_id).first_last_name}"
-        %p= link_to "weiterlesen...", blog_path(@blogs[3]), :class => 'btn btn-mini'
+    - (0..3).each do |i|
+      %div.span3
+        - if @blogs.size >= i.to_i
+          %h4
+            = @blogs[i].title
+            %br
+            %small{:style => 'font-size: 12px;color: black;'}= "von #{User.find(@blogs[i].author_id).first_last_name} im #{l @blogs[i].created_at, :format => '%B %Y'}"
+          %p= @blogs[i].subtitle
+          %p= link_to "weiterlesen...", blog_path(@blogs[i]), :class => 'btn btn-mini'
 
