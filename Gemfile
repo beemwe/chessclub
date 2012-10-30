@@ -6,7 +6,7 @@ gem 'unicorn'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-
+gem 'unicorn'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -20,6 +20,10 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'twitter-bootstrap-rails'
+end
+
+group :development do
+  gem "capistrano"
 end
 
 gem 'jquery-rails'
@@ -37,6 +41,8 @@ gem 'squeel'
 gem 'acts_as_tree_rails3', '~> 0.1.0'
 gem 'mercury-rails'
 gem 'fullcalendar-rails'
+gem 'paperclip'
+gem 'friendly_id'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -44,13 +50,8 @@ gem 'fullcalendar-rails'
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
 # Deploy with Capistrano
 # gem 'capistrano'
 
 # To use debugger
 # gem 'debugger'
-gem 'paperclip'
-gem 'friendly_id'

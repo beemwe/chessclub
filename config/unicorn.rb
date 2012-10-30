@@ -1,12 +1,12 @@
-RAILS_ROOT = '/home/beemwe/RubymineProjects/schachclub/'
-rails_env = ENV['RAILS_ENV'] || 'development'
+Rails.root = '/home/beemwe/webspaces/schachclub/current'
+Rails.env = ENV['RAILS_ENV'] || 'development'
 worker_processes 1
 preload_app true
 timeout 30
-listen RAILS_ROOT + 'tmp/sockets/unicorn.sock', :backlog => 64
+listen Rails.root + 'tmp/sockets/unicorn.sock', :backlog => 64
 
 before_fork do |server, worker|
-  pid_old = RAILS_ROOT + 'tmp/pids/unicorn.pid.oldbin'
+  pid_old = Rails.root + 'tmp/pids/unicorn.pid.oldbin'
   if File.exists?(pid_old) && server.pid != pid_old
     begin
       Process.kill("QUIT", File.read(pid_old).to_i)
@@ -30,7 +30,7 @@ after_fork do |server, worker|
       Process::UID.change_privilege(target_uid)
     end
   rescue => e
-    if RAILS_ENV == 'development'
+    if Rails.env == 'development'
       STDERR.puts "Cannot change Unicorn's worker UID/GID in development environment."
     else
       raise e
