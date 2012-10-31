@@ -29,9 +29,9 @@ set(:previous_revision) { capture("cd #{current_path}; git rev-parse --short HEA
 default_environment["RAILS_ENV"] = 'production'
 
 # Use our ruby-1.9.2-p290@my_site gemset
-default_environment["PATH"]         = "--"
-default_environment["GEM_HOME"]     = "--"
-default_environment["GEM_PATH"]     = "--"
+# default_environment["PATH"]         = ""
+default_environment["GEM_HOME"]     = "/usr/local/rvm/gems/ruby-1.9.3-p125@schachclub"
+default_environment["GEM_PATH"]     = "/usr/local/rvm/gems/ruby-1.9.3-p125@schachclub"
 default_environment["RUBY_VERSION"] = "ruby-1.9.3-p125"
 
 # default_run_options[:shell] = 'bash'
