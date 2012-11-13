@@ -6,7 +6,8 @@ Schachclub::Application.routes.draw do
   mount Mercury::Engine => '/'
 
   resources :blogs do
-    member { post :mercury_update }
+    collection { put :mercury_create }
+    member { put :mercury_update }
   end
 
   resources :leagues

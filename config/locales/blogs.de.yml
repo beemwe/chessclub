@@ -1,0 +1,28 @@
+de:
+  activerecord:
+    models:
+      blog:
+        one: Artikel
+        other: Artikel
+    attributes:
+      blog:
+        content: Inhalt
+        title: Titel
+        subtitle: Untertitel
+        published_at: veröffentlicht am
+        created_at: erstellt am
+        user: Autor
+        author_id: Autor
+  blogs:
+    index:
+      title: Alle Artikel
+    show:
+      title: '%{blog}'
+      back: Zurück
+      edit: Bearbeiten
+      destroy: Löschen
+      confirm: Sind Sie sicher?
+    new:
+      title: 'Neuen Artikel anlegen'
+    edit:
+      title: 'Artikel bearbeiten'

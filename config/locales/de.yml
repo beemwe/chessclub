@@ -193,6 +193,7 @@ de:
       show: 'Einzelansicht %{model}'
 
     actions: Aktionen
+
     links:
       index: Alle anzeigen
       search: Suchen
@@ -201,6 +202,7 @@ de:
       show: Einzelansicht
       print: 'Drucken (PDF)'
       destroy: Löschen
+      confirm: Sind Sie sicher?
       add_subform: Hinzufügen
       back: Zurück zur Liste
       cancel: Abbrechen

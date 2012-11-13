@@ -1,25 +1,22 @@
-- content_for :head do
-  = javascript_include_tag 'mercury_loader.js'
-
-- model_class = Blog
 .page-header
-  %h1
-    %span{:id => 'blog_title', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'simple'}= @blog.title
+  %h1{:id => 'blog_title', :style => 'width: 100%', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'simple'}= @blog.title
 
 %h3{:id => 'blog_subtitle', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'simple'}= raw @blog.subtitle
 
-%div{:id => 'blog_content', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'full'}= raw @blog.content
+%div{:id => 'blog_content', :style => 'min-height: 150px;', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'full'}= raw @blog.content
 
 %p
-  %strong
-    Veröffentlicht
-  von
-  = User.find(@blog.author_id).first_last_name
-  am
-  = l @blog.published_at, :format => :long
+  = @blog.author.first_last_name
+  - if @blog.published_at.blank?
+    = '(noch nicht veröffentlicht)'
+  - else
+    = '(am ' + l(@blog.published_at, :format => :long) + ' veröffentlicht)'
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn'
-  - if can? :manage, Blog
-    = link_to( t('.edit', :default => t('helpers.links.edit')), "/editor" + request.path, id: "edit_link", class: 'btn btn-primary', data: {save_url: mercury_update_blog_path(@blog)} )
-    = link_to( t('.destroy', :default => t("helpers.links.destroy")), blog_path(@blog), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger' )
+  = link_to t('.back', :default => t('helpers.links.back')), :back, :class => 'btn'
+  - if @blog.id.present?
+    - if can? :manage, Blog
+      = link_to( t('.edit', :default => t('helpers.links.edit')), "/editor" + blog_path(@blog), id: "edit_link", class: 'btn btn-primary', data: {save_url: mercury_update_blog_path(@blog), redirect_url: blog_path(@blog)} )
+      = link_to( t('.destroy', :default => t('helpers.links.destroy')), blog_path(@blog), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger' )
+  - elsif can? :manage, Blog
+    = link_to( t('.edit', :default => t('helpers.links.new')), "#", id: "edit_link", class: 'btn btn-primary', data: {save_url: mercury_create_blogs_path, redirect_url: blogs_path} )

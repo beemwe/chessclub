@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  #  Include Paperclip
+  include Paperclip::Glue
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
   attr_accessible :last_name, :first_name, :birth_date, :member_since, :dwz, :title, :dsb_id,
@@ -21,7 +24,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :last_name, :first_name, :username, :gender
 
-  image_accessor :avatar
+  has_attached_file :avatar, styles: { medium: '300x300>', thumb: '100x100>' }
 
   before_save :set_roles
 

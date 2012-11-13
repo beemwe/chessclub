@@ -1,6 +1,5 @@
 class BlogsController < ApplicationController
   load_and_authorize_resource :blog, :except => [:show]
-  # skip_authorize_resource :only => :show
 
   # GET /blogs
   # GET /blogs.json
@@ -27,14 +26,13 @@ class BlogsController < ApplicationController
     @blog = Blog.new(:author_id => current_user.id)
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render action: 'show' }
       format.json { render json: @blog }
     end
   end
 
   # GET /blogs/1/edit
   def edit
-    # @blog = Blog.find_by_permalink(params[:id])
   end
 
   # POST /blogs
@@ -57,9 +55,6 @@ class BlogsController < ApplicationController
   # PUT /blogs/1
   # PUT /blogs/1.json
   def update
-    # @blog = Blog.find_by_permalink(params[:id])
-    old_permalink = @blog.permalink
-
     @blog.title = params[:content][:blog_title][:value] if params[:content] && params[:content][:blog_title][:value]
     @blog.subtitle = params[:content][:blog_subtitle][:value] if params[:content] && params[:content][:blog_subtitle][:value]
     @blog.content = params[:content][:blog_content][:value] if params[:content] && params[:content][:blog_content][:value]
@@ -70,7 +65,6 @@ class BlogsController < ApplicationController
         format.json { head :no_content }
       else
         format.html do
-          @blog.permalink = old_permalink
           flash.alert = t('activemodel.notice.could_not_update', :model => Blog.model_name.human)
           render :action => :edit, :status => :unprocessable_entity
         end
@@ -90,20 +84,33 @@ class BlogsController < ApplicationController
     end
   end
 
-  def mercury_update
-    @blog = Blog.find_by_permalink(params[:id])
-    old_permalink = @blog.permalink
-
+  def mercury_create
+    @blog = Blog.new(params[:blog])
+    @blog.author_id = current_user.id
     @blog.title = params[:content][:blog_title][:value]
+    @blog.subtitle = params[:content][:blog_subtitle][:value]
+    @blog.content = params[:content][:blog_content][:value]
+
+    if @blog.save
+      flash.notice = "Erstellen erfolgreich!"
+      render text: ""
+    else
+      flash.alert = t('activemodel.notice.could_not_create', :model => Blog.model_name.human)
+      render text: "", status: 422
+    end
+  end
+
+  def mercury_update
+    @blog.title = params[:content][:blog_title][:value]
+    @blog.subtitle = params[:content][:blog_subtitle][:value]
     @blog.content = params[:content][:blog_content][:value]
 
     if @blog.save
       flash.notice = "Update erfolgreich!"
       render text: ""
     else
-      @blog.permalink = old_permalink
       flash.alert = t('activemodel.notice.could_not_update', :model => Blog.model_name.human)
-      render text: ""
+      render text: "", status: 422
     end
   end
 end

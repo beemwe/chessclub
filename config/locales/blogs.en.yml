@@ -1,0 +1,28 @@
+en:
+  activerecord:
+    models:
+      blog:
+        one: blog post
+        other: blog posts
+    attributes:
+      blog:
+        content: content
+        title: title
+        subtitle: Subtitle
+        published_at: published at
+        created_at: created at
+        user: Author
+        author_id: Author
+  blogs:
+    index:
+      title: All Blog Posts
+    show:
+      title: '%{blog}'
+      back: Back
+      edit: Edit
+      destroy: Delete
+      confirm: Are you sure?
+    new:
+      title: 'Create new Blog Post'
+    edit:
+      title: 'Edit new Blog Post'

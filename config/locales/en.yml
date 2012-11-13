@@ -1,5 +1,262 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# German translations for Ruby on Rails
+# by Clemens Kofler (clemens@railway.at)
+# contributors:
+#  - Alexander Dreher - http://github.com/alexdreher - Rails 3 update
 
 en:
-  hello: "Hello world"
+  units:
+    unit: unit
+    pcs: pcs.
+    lfm: lfm
+    sqare: m²
+    room: m³
+    mass: kg
+    h: Std.
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%e. %b"
+      long: "%e. %B %Y"
+      only_day: "%e"
+
+    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    order: [ "day", "month", "year" ]
+
+    periods:
+      days: Tage
+      weeks: Wochen
+      months: Monate
+      years: Jahre
+
+  time:
+    formats:
+      default: "%A, %d. %B %Y, %H:%M Uhr"
+      short: "%d. %B, %H:%M Uhr"
+      long: "%A, %d. %B %Y, %H:%M Uhr"
+      time: "%H:%M"
+
+    am: "vormittags"
+    pm: "nachmittags"
+  day_distance:
+    unit:
+      one: Tag
+      other: Tage
+  datetime:
+    distance_in_words:
+      half_a_minute: 'eine halbe Minute'
+      less_than_x_seconds:
+        one: 'weniger als eine Sekunde'
+        other: 'weniger als %{count} Sekunden'
+      x_seconds:
+        one: 'eine Sekunde'
+        other: '%{count} Sekunden'
+      less_than_x_minutes:
+        one: 'weniger als eine Minute'
+        other: 'weniger als %{count} Minuten'
+      x_minutes:
+        one: 'eine Minute'
+        other: '%{count} Minuten'
+      about_x_hours:
+        one: 'etwa eine Stunde'
+        other: 'etwa %{count} Stunden'
+      x_days:
+        one: 'ein Tag'
+        other: '%{count} Tage'
+      about_x_months:
+        one: 'etwa ein Monat'
+        other: 'etwa %{count} Monate'
+      x_months:
+        one: 'ein Monat'
+        other: '%{count} Monate'
+      almost_x_years:
+        one: 'fast ein Jahr'
+        other: 'fast %{count} Jahre'
+      about_x_years:
+        one: 'etwa ein Jahr'
+        other: 'etwa %{count} Jahre'
+      over_x_years:
+        one: 'mehr als ein Jahr'
+        other: 'mehr als %{count} Jahre'
+    prompts:
+      second: "Sekunden"
+      minute: "Minuten"
+      hour: "Stunden"
+      day: "Tag"
+      month: "Monat"
+      year: "Jahr"
+
+  number:
+    format:
+      precision: 2
+      separator: ','
+      delimiter: '.'
+      significant: false
+      strip_insignificant_zeros: false
+    currency:
+      format:
+        unit: '€'
+        format: '%n %u'
+        separator: ","
+        delimiter: ""
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+    percentage:
+      format:
+        delimiter: ""
+    precision:
+      format:
+        delimiter: ""
+    human:
+      format:
+        delimiter: ""
+        precision: 2
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        # Storage units output formatting.
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: Tausend
+          million: Millionen
+          billion:
+            one: Milliarde
+            others: Milliarden
+          trillion: Billionen
+          quadrillion:
+            one: Billiarde
+            others: Billiarden
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " und "
+      last_word_connector: " und "
+    select:
+      prompt: "Bitte wählen:"
+
+  activemodel:
+    notice:
+      create: "%{model} erfolgreich erstellt."
+      could_not_create: "%{model} konnte nicht erstellt werden. Bitte Eingaben überprüfen"
+      update: "%{model} erfolgreich aktualisiert."
+      could_not_update: "%{model} konnte nicht aktualisiert werden. Bitte Eingaben überprüfen"
+      destroy: "%{model} erfolgreich gelöscht."
+      could_not_destroy: "%{model} konnte nicht gelöscht werden. Evtl. verbundene Referenzen?"
+      login: "Erfolgreich angemeldet."
+      logout: "Sie wurden abgemeldet."
+    alert:
+      invalid_password: "Nicht registrierter Benutzer oder falsches Passwort."
+    errors:
+      template:
+        header:
+          one:    "Konnte %{model} nicht speichern: ein Fehler."
+          other:  "Konnte %{model} nicht speichern: %{count} Fehler."
+        body: "Bitte überprüfen Sie die folgenden Felder:"
+
+  helpers:
+    no_data_yet: "No existent %{model} yet. A new dataset can be created by clicking at %{link}."
+
+    select:
+      prompt: "Pls choose"
+
+    confirmation:
+      delete: "Are you sure?"
+
+    submit:
+      create: 'Create %{model}'
+      update: 'Update %{model}'
+      submit: '%Save {model}'
+      delete: '%Delete {model}'
+      add_subform: 'add %{model}'
+      cancel: 'cancel'
+
+    title:
+      index: '%{model} List'
+      new: 'Create %{model}'
+      edit: 'Edit %{model}'
+      show: 'Single View %{model}'
+
+    actions: Actions
+    links:
+      index: Show all
+      search: Search
+      new: Create
+      edit: Edit
+      show: Single View
+      print: 'Print (PDF)'
+      destroy: Delete
+      confirm: Are you sure?
+      add_subform: Add
+      back: Back to list
+      cancel: Cancel
+
+    authentication:
+      missing: "You have to b registered and logged in if you want t access this page."
+
+    authorization:
+      access_denied: "You are not allowe to access this page!"
+
+  errors:
+    format: "%{attribute} %{message}"
+
+    messages: &errors_messages
+      inclusion: "ist kein gültiger Wert"
+      exclusion: "ist nicht verfügbar"
+      invalid: "ist nicht gültig"
+      confirmation: "stimmt nicht mit der Bestätigung überein"
+      accepted: "muss akzeptiert werden"
+      empty: "muss ausgefüllt werden"
+      blank: "muss ausgefüllt werden"
+      too_long: "ist zu lang (nicht mehr als %{count} Zeichen)"
+      too_short: "ist zu kurz (nicht weniger als %{count} Zeichen)"
+      wrong_length: "hat die falsche Länge (muss genau %{count} Zeichen haben)"
+      not_a_number: "ist keine Zahl"
+      greater_than: "muss größer als %{count} sein"
+      greater_than_or_equal_to: "muss größer oder gleich %{count} sein"
+      equal_to: "muss genau %{count} sein"
+      less_than: "muss kleiner als %{count} sein"
+      less_than_or_equal_to: "muss kleiner oder gleich %{count} sein"
+      odd: "muss ungerade sein"
+      even: "muss gerade sein"
+      not_an_integer: "muss ganzzahlig sein"
+      start_time_lt_end_time: 'Der Beginn darf nicht hinter dem Ende liegen!'
+
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one:    "Konnte %{model} nicht speichern: ein Fehler."
+          other:  "Konnte %{model} nicht speichern: %{count} Fehler."
+        body: "Bitte überprüfen Sie die folgenden Felder:"
+
+      messages:
+        taken: "ist bereits vergeben"
+        record_invalid: "Gültigkeitsprüfung ist fehlgeschlagen: %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{attribute}%{message}"
+
+  devise:
+    sessions:
+      refinery_user:
+        signed_out: Benutzer erfolgreich abgemeldet
+    failure:
+      already_authenticated: Es ist bereits ein anderer Benutzer angemeldet. Bitte erst ausloggen!
