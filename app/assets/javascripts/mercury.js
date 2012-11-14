@@ -18,7 +18,7 @@
  * Require any localizations you wish to support
  * Example: es.locale, or fr.locale -- regional dialects are in each language file so never en_US for instance.
  * Make sure you enable the localization feature in the configuration.
- * require mercury/locales/swedish_chef.locale
+ *= require mercury/locales/de.locale
  *
  * Add all requires for plugins that extend or change the behavior of Mercury Editor.
  * require mercury/plugins/save_as_xml/plugin.js

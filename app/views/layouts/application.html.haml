@@ -26,7 +26,7 @@
     / Size should be 32 x 32 pixels
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag "application"
-    = javascript_include_tag "partial_loaded/#{params[:controller]}" if File.exists?("#{Rails.root}/app/assets/javascripts/partial_loaded/#{params[:controller]}")
+    = javascript_include_tag "partial_loaded/#{params[:controller]}" #if File.exists?("#{Rails.root}/app/assets/javascripts/partial_loaded/#{params[:controller]}")
   %body
     .navbar.navbar-fixed-top
       .navbar-inner
@@ -60,7 +60,6 @@
                         - Team.archive.each do |t_archived|
                           %li= link_to t_archived.name, team_path(t_archived.id)
               %li= link_to "Kalender", "/kalender"
-              %li= link_to "Impressum", "/impressum"
               - if can?(:modify, User) || can?(:modify, Blog) || can?(:manage, League)
                 %li.dropdown
                   = link_to "Verwaltung<b class=\"caret\"></b>".html_safe, '#', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
@@ -89,5 +88,10 @@
         .row
           %div{:class => "span12"}
             = yield
-      %footer
-        %p &copy; Walter Dienstleistungen 2012
+      %footer.page-footer
+        %p{style: 'text-align: center; font-size: 10pt;'}
+          &#169; TuS Fürstenfeldbruck 2012
+          |
+          = link_to 'Impressum & Kontakt', impressum_path
+          | Design & Entwicklung:
+          = link_to 'Walter Dienstleistungen', 'http://walterdl.hopto.org'

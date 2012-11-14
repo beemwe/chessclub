@@ -20,7 +20,7 @@ Schachclub::Application.routes.draw do
   match 'teams/:id/announce_team' => 'teams#announce_team', :as => :announce_team, :method => :get
 
   get "welcome/index"
-  match "impressum" => 'welcome#imprint'
+  get "impressum" => 'welcome#imprint'
 
   get "kalender" => 'events#index'
   resources :events do
