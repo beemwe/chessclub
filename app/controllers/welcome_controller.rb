@@ -7,7 +7,6 @@ class WelcomeController < ApplicationController
   end
 
   def imprint
-
   end
 
 end
