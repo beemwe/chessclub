@@ -1,4 +1,4 @@
-class Blog < ActiveRecord::Base
+class BlogPost < ActiveRecord::Base
   belongs_to :author, class_name: "User", foreign_key: "author_id"
   extend FriendlyId
   friendly_id :title, :use => [:slugged, :history]
@@ -8,6 +8,6 @@ class Blog < ActiveRecord::Base
   validates_presence_of :title
 
   def self.recent
-    Blog.where('published_at IS NOT NULL').order('created_at DESC, published_at DESC').limit(4)
+    BlogPost.where('published_at IS NOT NULL').order('created_at DESC, published_at DESC').limit(4)
   end
 end

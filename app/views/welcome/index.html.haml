@@ -30,15 +30,15 @@
 
   %div.span3
     %h2 Twitterbox
-- if @blogs.size > 0
+- if @blogposts.size > 0
   %div.row{style: 'margin-top:15px;padding-top:15px;border-top:2px solid #ccc;'}
     - (0..3).each do |i|
       %div.span3
-        - if @blogs.size >= i.to_i
+        - if @blogposts.size >= i.to_i
           %h4
-            = @blogs[i].title
+            = @blogposts[i].title
             %br
-            %small{:style => 'font-size: 12px;color: black;'}= "von #{User.find(@blogs[i].author_id).first_last_name} im #{l @blogs[i].created_at, :format => '%B %Y'}"
-          %p= @blogs[i].subtitle
-          %p= link_to "weiterlesen...", blog_path(@blogs[i]), :class => 'btn btn-mini'
+            %small{:style => 'font-size: 12px;color: black;'}= "von #{User.find(@blogposts[i].author_id).first_last_name} im #{l @blogposts[i].created_at, :format => '%B %Y'}"
+          %p= @blogposts[i].subtitle
+          %p= link_to "weiterlesen...", blog_post_path(@blogposts[i]), :class => 'btn btn-mini'
 

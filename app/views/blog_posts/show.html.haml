@@ -1,0 +1,22 @@
+.page-header
+  %h1{:id => 'blog_title', :style => 'width: 100%', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'simple'}= @blog_post.title
+
+%h3{:id => 'blog_subtitle', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'simple'}= raw @blog_post.subtitle
+
+%div{:id => 'blog_content', :style => 'min-height: 150px;', :class => 'mercury-region', 'data-type' => 'editable', 'data-mercury' => 'full'}= raw @blog_post.content
+
+%p
+  = @blog_post.author.first_last_name
+  - if @blog_post.published_at.blank?
+    = '(noch nicht veröffentlicht)'
+  - else
+    = '(am ' + l(@blog_post.published_at, :format => :long) + ' veröffentlicht)'
+
+.form-actions
+  = link_to t('.back', :default => t('helpers.links.back')), :back, :class => 'btn'
+  - if @blog_post.id.present?
+    - if can? :manage, BlogPost
+      = link_to( t('.edit', :default => t('helpers.links.edit')), "/editor" + blog_post_path(@blog_post), id: "edit_link", class: 'btn btn-primary', data: {save_url: mercury_update_blog_post_path(@blog_post), redirect_url: blog_post_path(@blog_post)} )
+      = link_to( t('.destroy', :default => t('helpers.links.destroy')), blog_post_path(@blog_post), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger' )
+  - elsif can? :manage, BlogPost
+    = link_to( t('.edit', :default => t('helpers.links.new')), "#", id: "edit_link", class: 'btn btn-primary', data: {save_url: mercury_create_blog_posts_path, redirect_url: blog_posts_path} )

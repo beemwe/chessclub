@@ -9,7 +9,7 @@ class Ability
     if user.role? :administrator
       can :manage, :all
     elsif user.role? :autor
-      can :manage, Blog
+      can :manage, BlogPost
     elsif user.role? :spielleiter
       can :manage, Tournament
     elsif user.role? :mannschaftsführer

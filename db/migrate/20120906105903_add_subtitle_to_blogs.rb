@@ -1,5 +1,5 @@
 class AddSubtitleToBlogs < ActiveRecord::Migration
   def change
-    add_column :blogs, :subtitle, :string
+    add_column :blog_posts, :subtitle, :string
   end
 end

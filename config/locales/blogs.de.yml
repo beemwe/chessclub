@@ -1,11 +1,11 @@
 de:
   activerecord:
     models:
-      blog:
+      blog_post:
         one: Artikel
         other: Artikel
     attributes:
-      blog:
+      blog_post:
         content: Inhalt
         title: Titel
         subtitle: Untertitel
@@ -13,9 +13,10 @@ de:
         created_at: erstellt am
         user: Autor
         author_id: Autor
-  blogs:
+  blog_posts:
     index:
       title: Alle Artikel
+      publish: Veröffentlichen
     show:
       title: '%{blog}'
       back: Zurück

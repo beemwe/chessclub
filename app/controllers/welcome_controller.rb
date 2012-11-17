@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   def index
-    @blogs = Blog.recent
+    @blogposts = BlogPost.recent
   end
 
   def show

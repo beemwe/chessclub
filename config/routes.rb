@@ -5,9 +5,10 @@ Schachclub::Application.routes.draw do
 
   mount Mercury::Engine => '/'
 
-  resources :blogs do
+  resources :blog_posts do
     collection { put :mercury_create }
     member { put :mercury_update }
+    member { get :publish }
   end
 
   resources :leagues
