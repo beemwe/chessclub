@@ -1,0 +1,12 @@
+- reply = defined?(reply) ? reply : false
+%li{:id => "comment_#{comment.id}"}
+  %span.commenter
+    %b= comment.owner.first_last_name
+    schrieb vor
+    = distance_of_time_in_words(Time.now - comment.updated_at)
+  %span= link_to t('opinio.actions.delete'), comment_path(comment), :class => 'btn btn-mini btn-danger', :method => :delete, :remote => true if current_user.present? && (current_user.role?(:administrator) || comment.owner_id == current_user.id)
+  = simple_format(comment.body)
+  - if Opinio.accept_replies && !reply
+
+    %ul{:id=>"comment_#{comment.id}_replies", :class=>"replies"}
+      = render :partial => "opinio/comments/comment", :collection => comment.comments, :locals => {:reply => true}

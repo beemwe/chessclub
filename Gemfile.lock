@@ -102,6 +102,10 @@ GEM
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.5)
+    opinio (0.6)
+      jquery-rails
+      kaminari
+      rails (~> 3)
     orm_adapter (0.4.0)
     paperclip (3.2.0)
       activemodel (>= 3.0.0)
@@ -198,6 +202,7 @@ DEPENDENCIES
   mercury-rails
   mysql2
   nokogiri
+  opinio
   paperclip
   rails (= 3.2.8)
   rolify

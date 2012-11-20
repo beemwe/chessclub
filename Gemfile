@@ -43,6 +43,7 @@ gem 'mercury-rails'
 gem 'fullcalendar-rails'
 gem 'paperclip'
 gem 'friendly_id'
+gem 'opinio'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -55,3 +56,5 @@ gem 'friendly_id'
 
 # To use debugger
 # gem 'debugger'
+
+gem "kaminari"

@@ -1,4 +1,6 @@
 Schachclub::Application.routes.draw do
+  opinio_model
+
     namespace :mercury do
       resources :images
     end
@@ -6,6 +8,7 @@ Schachclub::Application.routes.draw do
   mount Mercury::Engine => '/'
 
   resources :blog_posts do
+    opinio
     collection { put :mercury_create }
     member { put :mercury_update }
     member { get :publish }

@@ -13,3 +13,24 @@ img[align=right] {
 img[align=left] {
   padding: 0 5px 5px 0;
 }
+
+div#comment-area, div#images-area {
+  padding-top: 9px;
+  border-top: 1px solid #eee;
+  margin: 30px 0 20px;
+}
+
+#comments {
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  .commenter {
+    font-size:10pt;
+    font-style: italic;
+    line-height: 12pt;
+  }
+}
+
+form#new_comment textarea#comment_body {
+  width: 90%;
+}

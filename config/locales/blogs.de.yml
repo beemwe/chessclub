@@ -27,3 +27,18 @@ de:
       title: 'Neuen Artikel anlegen'
     edit:
       title: 'Artikel bearbeiten'
+  opinio:
+    actions:
+      delete: "Kommentar löschen"
+      reply: "Antworten"
+      add: "Kommentar erstellen"
+    messages:
+      no_comments_found: "Noch keine Kommentare vorhanden"
+      add_comment: "Kommentar schreiben"
+      must_be_logged_in_to_comment: "Für einen eigenen Kommentar must Du registriert und angemeldet sein!"
+      comments: "Kommentare"
+      comment_sent: "Kommentar erfolgreich erstellt."
+      comment_sending_error: 'Fehler beim Senden des Kommentars.'
+      comment_destroyed: 'Kommentar wurde gelöscht.'
+      comment_interval: 'Du must %{time} Sekunden warten, um einen weiteren Kommentar zu senden.'
+      cannot_be_comment_of_comment: "Es kann (noch) nicht auf eine Antwort geantwortet werden."
