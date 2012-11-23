@@ -3,6 +3,13 @@
 
 $(document).ready ->
   $(".date-picker").datepicker()
+
+  $("#ajax-loader").bind("ajaxSend", () ->
+    $(this).show()
+  ).bind("ajaxComplete", () ->
+    $(this).hide()
+  )
+
   $("#calendar").fullCalendar({
     editable: true,
     selectable: true,
@@ -140,5 +147,6 @@ moveEvent = (event, dayDelta, minuteDelta, allDay) ->
         dataType: 'script',
         type: 'post',
         url: "/events/#{event.id}/move"
-    });
+    })
+
 
