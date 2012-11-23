@@ -17,7 +17,13 @@ Schachclub::Application.routes.draw do
   resources :leagues
 
   resources :blog_articles
-  devise_for :users, :path_prefix => 'devise'
+  # devise_for :users, :path_prefix => 'devise'
+  devise_for :users, :controllers => {:sessions => 'sessions'}, :path_prefix => 'devise'
+  devise_scope :user do
+    match '/logout', to: 'sessions#destroy'
+    match '/user_menu', to: 'sessions#user_menu'
+  end
+
   resources :users
   resources :tournaments
   resources :teams

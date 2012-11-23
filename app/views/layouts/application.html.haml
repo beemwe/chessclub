@@ -60,23 +60,18 @@
                         - Team.archive.each do |t_archived|
                           %li= link_to t_archived.name, team_path(t_archived.id)
               %li= link_to "Kalender", "/kalender"
-              - if can?(:modify, User) || can?(:modify, BlogPost) || can?(:manage, League)
-                %li.dropdown
-                  = link_to "Verwaltung<b class=\"caret\"></b>".html_safe, '#', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
-                  %ul.dropdown-menu
-                    %li= link_to "Benutzerverwaltung", users_path if can?(:manage, User)
-                    %li= link_to "Ligaverwaltung", leagues_path if can?(:manage, League)
-                    %li= link_to "Blogverwaltung", blog_posts_path if can?(:manage, BlogPost)
             - if !user_signed_in?
-              = form_for(resource, :as => resource_name, :url => user_session_path, :html => {:class => 'navbar-form pull-right'}) do |f|
-                = f.text_field :login, :class => 'span1', :style => "font-size: 8pt; height: 10px;"
-                = f.password_field :password, :class => 'span1', :style => "font-size: 6pt; height: 10px;"
-                = f.submit 'Anmelden', :class => 'btn btn-mini'
-                = link_to "Registrieren", new_user_registration_path, :class => 'btn btn-mini'
+              %ul#login-area.nav.pull-right
+                %li.dropdown
+                  = link_to "Anmelden<b class=\"caret\"></b>".html_safe, '#', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                  %div.dropdown-menu{style: "padding: 15px; padding-bottom: 0px;"}
+                    = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :remote => true, :format => :json, :html => {:class => 'navbar-form pull-right'}) do |f|
+                      = f.input :login, :style=>"margin-bottom: 15px;", :placeholder=>"Benutzername oder E-Mail"
+                      = f.input :password, :as => :password, :style => "margin-bottom: 15px;", :placeholder => "Kennwort"
+                      = f.input :remember_me, :as => :boolean, :label => 'Angemeldet bleiben'
+                      = f.button :submit, 'Anmelden', :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
             - else
-              %div.navbar-form.pull-right
-                = link_to "#{current_user.first_last_name}", edit_user_registration_path
-                = link_to "Abmelden", destroy_user_session_path, :method => "delete", :class => 'btn btn-mini'
+              = render :partial => 'devise/shared/user_menu'
           / /.nav-collapse
     .container
       %section#flash-messages.span7

@@ -5,7 +5,7 @@
     schrieb vor
     = distance_of_time_in_words(Time.now - comment.updated_at)
   %span= link_to t('opinio.actions.delete'), comment_path(comment), :class => 'btn btn-mini btn-danger', :method => :delete, :remote => true if current_user.present? && (current_user.role?(:administrator) || comment.owner_id == current_user.id)
-  = simple_format(comment.body)
+  %div.well.well-small{:style => 'width:90%;'}= simple_format(comment.body)
   - if Opinio.accept_replies && !reply
 
     %ul{:id=>"comment_#{comment.id}_replies", :class=>"replies"}
