@@ -1,5 +1,5 @@
 root = '/var/rails/tusffbschach/current'
-Rails.env = ENV['RAILS_ENV'] || 'production'
+env = ENV['RAILS_ENV'] || 'production'
 worker_processes 2
 preload_app true
 timeout 30
@@ -30,7 +30,7 @@ after_fork do |server, worker|
       Process::UID.change_privilege(target_uid)
     end
   rescue => e
-    if Rails.env == 'development'
+    if env == 'development'
       STDERR.puts "Cannot change Unicorn's worker UID/GID in development environment."
     else
       raise e
