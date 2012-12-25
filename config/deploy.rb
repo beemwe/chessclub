@@ -1,5 +1,6 @@
 # config/deploy.rb 
 require "bundler/capistrano"
+load 'deploy/assets'
 
 set :scm,             :git
 set :repository,      "ssh://beemwe@walterdl.hopto.org/var/repositories/schachclub.git"
@@ -136,6 +137,7 @@ namespace :deploy do
       rollback.cleanup
     end
   end
+
 end
 
 def run_rake(cmd)
