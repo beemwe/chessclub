@@ -11,7 +11,7 @@ set :deploy_to,       "/var/rails/tusffbschach"
 set :normalize_asset_timestamps, false
 
 set :user,            "schachclub"
-set :group,           "rvm"
+set :group,           "unicorn"
 set :use_sudo,        false
 
 role :web,    "tus-ffb-schach.de"
@@ -29,12 +29,12 @@ set(:previous_revision) { capture("cd #{current_path}; git rev-parse --short HEA
 default_environment["RAILS_ENV"] = 'production'
 
 # Use our ruby-1.9.2-p290@my_site gemset
-default_environment["PATH"]         = "usr/local/rvm/gems/ruby-1.9.3-p327@personalconcept/bin:/usr/local/rvm/gems/ruby-1.9.3-p327@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p327/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+default_environment["PATH"]         = "usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach/bin:/usr/local/rvm/gems/ruby-1.9.3-p327@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p327/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 default_environment["GEM_HOME"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach"
 default_environment["GEM_PATH"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach:/usr/local/rvm/gems/ruby-1.9.3-p327@global"
 default_environment["RUBY_VERSION"] = "ruby-1.9.3-p327"
 
-# default_run_options[:shell] = 'bash'
+default_run_options[:shell] = 'bash'
 
 namespace :deploy do
   desc "Deploy your application"
@@ -110,12 +110,12 @@ namespace :deploy do
 
   desc "Start unicorn"
   task :start, :except => { :no_release => true } do
-    run "cd #{current_path} ; bundle exec unicorn_rails -c config/unicorn.rb -D"
+    run "cd #{current_path} ; bundle exec unicorn_rails -c /var/rails/tusffbschach/current/config/unicorn.rb -D"
   end
 
   desc "Stop unicorn"
   task :stop, :except => { :no_release => true } do
-    run "kill -s QUIT `cat #{latest_release}/tmp/pids//unicorn.schachclub.pid`"
+    run "kill -s QUIT `cat #{shared_path}/tmp/pids/unicorn.schachclub.pid`"
   end  
 
   namespace :rollback do
