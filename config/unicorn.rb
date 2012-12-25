@@ -3,8 +3,8 @@ env = ENV['RAILS_ENV'] || 'production'
 worker_processes 2
 preload_app true
 timeout 30
-listen root + 'tmp/sockets/unicorn.sock', :backlog => 64
-pid "/var/rails/tusffbschach/shared/tmp/pids/unicorn.schachclub.pid"
+listen '/var/rails/tusffbschach/shared/tmp/sockets/unicorn.sock', :backlog => 64
+pid '/var/rails/tusffbschach/shared/tmp/pids/unicorn.schachclub.pid'
 
 # Production specific settings
 if env == "production"
