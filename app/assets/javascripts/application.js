@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require datetimeentry/jquery.datetimeentry.pack
 //= require datetimeentry/jquery.datetimeentry-de
 //= require twitter/bootstrap.js
