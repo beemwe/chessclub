@@ -102,7 +102,7 @@ namespace :deploy do
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
     if File.exist?("#{latest_release}/tmp/pids/unicorn.schachclub.pid")
-      run "kill -s USR2 `cat #{latest_release}/tmp/pids/unicorn.schachclub.pid`"
+      run "kill -s USR2 `cat #{latest_release}/tmp/pids/unicorn.chess.pid`"
     else
       start
     end
@@ -115,7 +115,7 @@ namespace :deploy do
 
   desc "Stop unicorn"
   task :stop, :except => { :no_release => true } do
-    run "kill -s QUIT `cat #{shared_path}/tmp/pids/unicorn.schachclub.pid`"
+    run "kill -s QUIT `cat #{shared_path}/tmp/pids/unicorn.chess.pid`"
   end  
 
   namespace :rollback do
@@ -141,3 +141,4 @@ end
 def run_rake(cmd)
   run "cd #{current_path}; #{rake} #{cmd}"
 end
+
