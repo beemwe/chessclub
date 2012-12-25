@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require datetimeentry/jquery.datetimeentry.pack
 //= require datetimeentry/jquery.datetimeentry-de
-//= require twitter/bootstrap
+//= require twitter/bootstrap.js
 //= require users
 //= require_directory .
 

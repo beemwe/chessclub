@@ -102,7 +102,7 @@ namespace :deploy do
 
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
-    if File.exist?("#{latest_release}/tmp/pids/unicorn.schachclub.pid")
+    if File.exist?("#{latest_release}/tmp/pids/unicorn.chess.pid")
       run "kill -s USR2 `cat #{latest_release}/tmp/pids/unicorn.chess.pid`"
     else
       start
