@@ -4,17 +4,17 @@ worker_processes 2
 preload_app true
 timeout 30
 listen root + 'tmp/sockets/unicorn.sock', :backlog => 64
-pid "/var/rails/tusffbschach/shared/tmp/pids/unicorn.personalconcept.pid"
+pid "/var/rails/tusffbschach/shared/tmp/pids/unicorn.schachclub.pid"
 
 # Production specific settings
 if env == "production"
   # Help ensure your application will always spawn in the symlinked
   # "current" directory that Capistrano sets up.
-  working_directory "/var/rails/personalconcept/current"
+  working_directory "/var/rails/tusffbschach/current"
 
   # feel free to point this anywhere accessible on the filesystem
   user 'schachclub', 'unicorn'
-  shared_path = "/var/rails/personalconcept/shared"
+  shared_path = "/var/rails/tusffbschach/shared"
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
   stdout_path "#{shared_path}/log/unicorn.stdout.log"
@@ -31,7 +31,7 @@ before_fork do |server, worker|
 
   # Before forking, kill the master process that belongs to the .oldbin PID.
   # This enables 0 downtime deploys.
-  old_pid = "/var/rails/tusffbschach/shared/tmp/pids/unicorn.personalconcept.pid.oldbin"
+  old_pid = "/var/rails/tusffbschach/shared/tmp/pids/unicorn.schachclub.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
