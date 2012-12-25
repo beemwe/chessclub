@@ -29,7 +29,7 @@ set(:previous_revision) { capture("cd #{current_path}; git rev-parse --short HEA
 default_environment["RAILS_ENV"] = 'production'
 
 # Use our ruby-1.9.2-p290@my_site gemset
-# default_environment["PATH"]         = ""
+default_environment["PATH"]         = "usr/local/rvm/gems/ruby-1.9.3-p327@personalconcept/bin:/usr/local/rvm/gems/ruby-1.9.3-p327@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p327/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 default_environment["GEM_HOME"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach"
 default_environment["GEM_PATH"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach:/usr/local/rvm/gems/ruby-1.9.3-p327@global"
 default_environment["RUBY_VERSION"] = "ruby-1.9.3-p327"
@@ -48,7 +48,7 @@ namespace :deploy do
     dirs = [deploy_to, shared_path]
     dirs += shared_children.map { |d| File.join(shared_path, d) }
     dirs += %w(tmp/sockets tmp/pids).map { |d| File.join(shared_path, d) }
-    run "#{try_sudo} mkdir -p #{dirs.join(' ')} && #{try_sudo} chmod g+w #{dirs.join(' ')}"
+    run "#{try_sudo} mkdir -p #{dirs.join(' ')} && #{try_sudo} chmod g+w #{dirs[1..dirs.size - 1].join(' ')}"
     run "git clone #{repository} #{current_path}"
     finalize_update
   end
@@ -102,7 +102,11 @@ namespace :deploy do
 
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
-    run "kill -s USR2 `cat #{latest_release}/tmp/pids/unicorn.schachclub.pid`"
+    if File.exist?("#{latest_release}/tmp/pids/unicorn.schachclub.pid")
+      run "kill -s USR2 `cat #{latest_release}/tmp/pids/unicorn.schachclub.pid`"
+    else
+      start
+    end
   end
 
   desc "Start unicorn"

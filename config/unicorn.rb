@@ -1,12 +1,12 @@
-Rails.root = '/var/rails/tusffbschach/current'
+root = '/var/rails/tusffbschach/current'
 Rails.env = ENV['RAILS_ENV'] || 'production'
 worker_processes 2
 preload_app true
 timeout 30
-listen Rails.root + 'tmp/sockets/unicorn.sock', :backlog => 64
+listen root + 'tmp/sockets/unicorn.sock', :backlog => 64
 
 before_fork do |server, worker|
-  pid_old = Rails.root + 'tmp/pids/unicorn.pid.oldbin'
+  pid_old = root + 'tmp/pids/unicorn.pid.oldbin'
   if File.exists?(pid_old) && server.pid != pid_old
     begin
       Process.kill("QUIT", File.read(pid_old).to_i)
