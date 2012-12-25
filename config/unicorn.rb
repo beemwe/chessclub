@@ -1,5 +1,5 @@
-Rails.root = '/home/beemwe/webspaces/schachclub/current'
-Rails.env = ENV['RAILS_ENV'] || 'development'
+Rails.root = '/var/rails/tusffbschach/current'
+Rails.env = ENV['RAILS_ENV'] || 'production'
 worker_processes 2
 preload_app true
 timeout 30

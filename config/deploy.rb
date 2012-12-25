@@ -11,12 +11,12 @@ set :deploy_to,       "/var/rails/tusffbschach"
 set :normalize_asset_timestamps, false
 
 set :user,            "schachclub"
-set :group,           "unicorn"
+set :group,           "rvm"
 set :use_sudo,        false
 
-role :web,    "railssvr"
-role :app,    "railssvr"
-role :db,     "railssvr", :primary => true
+role :web,    "tus-ffb-schach.de"
+role :app,    "tus-ffb-schach.de"
+role :db,     "tus-ffb-schach.de", :primary => true
 
 set(:latest_release)  { fetch(:current_path) }
 set(:release_path)    { fetch(:current_path) }
@@ -50,6 +50,7 @@ namespace :deploy do
     dirs += %w(tmp/sockets tmp/pids).map { |d| File.join(shared_path, d) }
     run "#{try_sudo} mkdir -p #{dirs.join(' ')} && #{try_sudo} chmod g+w #{dirs.join(' ')}"
     run "git clone #{repository} #{current_path}"
+    finalize_update
   end
 
   task :cold do
