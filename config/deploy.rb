@@ -7,11 +7,11 @@ set :branch,          "origin/master"
 set :migrate_target,  :current
 set :ssh_options,     { :forward_agent => true }
 set :rails_env,       "production"
-set :deploy_to,       "/home/beemwe/webspaces/schachclub"
+set :deploy_to,       "/var/rails/tusffbschach"
 set :normalize_asset_timestamps, false
 
-set :user,            "beemwe"
-set :group,           "beemwe"
+set :user,            "schachclub"
+set :group,           "unicorn"
 set :use_sudo,        false
 
 role :web,    "railssvr"
@@ -30,9 +30,9 @@ default_environment["RAILS_ENV"] = 'production'
 
 # Use our ruby-1.9.2-p290@my_site gemset
 # default_environment["PATH"]         = ""
-default_environment["GEM_HOME"]     = "/usr/local/rvm/gems/ruby-1.9.3-p125@schachclub"
-default_environment["GEM_PATH"]     = "/usr/local/rvm/gems/ruby-1.9.3-p125@schachclub"
-default_environment["RUBY_VERSION"] = "ruby-1.9.3-p125"
+default_environment["GEM_HOME"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach"
+default_environment["GEM_PATH"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach:/usr/local/rvm/gems/ruby-1.9.3-p327@global"
+default_environment["RUBY_VERSION"] = "ruby-1.9.3-p327"
 
 # default_run_options[:shell] = 'bash'
 
@@ -47,6 +47,7 @@ namespace :deploy do
   task :setup, :except => { :no_release => true } do
     dirs = [deploy_to, shared_path]
     dirs += shared_children.map { |d| File.join(shared_path, d) }
+    dirs += %w(tmp/sockets tmp/pids).map { |d| File.join(shared_path, d) }
     run "#{try_sudo} mkdir -p #{dirs.join(' ')} && #{try_sudo} chmod g+w #{dirs.join(' ')}"
     run "git clone #{repository} #{current_path}"
   end
@@ -88,8 +89,7 @@ namespace :deploy do
       mkdir -p #{latest_release}/tmp &&
       ln -s #{shared_path}/log #{latest_release}/log &&
       ln -s #{shared_path}/system #{latest_release}/public/system &&
-      ln -s #{shared_path}/pids #{latest_release}/tmp/pids &&
-      ln -sf #{shared_path}/database.yml #{latest_release}/config/database.yml
+      ln -s #{shared_path}/pids #{latest_release}/tmp/pids
     CMD
 
     if fetch(:normalize_asset_timestamps, true)
@@ -101,7 +101,7 @@ namespace :deploy do
 
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
-    run "kill -s USR2 `cat /tmp/unicorn.my_site.pid`"
+    run "kill -s USR2 `cat #{latest_release}/tmp/pids/unicorn.schachclub.pid`"
   end
 
   desc "Start unicorn"
@@ -111,7 +111,7 @@ namespace :deploy do
 
   desc "Stop unicorn"
   task :stop, :except => { :no_release => true } do
-    run "kill -s QUIT `cat /tmp/unicorn.my_site.pid`"
+    run "kill -s QUIT `cat #{latest_release}/tmp/pids//unicorn.schachclub.pid`"
   end  
 
   namespace :rollback do

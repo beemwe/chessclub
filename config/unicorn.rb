@@ -1,6 +1,6 @@
 Rails.root = '/home/beemwe/webspaces/schachclub/current'
 Rails.env = ENV['RAILS_ENV'] || 'development'
-worker_processes 1
+worker_processes 2
 preload_app true
 timeout 30
 listen Rails.root + 'tmp/sockets/unicorn.sock', :backlog => 64
