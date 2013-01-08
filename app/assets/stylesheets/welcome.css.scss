@@ -1,3 +1,28 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#braingames {
+  background: white;
+  border: 1px solid #bbbbbb;
+  width: 270px;
+  height: 270px;
+  position: relative;
+}
+
+#braingames:before {
+  border: 1px solid white;
+  content: '';
+  width: 268px;
+  height: 268px;
+  position: absolute;
+}
+
+#braingames:after {
+  content: '';
+  border: 1px solid #bbbbbb;
+  width: 270px;
+  height: 270px;
+  position: absolute;
+}
+

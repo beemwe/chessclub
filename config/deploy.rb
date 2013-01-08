@@ -102,16 +102,13 @@ namespace :deploy do
 
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
-    if File.exist?("#{latest_release}/tmp/pids/unicorn.chess.pid")
-      run "kill -s USR2 `cat #{latest_release}/tmp/pids/unicorn.chess.pid`"
-    else
-      start
-    end
+    file = "#{shared_path}/tmp/pids/unicorn.chess.pid"
+    run "if [[ -f #{file} ]]; then kill -s USR2 `cat #{file}`; else cd #{current_path} && bundle exec unicorn_rails -c /var/rails/tusffbschach/current/config/unicorn.rb -D; fi"
   end
 
   desc "Start unicorn"
   task :start, :except => { :no_release => true } do
-    run "cd #{current_path} ; bundle exec unicorn_rails -c /var/rails/tusffbschach/current/config/unicorn.rb -D"
+    run "cd #{current_path}; bundle exec unicorn_rails -c /var/rails/tusffbschach/current/config/unicorn.rb -D"
   end
 
   desc "Stop unicorn"
