@@ -3,26 +3,32 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #braingames {
+  margin-top: 29px;
   background: white;
-  border: 1px solid #bbbbbb;
-  width: 270px;
-  height: 270px;
+  border: 1px solid red;
+  width: 258px;
+  height: 268px;
   position: relative;
+  padding: 5px;
 }
 
 #braingames:before {
   border: 1px solid white;
   content: '';
-  width: 268px;
-  height: 268px;
+  width: 266px;
+  height: 276px;
   position: absolute;
 }
 
 #braingames:after {
   content: '';
-  border: 1px solid #bbbbbb;
-  width: 270px;
-  height: 270px;
+  border: 1px solid red;
+  width: 264px;
+  height: 274px;
+  left: 1px;
+  top: 1px;
   position: absolute;
 }
+
+#braingames h4 { font-size: 16.3px;}
 
