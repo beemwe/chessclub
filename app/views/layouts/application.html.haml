@@ -4,7 +4,7 @@
     %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}/
     %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    %title= content_for?(:title) ? yield(:title) : "Schachclub"
+    %title= content_for?(:title) ? (yield(:title).to_s[0..16] == 'TuS FFB :: Schach' ? yield(:title) : "TuS FFB :: Schach :: #{yield(:title)}") : 'TuS FFB :: Schach'
     = csrf_meta_tag
     / Le HTML5 shim, for IE6-8 support of HTML elements
     /[if lt IE 9]
@@ -86,6 +86,7 @@
       %footer
         %p
           &copy; TuS Fürstenfeldbruck 2012
+          = "- #{Time.now.year.to_s}"
           |
           = link_to 'Impressum & Kontakt', '/impressum'
           |
