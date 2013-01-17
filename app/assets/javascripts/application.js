@@ -18,5 +18,6 @@
 //= require datetimeentry/jquery.datetimeentry-de
 //= require twitter/bootstrap.js
 //= require users
+//= require cocoon
 //= require_directory .
 

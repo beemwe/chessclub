@@ -1,11 +1,13 @@
 # encoding:utf-8
 class Team < ActiveRecord::Base
-  attr_accessible :age_limit, :board_count, :gender, :league, :name, :subs_bench, :season, :leader_id
-
-  include ::Transitions
-  include ActiveRecord::Transitions
-
   belongs_to :leader, :class_name => 'User'
+  has_many :combatdays, :dependent => :destroy
+
+  attr_accessible :age_limit, :board_count, :gender, :league, :name, :subs_bench, :season, :leader_id,
+                  :combatdays_attributes
+  accepts_nested_attributes_for :combatdays, :reject_if => :reject_combat_days, :allow_destroy => true
+
+  include ActiveRecord::Transitions
 
   before_create :set_name_from_attributes
 
@@ -48,6 +50,10 @@ class Team < ActiveRecord::Base
     result
   end
 
+  def state?(state)
+    self.state.to_sym == state
+  end
+
   def self.actives
     Team.where{state != 'archived'}
   end
@@ -74,5 +80,9 @@ class Team < ActiveRecord::Base
 
     lfd = others.count > 0 ? " #{ROMAN_NUMBERS[others.count]}" : ""
     self.name = "TuS Fürstenfeldbruck#{addition}#{lfd}"
+  end
+
+  def reject_combat_days(attributed)
+    attributed['title'].blank? || attributed['combat_date'].blank?
   end
 end

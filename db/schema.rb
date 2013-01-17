@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117120607) do
+ActiveRecord::Schema.define(:version => 20130114120036) do
 
   create_table "blog_articles", :force => true do |t|
     t.string   "title"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(:version => 20121117120607) do
   end
 
   add_index "blog_posts", ["slug"], :name => "index_blogs_on_slug"
+
+  create_table "clubs", :force => true do |t|
+    t.string   "name"
+    t.integer  "zps"
+    t.string   "country_organization"
+    t.string   "region_organisation"
+    t.string   "county_organization"
+    t.boolean  "delete_flag"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "owner_id",         :null => false
@@ -70,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20121117120607) do
     t.string   "place"
     t.integer  "owner_id"
     t.string   "category"
+    t.integer  "team_id"
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
@@ -105,6 +117,23 @@ ActiveRecord::Schema.define(:version => 20121117120607) do
     t.datetime "image_updated_at"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "players", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "member_id"
+    t.string   "state"
+    t.string   "gender"
+    t.string   "last_poll"
+    t.integer  "dwz"
+    t.integer  "dwz_index"
+    t.integer  "elo"
+    t.string   "title"
+    t.integer  "birth_year"
+    t.boolean  "delete_flag"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "roles", :force => true do |t|

@@ -25,6 +25,7 @@ class TeamsController < ApplicationController
   # GET /teams/new.json
   def new
     @team = Team.new
+    @team.events.build
 
     respond_to do |format|
       format.html # new.html.erb

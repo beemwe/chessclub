@@ -33,7 +33,7 @@ function DatetimeEntry() {
 			// 'm' for minute, 'M' for two-digit minutes, 's' for seconds,
 			// 'S' for two-digit seconds, 'a' for AM/PM indicator (omit for 24-hour)
 		datetimeSeparators: '.', // Additional separators between datetime portions
-		monthNames: ['January', 'February', 'March', 'April', 'May', 'June',
+		monthNames: ['Januar', 'February', 'March', 'April', 'May', 'June',
 			'July', 'August', 'September', 'October', 'November', 'December'], // Names of the months
 		monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 			'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Abbreviated names of the months

@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
-  attr_accessible :title, :place, :category, :description, :owner_id, :all_day, :endtime, :event_series_id, :starttime, :period, :frequency, :commit_button
+  attr_accessible :title, :place, :category, :description, :owner_id, :all_day, :endtime, :event_series_id, :starttime,
+                  :period, :frequency, :commit_button
   attr_accessor :period, :frequency, :commit_button
 
   validates_presence_of :title, :starttime, :endtime

@@ -3,7 +3,7 @@ module SimpleForm
     class DatePickerInput < Base
       def input
         "<div class=\"input-append date #{css_class}\" id=\"#{input_id}\" data-date=\"#{input_value}\" data-date-format=\"#{input_format}\">
-        				<input size=\"8\" type=\"date\" name=\"#{input_name}\" value=\"#{input_value}\">
+        				<input size=\"8\" type=\"text\" name=\"#{input_name}\" value=\"#{input_value}\">
         				<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>
         </div>".html_safe
         # @builder.text_field(attribute_name,input_html_options).html_safe
@@ -39,7 +39,7 @@ module SimpleForm
       end
 
       def input_format
-        '%d.%m.%Y - %H:%M'
+        '%d.%m.%Y'
       end
 
     end
