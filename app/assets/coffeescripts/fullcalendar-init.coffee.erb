@@ -1,6 +1,5 @@
 <% require CanCan:Ability %>
 $(document).ready ->
-  $(".date-picker").datepicker()
   $("#calendar").fullCalendar({
     editable: <%= can?(:modify, Event) ? 'true' : 'false' %>,
     selectable: <%= can?(:modify, Event) ? 'true' : 'false' %>,

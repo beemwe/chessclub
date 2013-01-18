@@ -71,7 +71,7 @@ class EventsController < ApplicationController
     if can? :manage, Event
       @event = Event.find_by_id params[:id]
       if @event
-        if params[:event][:event_selection] == 'true' # gesamte Event-serie
+        if params[:event].present? && params[:event][:event_selection] == 'true' # gesamte Event-serie
           @event.event_series.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.starttime))
           @event.event_series.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
           @event.event_series.all_day = params[:all_day]

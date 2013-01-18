@@ -2,8 +2,6 @@
 <% require 'cancan/ability' %>
 
 $(document).ready ->
-  $(".date-picker").datepicker()
-
   $("#ajax-loader").bind("ajaxSend", () ->
     $(this).show()
   ).bind("ajaxComplete", () ->

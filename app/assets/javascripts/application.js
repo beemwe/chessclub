@@ -11,13 +11,15 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
+//= require jquery.ui.all
 //= require twitter/bootstrap
-//= require datetimeentry/jquery.datetimeentry.pack
+//= require datetimeentry/jquery.datetimeentry
 //= require datetimeentry/jquery.datetimeentry-de
 //= require twitter/bootstrap.js
 //= require users
 //= require cocoon
 //= require_directory .
 
+/*
+*/
