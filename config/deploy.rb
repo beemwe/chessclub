@@ -15,9 +15,9 @@ set :user,            "schachclub"
 set :group,           "unicorn"
 set :use_sudo,        false
 
-role :web,    "tus-ffb-schach.de"
-role :app,    "tus-ffb-schach.de"
-role :db,     "tus-ffb-schach.de", :primary => true
+role :web,    "tusffb-schach.de"
+role :app,    "tusffb-schach.de"
+role :db,     "tusffb-schach.de", :primary => true
 
 set(:latest_release)  { fetch(:current_path) }
 set(:release_path)    { fetch(:current_path) }

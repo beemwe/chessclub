@@ -55,10 +55,10 @@ class Team < ActiveRecord::Base
   end
 
   def self.actives
-    Team.where{state != 'archived'}
+    Team.where{state != 'archived'}.order('name')
   end
   def self.archive
-    Team.where{state == 'archived'}
+    Team.where{state == 'archived'}.order('name')
   end
 
   protected

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
@@ -45,7 +46,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to @team, notice: 'Team was successfully created.' }
+        format.html { redirect_to @team, notice: 'Die Mannschaft wurde erfolgreich erstellt.' }
         format.json { render json: @team, status: :created, location: @team }
       else
         format.html { render action: "new" }
@@ -61,7 +62,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.update_attributes(params[:team])
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+        format.html { redirect_to @team, notice: 'Die Mannschaftsdaten wurden erfolgreich geändert.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
