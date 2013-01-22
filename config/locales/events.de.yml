@@ -20,12 +20,9 @@ de:
     weekly2: 2-wöchentlich
     weekly3: 3-wöchentlich
     weekly4: 4-wöchentlich
-    firstweekdayofmonth: jeden 1. %{day} im Monat
-    secondweekdayofmonth: jeden 2. %{day} im Monat
-    thirdweekdayofmonth: jeden 3. %{day} im Monat
-    fourthweekdayofmonth: jeden 4. %{day} im Monat
-    lastweekdayofmonth: jeden letzten %{day} im Monat
     monthly: monatlich
+    countedweekdayofmonth: jeden %{number}. %{day} im Monat
+    lastweekdayofmonth: jeden letzten %{day} im Monat
     monthly2: jeden 2. Monat
     monthly3: quartalsweise
     monthly6: halbjährlich

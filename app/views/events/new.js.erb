@@ -1,3 +1,75 @@
+function CalcWeekday4Repetition() {
+  var sDate = $("#event_starttime").val();
+  var d = parseInt(sDate.substr(0,2));
+  var m = parseInt(sDate.substr(3,2)) - 1;
+  var y = parseInt(sDate.substr(6,4));
+  var dDate = new Date(y, m, d);
+  var wDay = dDate.getDay();
+  var sWeekDay = '0';
+  switch (wDay) {
+    case 0:
+      sWeekDay = 'Sonntag';
+      break;
+    case 1:
+      sWeekDay = 'Montag';
+      break;
+    case 2:
+      sWeekDay = 'Dienstag';
+      break;
+    case 3:
+      sWeekDay = 'Mittwoch';
+      break;
+    case 4:
+      sWeekDay = 'Donnerstag';
+      break;
+    case 5:
+      sWeekDay = 'Freitag';
+      break;
+    case 6:
+      sWeekDay = 'Samstag';
+      break;
+    }
+
+  var oneWeekBefore = new Date();
+  var twoWeeksBefore = new Date();
+  var threeWeeksBefore = new Date();
+  var fourWeeksBefore = new Date();
+  var oneWeekAfter = new Date();
+  var weekCounter = 0;
+  var weekOffsetTime = 7 * 24 * 60 * 60 * 1000;
+  oneWeekBefore.setTime(dDate.getTime()-weekOffsetTime);
+  twoWeeksBefore.setTime(oneWeekBefore.getTime()-weekOffsetTime);
+  threeWeeksBefore.setTime(twoWeeksBefore.getTime()-weekOffsetTime);
+  fourWeeksBefore.setTime(threeWeeksBefore.getTime()-weekOffsetTime);
+  oneWeekAfter.setTime(dDate.getTime()+weekOffsetTime);
+  var weekCounter = 0;
+
+  if (oneWeekBefore.getMonth() != dDate.getMonth()) {
+      weekCounter = 1;
+  } else if (twoWeeksBefore.getMonth() != dDate.getMonth()) {
+      weekCounter = 2;
+  } else if (threeWeeksBefore.getMonth() != dDate.getMonth()) {
+      weekCounter = 3;
+  } else if (fourWeeksBefore.getMonth() != dDate.getMonth()) {
+      weekCounter = 4;
+  }
+
+  if (weekCounter > 0) {
+    var sSubst = 'jeden %{number}. %{weekday} im Monat'.replace('%{number}', weekCounter).replace('%{weekday}', sWeekDay);
+    $("select#event_period > option[value*='CountedWeekdayOfMonth']").text(sSubst).show();
+  } else {
+      $("select#event_period > option[value*='CountedWeekdayOfMonth']").hide();
+  }
+
+  if (oneWeekAfter.getMonth() != dDate.getMonth()) {
+    sSubst = "jeden letzten %{weekday} im Monat";
+    sSubst = sSubst.replace("%{weekday}", sWeekDay);
+    $("select#event_period > option[value*='LastWeekdayOfMonth']").text(sSubst).show();
+  } else {
+    $("select#event_period > option[value*='LastWeekdayOfMonth']").hide();
+  }
+}
+
 $('#edit_event_dialog').html('<%= escape_javascript(render(partial: 'form', :locals => {:remote => true}))%>');
 $('input.date-time-entry').datetimeEntry({datetimeFormat: 'D.O.Y - H:M'})
 $('#edit_event_dialog').dialog({
@@ -8,3 +80,9 @@ $('#edit_event_dialog').dialog({
         $('#edit_event_dialog').dialog('destroy');
     }
   });
+$("select#event_period > option[value*='WeekdayOfMonth']").hide();
+CalcWeekday4Repetition();
+
+$("#event_starttime").change( function(){
+  CalcWeekday4Repetition();
+})
