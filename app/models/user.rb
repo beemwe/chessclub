@@ -7,15 +7,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   #  Include Paperclip
-  include Paperclip::Glue
+  has_attached_file :avatar, styles: { medium: '300x300>', thumb: '100x100>' }
 
   # Setup accessible (or protected) attributes for your model
+  attr_accessor :login
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
   attr_accessible :last_name, :first_name, :birth_date, :member_since, :dwz, :title, :dsb_id,
-                  :avatar, :retained_avatar, :remove_avatar, :address, :zip, :location,
-                  :phone, :mobile, :gender, :status
-  attr_accessor :login
-  attr_accessible :login
+                  :avatar, :address, :zip, :location, :phone, :mobile, :gender, :status,
+                  :login
 
   has_many :blog_articles, :foreign_key => 'author_id'
   has_many :teams, :foreign_key => 'leader_id'
@@ -23,8 +22,6 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
 
   validates_presence_of :last_name, :first_name, :username, :gender
-
-  has_attached_file :avatar, styles: { medium: '300x300>', thumb: '100x100>' }
 
   before_save :set_roles
 

@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 gem 'unicorn'
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
 gem 'less-rails'
@@ -35,7 +33,6 @@ gem 'cocoon', '>=1.1'
 gem 'devise'
 gem 'cancan'
 gem 'rolify'
-gem 'dragonfly'
 gem 'nokogiri'
 gem 'kaminari'
 gem 'transitions', :require => ['transitions', 'active_record/transitions']

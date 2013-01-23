@@ -6,12 +6,7 @@
       - if @user.id == current_user.id
         = f.input :password
         = f.input :password_confirmation
-      = f.input :avatar do
-        =# f.file_field :avatar
-        =# f.hidden_field :retained_avatar
-        =# image_tag @user.avatar.thumb('100x100').url, :style => "float:left;" if @user.avatar_uid
-        =# f.label :remove_avatar, 'Löschen', :style => "float:left;margin-left: 10px;" if @user.avatar_uid
-        =# f.check_box :remove_avatar, :style => "float:left;margin-left: 5px;" if @user.avatar_uid
+      = f.input :avatar, :as => :avatar
     = field_set_tag "Persönliche Informationen", :class => 'span6' do
       = f.input :last_name
       = f.input :first_name
@@ -21,7 +16,7 @@
       = f.input :location, :label => 'PLZ Ort' do
         .row-fluid
           = f.text_field :zip, :class => 'span3', :style => 'float:left;'
-          = f.text_field :location, :class => 'span9'
+          = f.text_field :location, :class => 'span9', :style => 'vertical-align: top;'
       = f.input :phone, :as => :tel
       = f.input :mobile, :as => :tel
 

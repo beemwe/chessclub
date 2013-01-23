@@ -3,6 +3,7 @@
   %h1=@user.first_last_name
 .row
   %div.span3
+    = image_tag @user.avatar.url(:medium)
   %div.span6
     %div.row
       %div.span3

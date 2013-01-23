@@ -65,5 +65,16 @@ Schachclub::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = {:host => 'schach.walterdl.de'}
+  config.action_mailer.default_url_options = {:host => 'tusffb-schach.de'}
+
+  # Configure the ActionMailer
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "webserver.tusffb-schach.de",
+    :port                 => 25,
+    :user_name            => 'bernd.m.walter@tusffb-schach.de',
+    :password             => 'hefnihit',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true  }
+
 end

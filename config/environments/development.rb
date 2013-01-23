@@ -36,4 +36,15 @@ Schachclub::Application.configure do
   config.assets.debug = false
   # Devise want's that:
   config.action_mailer.default_url_options = {:host => 'tusffbschach.hopto.org'}
+
+  # Configure the ActionMailer
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "webserver.tusffb-schach.de",
+    :port                 => 25,
+    :user_name            => 'bernd.m.walter@tusffb-schach.de',
+    :password             => 'hefnihit',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true  }
+
 end
