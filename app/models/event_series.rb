@@ -18,8 +18,8 @@ class EventSeries < ActiveRecord::Base
     while st.to_f <= stop_time.to_f
       # generate the child event
       the_title =  category == "birthday" ? "#{title} (#{nst.year - starttime.year})" : title
-      self.events.create(:title => the_title, :category => category, :description => description, :all_day => all_day, :starttime => st, :endtime => et)
-
+      self.events.create(title: the_title, category: category, place: place, description: description,
+                         all_day: all_day, starttime: st, endtime: et)
       counter += 1
 
       # calculate the next event's start and end time
@@ -101,42 +101,4 @@ class EventSeries < ActiveRecord::Base
     return result
   end
 
-  def original_create_events_until(end_time = END_TIME)
-    st = starttime
-    et = endtime
-    p = r_period(period)
-    nst, net = st, et
-
-    puts "Start: #{st}, Ende: #{et}"
-
-    while frequency.send(p).from_now(st) <= end_time
-      the_title =  category == "birthday" ? "#{title} (#{nst.year - starttime.year})" : title
-      self.events.create(:title => the_title, :category => category, :description => description, :all_day => all_day, :starttime => nst, :endtime => net)
-      nst = st = frequency.send(p).from_now(st)
-      net = et = frequency.send(p).from_now(et)
-
-      if period.downcase == 'monthly' or period.downcase == 'yearly'
-        begin
-          nst = DateTime.parse("#{starttime.hour}:#{starttime.min}:#{starttime.sec}, #{starttime.day}-#{st.month}-#{st.year}")
-          net = DateTime.parse("#{endtime.hour}:#{endtime.min}:#{endtime.sec}, #{endtime.day}-#{et.month}-#{et.year}")
-        rescue
-          nst = net = nil
-        end
-      end
-    end
-  end
-
-  def r_period(period)
-    case period
-      when 'Daily'
-      p = 'days'
-      when 'Weekly'
-      p = 'weeks'
-      when 'Monthly'
-      p = 'months'
-      when 'Yearly'
-      p = 'years'
-    end
-    return p
-  end
 end
