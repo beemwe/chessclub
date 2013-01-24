@@ -26,7 +26,7 @@ de:
       send_instructions: 'Du erhältst in wenigen Minuten eine E-Mail mit der Anleitung, wie Du Dein Passwort zurücksetzen kannst.'
       updated: 'Dein Passwort wurde geändert. Du bist jetzt angemeldet.'
       updated_not_active: 'Dein Passwort wurde geändert.'
-      send_paranoid_instructions: "Falls Deine E-Mail-Adresse in unserer Datenbank existiert erhältst Du in wenigen Minuten eine E-Mail mit der Anleitung, wie Du Dein Passwort zurücksetzen können."
+      send_paranoid_instructions: "Falls Deine E-Mail-Adresse in unserer Datenbank existiert erhältst Du in wenigen Minuten eine E-Mail mit der Anleitung, wie Du Dein Passwort zurücksetzen kannst."
     confirmations:
       send_instructions: 'Du erhältst in wenigen Minuten eine E-Mail, mit der Du Deine Registrierung bestätigen kannst.'
       send_paranoid_instructions: 'Falls Deine E-Mail-Adresse in unserer Datenbank existiert erhältst Du in wenigen Minuten eine E-Mail mit der Du Deine Registrierung bestätigen kannst.'
@@ -54,12 +54,12 @@ de:
         content: 'Du kannst Dein Registrierung mit einem Klick auf den nachfolgenden Link bestätigen:'
         link: 'Bitte Registrierung bestätigen'
       reset_password_instructions:
-        subject: 'Anleitung um Dein Passwort zurückzusetzen'
+        subject: 'Anleitung zum Zurücksetzen Deines Passworts'
         salutation: "Hallo %{user},"
-        intro: 'Für Deinen Zugang auf unserer Webseite wurde die Änderung Deines Passworts angefordert. Mit dem Klick auf den nachfolgenden Link wirst Du auf unsere Seite weitergeleitet, um Dein Passowrt dort zu ändern:'
+        intro: 'Für Deinen Zugang auf unserer Webseite wurde die Änderung Deines Passworts angefordert. Mit dem Klick auf den nachfolgenden Link wirst Du auf unsere Seite weitergeleitet, auf der Dein Passwort geändert werden kann:'
         link: 'Weiterleitung zur Webseteite'
-        ignore: 'Wenn Du die Änderung NICHT selbst veranlasst hast, ignoriere bitte diese Mail.'
-        change_info: 'Dein bisheriges Passwort bleibt solange unverändert, bis Du den obigen Link klickst und ein neues Passwort vergibst.'
+        ignore: 'Wenn Du die Änderung NICHT selbst veranlasst hast, ignoriere bitte diese Mail. Es hat sich dann wohl jemand anderes einen schlechten Scherz erlaubt.'
+        change_info: 'Dein bisheriges Passwort bleibt solange unverändert, bis Du den obigen Link klickst UND innerhalb von 6 Stunden ein neues Passwort vergibst. '
       unlock_instructions:
         subject: 'Anleitung um Deinen Account freizuschalten'
         salutation: 'Hallo %{user},'
