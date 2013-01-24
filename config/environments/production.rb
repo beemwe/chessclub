@@ -75,7 +75,6 @@ Schachclub::Application.configure do
     :user_name            => 'webserver@tusffb-schach.de',
     :password             => 'KZ9zHxpZqHjHNL2D',
     :authentication       => 'plain',
-    :openssl_verify_mode => 'none',
-    :enable_starttls_auto => true  }
+    :enable_starttls_auto => false  }
 
 end
