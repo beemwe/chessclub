@@ -35,7 +35,7 @@ Schachclub::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = false
   # Devise want's that:
-  config.action_mailer.default_url_options = {:host => 'tusffbschach.hopto.org'}
+  config.action_mailer.default_url_options = {:host => 'www.tusffb-schach.de'}
 
   # Configure the ActionMailer
   config.action_mailer.delivery_method = :smtp
