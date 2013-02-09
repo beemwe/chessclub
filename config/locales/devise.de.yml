@@ -59,6 +59,7 @@ de:
         intro: 'Für Deinen Zugang auf unserer Webseite wurde die Änderung Deines Passworts angefordert. Mit dem Klick auf den nachfolgenden Link wirst Du auf unsere Seite weitergeleitet, auf der Dein Passwort geändert werden kann:'
         link: 'Weiterleitung zur Webseteite'
         ignore: 'Wenn Du die Änderung NICHT selbst veranlasst hast, ignoriere bitte diese Mail. Es hat sich dann wohl jemand anderes einen schlechten Scherz erlaubt.'
+        closure: 'Wichtiger Hinweis:'
         change_info: 'Dein bisheriges Passwort bleibt solange unverändert, bis Du den obigen Link klickst UND innerhalb von 6 Stunden ein neues Passwort vergibst. '
       unlock_instructions:
         subject: 'Anleitung um Deinen Account freizuschalten'
