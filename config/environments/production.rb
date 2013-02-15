@@ -70,11 +70,14 @@ Schachclub::Application.configure do
   # Configure the ActionMailer
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "localhost.localdomain",
+    :address              => "webserver.tusffb-schach.de",
     :port                 => 25,
+    :domain               => "tusffb-schach.de",
     :user_name            => 'webserver@tusffb-schach.de',
     :password             => 'KZ9zHxpZqHjHNL2D',
     :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+    :enable_starttls_auto => true,
+    :openssl_verify_mode  => 'none'
+  }
 
 end
