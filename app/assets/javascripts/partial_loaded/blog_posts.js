@@ -455,13 +455,11 @@ $(window).bind('mercury:ready', function() {
     var link = $('#edit_link');
     Mercury.saveUrl = link.data('save-url');
     Mercury.redirectUrl = link.data('redirect-url');
-    // alert(Mercury.saveUrl);
     link.hide();
 });
 
 $(window).bind('mercury:saved', function() {
     var loc;
     loc = Mercury.redirectUrl
-    // alert("redirect!");
     window.location = loc
 });

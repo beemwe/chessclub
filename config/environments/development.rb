@@ -42,9 +42,12 @@ Schachclub::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "webserver.tusffb-schach.de",
     :port                 => 25,
+    :domain               => "tusffb-schach.de",
     :user_name            => 'bernd.m.walter@tusffb-schach.de',
     :password             => 'hefnihit',
     :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+    :enable_starttls_auto => true,
+    :openssl_verify_mode  => 'none'
+  }
 
 end
