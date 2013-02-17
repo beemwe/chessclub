@@ -73,8 +73,8 @@ Schachclub::Application.configure do
     :address              => "webserver.tusffb-schach.de",
     :port                 => 25,
     :domain               => "tusffb-schach.de",
-    :user_name            => 'webserver@tusffb-schach.de',
-    :password             => 'KZ9zHxpZqHjHNL2D',
+    :user_name            => 'bernd.m.walter@tusffb-schach.de',
+    :password             => 'hefnihit',
     :authentication       => 'plain',
     :enable_starttls_auto => true,
     :openssl_verify_mode  => 'none'

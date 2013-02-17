@@ -12,7 +12,7 @@ de:
         email: Email
         password: Passwort
         password_confirmation: Passwortbestätigung
-        remember_me: Daten speichern
+        remember_me: Angemeldet bleiben
         birth_date: Geburtsdatum
         member_since: Mitglied seit
         dwz: aktuelle DWZ

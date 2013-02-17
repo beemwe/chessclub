@@ -68,8 +68,9 @@
                     = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :remote => true, :format => :json, :html => {:class => 'navbar-form pull-right'}) do |f|
                       = f.input :login, :style=>"margin-bottom: 15px;", :placeholder=>"Benutzername oder E-Mail"
                       = f.input :password, :as => :password, :style => "margin-bottom: 15px;", :placeholder => "Kennwort"
-                      = f.input :remember_me, :as => :boolean, :label => 'Angemeldet bleiben'
+                      = f.input :remember_me, :as => :bool, :label => false
                       = f.button :submit, 'Anmelden', :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
+                    = link_to t('devise.actions.forgot_password'), new_password_path(resource_name)
             - else
               = render :partial => 'devise/shared/user_menu'
           / /.nav-collapse
