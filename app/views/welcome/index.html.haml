@@ -20,7 +20,7 @@
           %li Jugend-/Fortgeschrittenentraining, jeden Freitag, von 15:00 - 18:00 Uhr
           %li
             weitere Veranstaltungen, Ligakämpfe etc. findest Du im
-            %strong=link_to 'Terminkalender', kalender_path
+            %strong=link_to 'Kalender', kalender_path
         im Vereinsheim des TuS Fürstenfeldbruck,
         %br
         Auf der Lände 2, 82256 Fürstenfeldbruck
@@ -43,11 +43,11 @@
   %div.row{style: 'margin-top:15px;padding-top:15px;border-top:2px solid #ccc;'}
     - (0..3).each do |i|
       %div.span3
-        - if @blogposts.size >= i.to_i
+        - if @blogposts.size >= i.to_i && @blogposts[i].present?
           %h4
             = @blogposts[i].title
             %br
             %small{:style => 'font-size: 12px;color: black;'}= "von #{@blogposts[i].author.first_last_name} im #{l @blogposts[i].created_at, :format => '%B %Y'}"
           %p= @blogposts[i].subtitle
-          %p= link_to "weiterlesen...", blog_post_path(@blogposts[i]), :class => 'btn btn-mini'
+          %p= link_to '<i class="icon-book"></i> weiterlesen...'.html_safe, blog_post_path(@blogposts[i]), :class => 'btn btn-mini'
 

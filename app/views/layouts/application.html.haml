@@ -35,11 +35,11 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to 'TuS FFB::Abt. Schach', root_path, class: 'brand'
+          = link_to '<i class="icon-home"></i> TuS FFB::Abt. Schach'.html_safe, root_path, class: 'brand'
           .container.nav-collapse
             %ul.nav
               %li.dropdown
-                = link_to raw('Spielbetrieb<b class="caret"></b>'), "#", {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                = link_to raw('<i class="icon-flag"></i> Spielbetrieb<b class="caret"></b>'), "#", {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
                 %ul.dropdown-menu
                   - Tournament.actives.each do |t|
                     %li= link_to t.title, tournament_path(t.id)
@@ -49,7 +49,7 @@
                       - Tournament.archive.each do |t|
                         %li= link_to t.title, tournament_path(t.id)
               %li.dropdown
-                = link_to raw('Mannschaften<b class="caret"></b>'), "#", {class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                = link_to raw('<i class="icon-group"></i> Mannschaften<b class="caret"></b>').html_safe, "#", {class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
                 %ul.dropdown-menu
                   - Team.actives.each do |t|
                     %li= link_to t.name, team_path(t.id)
@@ -59,7 +59,7 @@
                       %ul.dropdown-menu
                         - Team.archive.each do |t_archived|
                           %li= link_to t_archived.name, team_path(t_archived.id)
-              %li= link_to "Kalender", "/kalender"
+              %li= link_to '<i class="icon-calendar"></i> Kalender'.html_safe, '/kalender'
             - if !user_signed_in?
               %ul#login-area.nav.pull-right
                 %li.dropdown
@@ -69,7 +69,8 @@
                       = f.input :login, :style=>"margin-bottom: 15px;", :placeholder=>"Benutzername oder E-Mail"
                       = f.input :password, :as => :password, :style => "margin-bottom: 15px;", :placeholder => "Kennwort"
                       = f.input :remember_me, :as => :bool, :label => false
-                      = f.button :submit, 'Anmelden', :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
+                      =# f.button :submit, '<i class="icon-book"></i> Anmelden'.html_safe, :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
+                      = button_tag '<i class="icon-signin"></i> Anmelden'.html_safe, :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
                     = link_to t('devise.actions.forgot_password'), new_password_path(resource_name)
             - else
               = render :partial => 'devise/shared/user_menu'

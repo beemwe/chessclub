@@ -15,8 +15,8 @@
         %td= l blogpost.published_at unless blogpost.published_at.blank?
         %td= blogpost.author.first_last_name
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), 'editor' + blog_post_path(blogpost), :class => 'btn btn-mini'
-          = link_to t('.publish'), publish_blog_post_path(blogpost), :class => 'btn btn-mini' if blogpost.published_at.blank? && (current_user.role?(:administrator) || (current_user.role?(:author) && blogpost.author_id != current_user.id))
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), blog_post_path(blogpost), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
+          = link_to "<i class=\"icon-edit\"></i> #{t('.edit', :default => t("helpers.links.edit"))}".html_safe, 'editor' + blog_post_path(blogpost), :class => 'btn btn-mini'
+          = link_to "<i class=\"icon-bullhorn\"></i> #{t('.publish')}".html_safe, publish_blog_post_path(blogpost), :class => 'btn btn-mini' if blogpost.published_at.blank? && (current_user.role?(:administrator) || (current_user.role?(:author) && blogpost.author_id != current_user.id))
+          = link_to "<i class=\"icon-trash\"></i> #{t('.destroy', :default => t("helpers.links.destroy"))}".html_safe, blog_post_path(blogpost), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
 
-= link_to t('.new', :default => t("helpers.links.new")), 'editor' + new_blog_post_path, :class => 'btn btn-primary'
+= link_to "<i class=\"icon-file\"></i> #{t('.new', :default => t("helpers.links.new"))}".html_safe, 'editor' + new_blog_post_path, :class => 'btn btn-primary'
