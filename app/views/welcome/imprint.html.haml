@@ -1,34 +1,47 @@
 .page-header
   %h1 Impressum
 %h3 Angaben gemäß § 5 TMG:
-%h4 postalische Adresse
-%p
-  TuS Fürstenfeldbruck
-  %br
-  = '- Abteilung Schach -'
-  %br
-  Klosterstraße 5
-  %br
-  82256 Fürstenfeldbruck
-  %br
-  %br
-  Amtsgericht Fürstenfeldbruck: Vereinsregisternummer VR 40113
-  %br
-  Steuernummer: 117/111/10269
-%h4 Telekommunikation
-%p
-  Tel.: +49 (8141) 264 61
-  %br
-  Fax:  +49 (8141) 290 984
-  %br
-  E-Mail:
-  =link_to 'info(at)tus-ffb.de', 'mail:info@tus-ffb.de'
-%h4 Verantwortlich für jornalistische und redaktionelle Inhalte:
-%p
-  Helmut Becker (Abteilungsleiter Schach)
-  %br
-  Hans-Bierling-Str 79
-  %br
-  82275 Emmering
+%div.row
+  %div.span5
+    %h4 postalische Adresse
+    %p
+      TuS Fürstenfeldbruck
+      %br
+      = '- Abteilung Schach -'
+      %br
+      Klosterstraße 5
+      %br
+      82256 Fürstenfeldbruck
+      %br
+      %br
+      Amtsgericht Fürstenfeldbruck: Vereinsregisternummer VR 40113
+      %br
+      Steuernummer: 117/111/10269
+  %div.span3
+    %h4 Telekommunikation
+    %p
+      Tel.: +49 (8141) 264 61
+      %br
+      Fax:  +49 (8141) 290 984
+      %br
+      E-Mail:
+      =link_to 'info(at)tus-ffb.de', 'mail:info@tus-ffb.de'
+  %div.span4
+    %h4 Verantwortlich für jornalistische und redaktionelle Inhalte:
+    %p
+      Helmut Becker (Abteilungsleiter Schach)
+      %br
+      Hans-Bierling-Str 79
+      %br
+      82275 Emmering
 
 %h3 Kontakt
+%div.row
+  %div.span4
+    %h4 Abteilungsleiter
+    - boss = User.find_by
+    = boss.first_last_name
+  %div.span4
+    %h4 stellv. Abteilungsleiter
+  %div.span4
+    %h4 Jugendleiter

@@ -1,0 +1,6 @@
+%div.row{:class => 'subformset nested-fields'}
+  %div.span4= f.input :first_name, label: false
+  %div.span4= f.input :last_name, label: false
+  %div.span1= f.input :fide_title, label: false
+  %div.span1= f.input :dwz, label: false
+  %div.span2= link_to_remove_association '<i class="icon-trash"></i> entfernen'.html_safe, f, :class => 'btn'

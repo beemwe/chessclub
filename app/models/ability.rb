@@ -6,14 +6,22 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    if user.role? :administrator
+    if user.has_role? :administrator
       can :manage, :all
-    elsif user.role? :autor
-      can :manage, BlogPost
-    elsif user.role? :spielleiter
+    end
+
+    if user.has_role? :autor
+      can :manage, BlogPost, :author_id => user.id
+    else
+      can :read, BlogPost
+    end
+
+    if user.has_role? :spielleiter
       can :manage, Tournament
-    elsif user.role? :mannschaftsführer
-      can :manage, User
+    end
+
+    if user.has_role? :mannschaftsführer
+
     end
   end
 end

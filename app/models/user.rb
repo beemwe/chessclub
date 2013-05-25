@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class User < ActiveRecord::Base
+  rolify
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -10,11 +11,11 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: '300x300>', thumb: '100x100>' }
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessor :login
-  attr_accessible :username, :email, :password, :password_confirmation, :remember_me
-  attr_accessible :last_name, :first_name, :birth_date, :member_since, :dwz, :title, :dsb_id,
-                  :avatar, :address, :zip, :location, :phone, :mobile, :gender, :status,
-                  :login
+                  attr_accessor :login
+                  attr_accessible :username, :email, :password, :password_confirmation, :remember_me
+                  attr_accessible :last_name, :first_name, :birth_date, :member_since, :dwz, :title, :dsb_id,
+                                  :avatar, :address, :zip, :location, :phone, :mobile, :gender, :status,
+                                  :login, :role_ids
 
   has_many :blog_articles, :foreign_key => 'author_id'
   has_many :teams, :foreign_key => 'leader_id'
@@ -91,6 +92,15 @@ class User < ActiveRecord::Base
       self.roles << Role.find_by_name('Spieler') unless self.role? :spieler
     else
       self.roles.delete(Role.find_by_name('Spieler')) if self.role? :spieler
+    end
+  end
+
+  def self.find_by_role(role)
+    r = Role.find_by_name role
+    if r.present?
+      result = User.where
+    else
+      result = nil
     end
   end
 

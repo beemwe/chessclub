@@ -7,13 +7,13 @@ class EventsController < ApplicationController
     if cannot? :manage, Event
       respond_to do |format|
         format.js { render :new do |page|
-          page << "$('#calendar').fullCalendar( 'refetchEvents' )"
+          page << '$(\'#calendar\').fullCalendar( \'refetchEvents\' )'
         end }
         format.html { redirect_to :action => :index }
       end
     else
       startDate = Time.now.beginning_of_hour
-      @event = Event.new(:owner_id => current_user.id, :starttime => startDate, :endtime => 1.hour.since(startDate), :period => "Does not repeat")
+      @event = Event.new(:owner_id => current_user.id, :starttime => startDate, :endtime => 1.hour.since(startDate), :period => 'Does not repeat')
       @event.starttime = Time.parse(params[:start_time][0,21]) if params[:start_time]
       @event.endtime = Time.parse(params[:end_time][0,21]) if params[:end_time]
       @event.all_day = params[:all_day] if params[:all_day]
@@ -26,7 +26,7 @@ class EventsController < ApplicationController
 
   def create
     success = false
-    if params[:event][:period] == "Does not repeat"
+    if params[:event][:period] == 'Does not repeat'
       @event = Event.new(params[:event])
       success = @event.save
     else
@@ -62,7 +62,7 @@ class EventsController < ApplicationController
     events = []
     @events.each do |event|
       the_cat = event.category.present? ? event.category : 'none'
-      events << {:id => event.id, :title => event.title, :category => the_cat, :place => event.place, :description => event.description || "Some cool description here...", :start => "#{event.starttime.iso8601}", :end => "#{event.endtime.iso8601}", :allDay => event.all_day, :recurring => (event.event_series_id)? true: false}
+      events << {:id => event.id, :title => event.title, :category => the_cat, :place => event.place, :description => event.description || 'Some cool description here...', :start => "#{event.starttime.iso8601}", :end => "#{event.endtime.iso8601}", :allDay => event.all_day, :recurring => (event.event_series_id)? true: false}
     end
     render :text => events.to_json
   end

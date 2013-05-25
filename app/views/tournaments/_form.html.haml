@@ -1,8 +1,21 @@
-= simple_form_for @tournament, :html => { :class => 'form-horizontal' } do |f|
+= simple_form_for @tournament, :html => { :class => 'form-vertical' } do |f|
   = f.input :title
   = f.input :modus, :as => :select, :collection => Tournament::MODI
   = f.input :rounds, :as => :integer
   = f.input :referee
+
+  = field_set_tag "Teilnehmer #{link_to_add_association('hinzufügen', f, :tournament_players, {id: 'add-subform', class: 'btn', 'data-association-insertion-node' => '#players', 'data-association-insertion-method' => :append })}".html_safe do
+    %div.row
+      %div.span4 Vorname
+      %div.span4 Name
+      %div.span1 Titel
+      %div.span1 DWZ
+      %div.span2= ''
+    #players
+      = f.simple_fields_for :tournament_players, html: {class: 'subform_set'} do |tournament_player|
+        = render 'tournament_player_fields', f: tournament_player
+
+
   .form-actions
     = f.button :submit, :class => 'btn btn-primary'
     = link_to t('helpers.submit.cancel'), :back, :class => 'btn'

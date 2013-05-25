@@ -1,15 +1,19 @@
 !!! 5
-%html{:lang => "de"}
+%html{lang: 'de'}
   %head
-    %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}/
-    %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    %title= content_for?(:title) ? (yield(:title).to_s[0..16] == 'TuS FFB :: Schach' ? yield(:title) : "TuS FFB :: Schach :: #{yield(:title)}") : 'TuS FFB :: Schach'
+    %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}/
+    %meta{:content => 'IE=Edge,chrome=1', 'http-equiv' => 'X-UA-Compatible'}/
+    %meta{:content => 'width=device-width, initial-scale=1.0', :name => 'viewport'}/
+    %title
+      - if yield(:title).to_s[0..16] == 'TuS FFB :: Schach'
+        = "TuS FFB :: Schach :: #{yield(:title)}"
+      - else
+        = 'TuS FFB :: Schach'
     = csrf_meta_tag
     / Le HTML5 shim, for IE6-8 support of HTML elements
     /[if lt IE 9]
-      %script{:src=>"http://html5shim.googlecode.com/svn/trunk/html5.js", :type=>"text/javascript"}
-    = stylesheet_link_tag "application", :media => "all"
+      %script{:src=>'http://html5shim.googlecode.com/svn/trunk/html5.js', :type=>'text/javascript'}
+    = stylesheet_link_tag 'application', :media => 'all'
     / For third-generation iPad with high-resolution Retina display:
     / Size should be 144 x 144 pixels
     = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
@@ -25,13 +29,13 @@
     / For all other devices
     / Size should be 32 x 32 pixels
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
-    = javascript_include_tag "application"#, :debug => true
+    = javascript_include_tag 'application' #, :debug => true
     = javascript_include_tag "partial_loaded/#{params[:controller]}" # if File.exists?("#{Rails.root}/app/assets/javascripts/partial_loaded/#{params[:controller]}")
   %body
     .navbar.navbar-fixed-top
       .navbar-inner
         .container-fluid
-          %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+          %a.btn.btn-navbar{'data-target' => '.nav-collapse', 'data-toggle' => 'collapse'}
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
@@ -39,17 +43,17 @@
           .container.nav-collapse
             %ul.nav
               %li.dropdown
-                = link_to raw('<i class="icon-flag"></i> Spielbetrieb<b class="caret"></b>'), "#", {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                = link_to raw('<i class="icon-flag"></i> Spielbetrieb<b class="caret"></b>'), '#', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
                 %ul.dropdown-menu
                   - Tournament.actives.each do |t|
                     %li= link_to t.title, tournament_path(t.id)
                   %li.dropdown
-                    = link_to raw('Archiv <i class="icon-arrow-right"></i>'), "#"
+                    = link_to raw('Archiv <i class="icon-arrow-right"></i>'), '#'
                     %ul{:class => 'dropdown-menu sub-menu'}
                       - Tournament.archive.each do |t|
                         %li= link_to t.title, tournament_path(t.id)
               %li.dropdown
-                = link_to raw('<i class="icon-group"></i> Mannschaften<b class="caret"></b>').html_safe, "#", {class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                = link_to raw('<i class="icon-group"></i> Mannschaften<b class="caret"></b>').html_safe, '#', {class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
                 %ul.dropdown-menu
                   - Team.actives.each do |t|
                     %li= link_to t.name, team_path(t.id)
@@ -63,11 +67,11 @@
             - if !user_signed_in?
               %ul#login-area.nav.pull-right
                 %li.dropdown
-                  = link_to "Anmelden<b class=\"caret\"></b>".html_safe, '#', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
-                  %div.dropdown-menu{style: "padding: 15px; padding-bottom: 0px;"}
+                  = link_to 'Anmelden<b class=\"caret\"></b>'.html_safe, '#', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                  %div.dropdown-menu{style: 'padding: 15px; padding-bottom: 0px;'}
                     = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :remote => true, :format => :json, :html => {:class => 'navbar-form pull-right'}) do |f|
-                      = f.input :login, :style=>"margin-bottom: 15px;", :placeholder=>"Benutzername oder E-Mail"
-                      = f.input :password, :as => :password, :style => "margin-bottom: 15px;", :placeholder => "Kennwort"
+                      = f.input :login, :style=>'margin-bottom: 15px;', :placeholder=>'Benutzername oder E-Mail'
+                      = f.input :password, :as => :password, :style => 'margin-bottom: 15px;', :placeholder => 'Kennwort'
                       = f.input :remember_me, :as => :bool, :label => false
                       =# f.button :submit, '<i class="icon-book"></i> Anmelden'.html_safe, :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
                       = button_tag '<i class="icon-signin"></i> Anmelden'.html_safe, :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'

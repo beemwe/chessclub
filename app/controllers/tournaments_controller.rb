@@ -1,6 +1,6 @@
 class TournamentsController < ApplicationController
-  before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create]
-  load_and_authorize_resource :only => [:new, :create, :destroy,:edit,:update]
+  before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create, :start]
+  load_and_authorize_resource :only => [:new, :create, :destroy,:edit,:update, :start]
 
   def index
     @tournaments = Tournament.all
@@ -21,6 +21,11 @@ class TournamentsController < ApplicationController
     end
   end
 
+  def start
+    @tournament.run!
+    redirect_to action: :edit
+  end
+
   def new
     respond_to do |format|
       format.json { render :json => @tournament }
@@ -30,11 +35,19 @@ class TournamentsController < ApplicationController
   end
 
   def edit
+    if @tournament.state == 'running'
+      @players = @tournament.tournament_players.map{|p| [p.id, "#{p.first_name} #{p.last_name}"]}
+    end
     respond_to do |format|
       format.json { render :json => @tournament }
       format.xml  { render :xml => @tournament }
       format.html
-    end
+  end
+
+  def edit_result
+    @tournament = Tournament.find params[:id]
+  end
+
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:json, :xml, :html)
   end

@@ -34,6 +34,15 @@ jQuery ->
       })
   )
 
+  $(document).bind('keyup', 'alt+a', () ->
+    $('.add_fields')[0].click()
+  )
+
+  $('#players').bind('cocoon:after-insert', (e, insert_item) ->
+    insert_item.find('input')[0].focus()
+  )
+  return
+
 $(document).ajaxError( (event, request) ->
   msg = request.getResponseHeader('X-Message')
   if msg

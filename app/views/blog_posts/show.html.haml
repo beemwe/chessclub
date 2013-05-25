@@ -12,12 +12,13 @@
   - else
     = '(am ' + l(@blog_post.published_at, :format => :long) + ' veröffentlicht)'
 
-%div#comment-area.span6
-  %h4 Kommentare zu diesem Artikel
-  = comments_for @blog_post
-%div#images-area.span6
-  %h4 weitere Bilder zu diesem Artikel
-%div{:style => 'clear:both;'}
+
+%div.row
+  %div#comment-area.span6
+    %h4 Kommentare zu diesem Artikel
+    = comments_for @blog_post
+  %div#images-area.span6
+    %h4 weitere Bilder zu diesem Artikel
 
 .form-actions
   = link_to t('.back', :default => t('helpers.links.back')), :back, :class => 'btn'
