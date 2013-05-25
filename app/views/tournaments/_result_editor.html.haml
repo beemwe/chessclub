@@ -1,0 +1,30 @@
+%table{id: 'tournament-table', 'data-tournament_id' => @tournament.id}
+  %tr
+    %td{style: 'width: 150px;'} &nbsp;
+    - @tournament.tournament_players.each do |player|
+      %td
+        %div.rotate270= "#{player.first_name} #{player.last_name}"
+    %td{style: 'vertical-align: bottom;'} Punkte
+    %td{style: 'vertical-align: bottom;'} Platz
+  - @tournament.tournament_players.each_with_index do |player, idx1|
+    %tr
+      %td= "#{player.first_name} #{player.last_name}"
+      - @players.each_with_index do |combatand, idx2|
+        %td.game-result{style: "background-color: #{idx1 == idx2 ? '#888' : '#fff'}", 'data-player1-name' => @players[idx1][1], 'data-player2-name' => @players[idx2][1], 'data-player1-id' => @players[idx1][0], 'data-player2-id' => @players[idx2][0]} &nbsp;
+
+%div#result-dialog
+  %p
+    %span#white-player weiß
+    –
+    %span#black-player schwarz
+  %p
+    = link_to '1:0', '#', id: 'white-wins', class: 'btn'
+    = link_to '0:1', '#', id: 'black-wins', class: 'btn'
+    = link_to '½:½', '#', id: 'remis', class: 'btn'
+    &nbsp;
+    &nbsp;
+    = link_to '1:0 kl', '#', id: 'white-wins-combatless', class: 'btn'
+    = link_to '0:1 kl', '#', id: 'black-wins-combatless', class: 'btn'
+  %div{style: 'display:hidden'}
+    %p#white-id 0
+    %p#black-id 0

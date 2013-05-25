@@ -1,6 +1,10 @@
 class BlogPost < ActiveRecord::Base
-  belongs_to :author, class_name: "User", foreign_key: "author_id"
+  belongs_to :author, class_name: 'User', foreign_key: 'author_id'
+
+  resourcify
+
   opinio_subjectum
+
   extend FriendlyId
   friendly_id :title, :use => [:slugged, :history]
 

@@ -68,6 +68,8 @@ nbproject
 
 # RubyMine
 .idea
+mysql-connector-java*.jar
+mysql-connector-license.txt
 
 # E-texteditor
 .eprj

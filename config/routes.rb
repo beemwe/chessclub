@@ -25,7 +25,11 @@ Schachclub::Application.routes.draw do
   end
 
   resources :users
-  resources :tournaments
+  resources :tournaments do
+    member { get :start}
+    member { post :edit_result}
+  end
+
   resources :teams
   match 'teams/:id/announce_team' => 'teams#announce_team', :as => :announce_team, :method => :get
 

@@ -3,9 +3,14 @@ class Tournament < ActiveRecord::Base
   include ::Transitions
   include ActiveRecord::Transitions
 
-  attr_accessible :modus, :rounds, :state, :title, :referee
+  has_many :tournament_players, dependent: :destroy
+  accepts_nested_attributes_for :tournament_players, :reject_if => :all_blank, :allow_destroy => true
 
-  MODI = [['Vollrundensystem', 'RobinRound'], ['doppelrund. Vollsystem', 'DoubleRobinRound'], ['K.O. System', 'KoSystem'], ['Schweizer System', 'SwissSystem']]
+  attr_accessible :modus, :rounds, :state, :title, :referee, :tournament_players_attributes
+  validates_presence_of :title, :modus
+
+
+  MODI = [%w(Rutschsystem EasyRobinRound), %w(Vollrundensystem RobinRound), ['doppelrund. Vollsystem', 'DoubleRobinRound'], ['K.O. System', 'KoSystem'], ['Schweizer System', 'SwissSystem']]
 
   state_machine do
     state :in_preparation
@@ -22,18 +27,19 @@ class Tournament < ActiveRecord::Base
     event :archive do
       transitions :to => :archived, :from => [:running, :finished]
     end
+
   end
 
   def state_name
     case self.state
       when 'in_preparation'
-        result = "In Vorbereitung"
+        result = 'In Vorbereitung'
       when 'running'
-        result = "läuft"
+        result = 'läuft'
       when 'finished'
-        result = "Abgeschlossen"
+        result = 'Abgeschlossen'
       when 'archived'
-        result = "archiviert"
+        result = 'archiviert'
     end
     result
   end

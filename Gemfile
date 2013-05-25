@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
+gem 'thin'
 gem 'unicorn'
 
 gem 'mysql2'
@@ -8,6 +9,7 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'jquery-hotkeys-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,7 +25,7 @@ group :assets do
 end
 
 group :development do
-  gem "capistrano"
+  gem 'capistrano'
 end
 
 gem 'haml'
@@ -43,6 +45,8 @@ gem 'fullcalendar-rails'
 gem 'paperclip'
 gem 'friendly_id'
 gem 'opinio'
+
+gem 'better_errors'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
