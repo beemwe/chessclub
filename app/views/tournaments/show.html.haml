@@ -28,7 +28,7 @@
           %td= player[0]
           %td{style: 'text-align: right'}= player[1]
 
-- if @tournament.state == 'running'
+- if %w{running finished archived}.include? @tournament.state
   %ul#the-tabulator.nav.nav-tabs
     %li.active
       %a{href: '#current-table'} Tabelle
