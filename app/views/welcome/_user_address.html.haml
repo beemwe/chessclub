@@ -1,0 +1,21 @@
+%div.row
+  %div.span1
+    = image_tag member.avatar.url(:medium)
+  %div.span3
+    = member.first_last_name
+    - if member.address.present?
+      %br
+      = member.address
+    - if member.zip.present? && member.location.present?
+      %br
+      = "#{member.zip} #{member.location}"
+    - if member.phone.present?
+      %br
+      = "Telefon: #{member.phone}"
+    - if member.mobile.present?
+      %br
+      = "mobil: #{member.mobile}"
+    - if member.email.present?
+      %br
+      Email:
+      = mail_to member.email, nil, :replace_at => '(at)', :class => 'email'

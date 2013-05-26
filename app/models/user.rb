@@ -96,12 +96,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_role(role)
-    r = Role.find_by_name role
-    if r.present?
-      result = User.where
-    else
-      result = nil
-    end
+    User.with_role role
   end
 
   def self.get_pagination_abrevs(per_page = 10)

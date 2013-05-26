@@ -39,9 +39,13 @@
 %div.row
   %div.span4
     %h4 Abteilungsleiter
-    - boss = User.find_by
-    = boss.first_last_name
+    - member = User.with_role('Abteilungsleiter').first
+    = render 'user_address', member: member if member.present?
   %div.span4
     %h4 stellv. Abteilungsleiter
+    - member = User.with_role('stellv. Abt.-leiter').first
+    = render 'user_address', member: member if member.present?
   %div.span4
     %h4 Jugendleiter
+    - member = User.with_role('Jugendleiter').first
+    = render 'user_address', member: member if member.present?
