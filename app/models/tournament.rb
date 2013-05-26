@@ -50,4 +50,24 @@ class Tournament < ActiveRecord::Base
   def self.archive
     Tournament.where{state == 'archived'}
   end
+
+  def make_table_array
+    buffer = self.tournament_players.map{|p| [p.id, "#{p.first_name} #{p.last_name}", p.result[:points], p.result[:place]]}.sort_by{|p| -p[2]}
+    points = buffer[0][2]
+    place = 1
+    buffer.each do |p|
+      if p[2] < points
+        place += 1
+        points = p[2]
+      end
+      p[3] = place
+      player = TournamentPlayer.find p[0]
+      new_result = player.result
+      new_result[:place] = place
+      player.update_attribute :result, new_result
+    end
+
+    buffer.sort_by{|p| p[0]}
+  end
+
 end

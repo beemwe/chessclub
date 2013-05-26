@@ -1,1 +1,11 @@
-alert('Ergebnis gespeichert!');
+//alert('In Reihe <%= @row %>, Spalte <%= @col %> kommt <%= @point1 %> rein');
+$('tr[data-row=<%= @row %>] td[data-col=<%= @col %>]').first().text('<%= @point1 %>');
+$('tr[data-row=<%= @col %>] td[data-col=<%= @row %>]').first().text('<%= @point2 %>');
+$('#result-points-<%= @player1.id %>').text(<%= @player1.result[:points] %>);
+$('#result-points-<%= @player2.id %>').text(<%= @player2.result[:points] %>);
+
+<% @tournament.make_table_array.each do |player| %>
+  $('#current-place-<%= player[0] %>').text(<%= player[3] %>)
+<% end %>
+
+//$('tr[data-row=2] td[data-col=4]').first().text('3');

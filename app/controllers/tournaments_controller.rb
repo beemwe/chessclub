@@ -1,3 +1,5 @@
+# encoding : utf-8
+
 class TournamentsController < ApplicationController
   before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create, :start]
   load_and_authorize_resource :only => [:new, :create, :destroy,:edit,:update, :start]
@@ -36,7 +38,7 @@ class TournamentsController < ApplicationController
 
   def edit
     if @tournament.state == 'running'
-      @players = @tournament.tournament_players.map{|p| [p.id, "#{p.first_name} #{p.last_name}"]}
+      @players = @tournament.make_table_array
     end
     respond_to do |format|
       format.json { render :json => @tournament }
@@ -46,6 +48,38 @@ class TournamentsController < ApplicationController
 
   def edit_result
     @tournament = Tournament.find params[:id]
+    @player1 = TournamentPlayer.find params[:white]
+    @player2 = TournamentPlayer.find params[:black]
+    @row = params[:row]
+    @col = params[:col]
+    @point1 = 'x'
+    @point2 = 'x'
+    if params[:result] == '1:0'
+      @point1 = '1'
+      @point2 = '0'
+      @player1.add_game_result @player2.id, 1
+      @player2.add_game_result @player1.id, 0
+    elsif params[:result] == '0:1'
+        @point1 = '0'
+        @point2 = '1'
+        @player1.add_game_result @player2.id, 0
+        @player2.add_game_result @player1.id, 1
+    elsif params[:result] == 'remis'
+        @point1 = '½'
+        @point2 = '½'
+        @player1.add_game_result @player2.id, 0.5
+        @player2.add_game_result @player1.id, 0.5
+    elsif params[:result] == '1:0 kl'
+        @point1 = '1 kl'
+        @point2 = '0 kl'
+        @player1.add_game_result @player2.id, 1
+        @player2.add_game_result @player1.id, 0
+    elsif params[:result] == '0:1 kl'
+        @point1 = '0 kl'
+        @point2 = '1 kl'
+        @player1.add_game_result @player2.id, 0
+        @player2.add_game_result @player1.id, 1
+    end
   end
 
   rescue ActiveRecord::RecordNotFound

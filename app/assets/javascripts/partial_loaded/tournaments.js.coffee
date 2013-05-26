@@ -9,6 +9,8 @@ $ ->
     name2 = $(this).data('player2-name')
     id1 = $(this).data('player1-id')
     id2 = $(this).data('player2-id')
+    row = $(this).data('row')
+    col =  $(this).data('col')
     if name1 == name2
       return false
     $('#result-dialog').dialog({
@@ -16,31 +18,35 @@ $ ->
       modal: true,
       width: 400,
       open: (event, ui) ->
-        $('#white-player').text(name1).data('player-id', id1)
+        $('#white-player').text(name1).data('player-id', id1).data('row', row).data('col', col)
         $('#black-player').text(name2).data('player-id', id2)
     })
 
   $('#white-wins').click ->
-    edit_result('white-wins')
+    edit_result('1:0')
   $('#black-wins').click ->
-    edit_result('black-wins')
+    edit_result('0:1')
 
   $('#remis').click ->
     edit_result('remis')
 
   $('#white-wins-combatless').click ->
-    edit_result('white-wins-combatless')
+    edit_result('1:0 kl')
 
   $('#black-wins-combatless').click ->
-    edit_result('black-wins-combatless')
+    edit_result('0:1 kl')
 
 edit_result = (result_type) ->
   tournament_id = $('#tournament-table').data('tournament_id')
   id1 = $('#white-player').data('player-id')
   id2 = $('#black-player').data('player-id')
+  col = $('#white-player').data('col')
+  row = $('#white-player').data('row')
   $.post("/tournaments/" + tournament_id + "/edit_result", {
     white: id1,
     black: id2,
     result: result_type
+    row,
+    col
   })
   $('#result-dialog').dialog('destroy')

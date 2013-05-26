@@ -4,14 +4,16 @@
     - @tournament.tournament_players.each do |player|
       %td
         %div.rotate270= "#{player.first_name} #{player.last_name}"
-    %td{style: 'vertical-align: bottom;'} Punkte
-    %td{style: 'vertical-align: bottom;'} Platz
+    %td{class: 'result-points-head'} Punkte
+    %td{class: 'current-place-head'} Platz
   - @tournament.tournament_players.each_with_index do |player, idx1|
-    %tr
+    %tr{'data-row' => idx1.to_s}
       %td= "#{player.first_name} #{player.last_name}"
       - @players.each_with_index do |combatand, idx2|
-        %td.game-result{style: "background-color: #{idx1 == idx2 ? '#888' : '#fff'}", 'data-player1-name' => @players[idx1][1], 'data-player2-name' => @players[idx2][1], 'data-player1-id' => @players[idx1][0], 'data-player2-id' => @players[idx2][0]} &nbsp;
-
+        %td.game-result{style: "background-color: #{idx1 == idx2 ? '#888' : '#fff'}",'data-row' => idx1.to_s, 'data-col' => idx2.to_s, 'data-player1-name' => @players[idx1][1], 'data-player2-name' => @players[idx2][1], 'data-player1-id' => @players[idx1][0], 'data-player2-id' => @players[idx2][0]}
+          = player.result[combatand[0]].present? ? (player.result[combatand[0]] == 0.5 ? '½' : player.result[combatand[0]]) : ''
+      %td.result-points{id: "result-points-#{@players[idx1][0]}"}= @players[idx1][2]
+      %td.current-place{id: "current-place-#{@players[idx1][0]}"}= @players[idx1][3].blank? ? '' : @players[idx1][3]
 %div#result-dialog
   %p
     %span#white-player weiß
@@ -25,6 +27,3 @@
     &nbsp;
     = link_to '1:0 kl', '#', id: 'white-wins-combatless', class: 'btn'
     = link_to '0:1 kl', '#', id: 'black-wins-combatless', class: 'btn'
-  %div{style: 'display:hidden'}
-    %p#white-id 0
-    %p#black-id 0
