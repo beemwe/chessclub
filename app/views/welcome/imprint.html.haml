@@ -47,5 +47,9 @@
     = render 'user_address', member: member if member.present?
   %div.span4
     %h4 Jugendleiter
+    - member = User.with_role('Spielleiter').first
+    = render 'user_address', member: member if member.present?
+  %div.span4
+    %h4 Jugendleiter
     - member = User.with_role('Jugendleiter').first
     = render 'user_address', member: member if member.present?
