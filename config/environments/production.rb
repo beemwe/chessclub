@@ -1,6 +1,13 @@
 Schachclub::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  config.middleware.use ExceptionNotifier,
+                        :email => {
+                            email_prefix: '[Whatever] ',
+                            sender_address: '"notifier" <notifier@tusffb-schach.de>',
+                            exception_recipients: %w{bernd.m.walter@gmail.com}
+                        }
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -79,5 +86,8 @@ Schachclub::Application.configure do
     :enable_starttls_auto => true,
     :openssl_verify_mode  => 'none'
   }
+  config.action_mailer.perform_deliveriers = true
+  config.action_mailer.raise_delivery_errors = true
+
 
 end
