@@ -56,13 +56,13 @@ namespace :deploy do
 
   task :cold do
     update
-    migrate
   end
 
   task :update do
     transaction do
       update_code
     end
+    migrate
   end
 
   desc "Update the deployed code."
