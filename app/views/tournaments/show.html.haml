@@ -46,7 +46,7 @@
             %th.span2 Punkte
             %th.span2 SoBe
         %tbody
-          - @tournament.make_table_array.sort{|p| -p[2]}.each_with_index do |player, idx|
+          - @tournament.make_table_array.sort_by{|p| -p[2]}.each_with_index do |player, idx|
             %tr
               %td{style: 'text-align: right'}= idx + 1
               %td= player[1]
