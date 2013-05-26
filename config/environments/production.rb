@@ -86,11 +86,7 @@ Schachclub::Application.configure do
     :enable_starttls_auto => true,
     :openssl_verify_mode  => 'none'
   }
-<<<<<<< HEAD
   config.action_mailer.perform_deliveries = true
-=======
-  config.action_mailer.perform_deliveriers = true
->>>>>>> origin/master
   config.action_mailer.raise_delivery_errors = true
 
 
