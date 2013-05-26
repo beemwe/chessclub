@@ -1,13 +1,6 @@
 Schachclub::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  config.middleware.use ExceptionNotifier,
-                        :email => {
-                            email_prefix: '[Exception] ',
-                            sender_address: %w{"Exception Notifier" <notifier@tusffb-schach.de>},
-                            exception_recipients: %w{bernd.m.walter@gmail.com}
-                        }
-
   # Code is not reloaded between requests
   config.cache_classes = true
 

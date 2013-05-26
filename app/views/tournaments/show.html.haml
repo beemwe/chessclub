@@ -1,6 +1,10 @@
 - model_class = Tournament
 .page-header
-  %h1= @tournament.title
+  %h1
+    = @tournament.title
+    (
+    = @tournament.states
+    )
 
 %p
   %strong= model_class.human_attribute_name(:modus) + ':'

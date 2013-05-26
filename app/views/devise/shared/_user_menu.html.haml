@@ -6,5 +6,6 @@
       %li= link_to '<i class="icon-signout"></i> Abmelden'.html_safe, logout_path, :method => :delete if current_user.present?
       %li.divider
       %li= link_to '<i class="icon-user"></i> Benutzerverwaltung'.html_safe, users_path if can?(:manage, User)
+      %li= link_to '<i class="icon-trophy"></i> Turnierverwaltung'.html_safe, tournaments_path if can?(:manage, Tournament)
       %li= link_to '<i class="icon-trophy"></i> Ligaverwaltung'.html_safe, leagues_path if can?(:manage, League)
       %li= link_to '<i class="icon-book"></i> Blogverwaltung'.html_safe, blog_posts_path if can?(:manage, BlogPost)

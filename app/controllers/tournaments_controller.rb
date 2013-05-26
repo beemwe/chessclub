@@ -79,6 +79,11 @@ class TournamentsController < ApplicationController
         @point2 = '1 kl'
         @player1.add_game_result @player2.id, 0
         @player2.add_game_result @player1.id, 1
+    elsif params[:result] == '0:0'
+        @point1 = '–'
+        @point2 = '–'
+        @player1.add_game_result @player2.id, 0
+        @player2.add_game_result @player1.id, 0
     end
   end
 

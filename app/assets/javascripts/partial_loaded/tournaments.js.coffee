@@ -16,7 +16,7 @@ $ ->
     $('#result-dialog').dialog({
       title: 'Ergebnis erfassen',
       modal: true,
-      width: 400,
+      width: 450,
       open: (event, ui) ->
         $('#white-player').text(name1).data('player-id', id1).data('row', row).data('col', col)
         $('#black-player').text(name2).data('player-id', id2)
@@ -35,6 +35,9 @@ $ ->
 
   $('#black-wins-combatless').click ->
     edit_result('0:1 kl')
+
+  $('#nobody-wins').click ->
+    edit_result('0:0')
 
 edit_result = (result_type) ->
   tournament_id = $('#tournament-table').data('tournament_id')

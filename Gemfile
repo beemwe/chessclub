@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 gem 'thin'
 gem 'unicorn'
-gem 'exception_notification', :require => 'exception_notifier'
+gem 'exception_notification'
 
 gem 'mysql2'
 gem 'less-rails'
