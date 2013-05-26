@@ -3,8 +3,8 @@ Schachclub::Application.configure do
 
   config.middleware.use ExceptionNotifier,
                         :email => {
-                            email_prefix: '[Whatever] ',
-                            sender_address: '"notifier" <notifier@tusffb-schach.de>',
+                            email_prefix: '[Exception] ',
+                            sender_address: %w{"Exception Notifier" <notifier@tusffb-schach.de>},
                             exception_recipients: %w{bernd.m.walter@gmail.com}
                         }
 
