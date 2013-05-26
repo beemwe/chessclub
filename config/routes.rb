@@ -27,6 +27,8 @@ Schachclub::Application.routes.draw do
   resources :users
   resources :tournaments do
     member { get :start}
+    member { get :finish}
+    member { get :archive}
     member { post :edit_result}
   end
 

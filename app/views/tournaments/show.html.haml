@@ -2,28 +2,81 @@
 .page-header
   %h1
     = @tournament.title
-    (
-    = @tournament.states
-    )
+    = "(#{@tournament.state_name})" if @tournament.state != 'archived'
 
-%p
-  %strong= model_class.human_attribute_name(:modus) + ':'
-  %br
-  = @tournament.modus
-%p
-  %strong= model_class.human_attribute_name(:rounds) + ':'
-  %br
-  = @tournament.rounds
-%p
-  %strong= model_class.human_attribute_name(:state) + ':'
-  %br
-  = @tournament.state
-%p
-  %strong= model_class.human_attribute_name(:referee) + ':'
-  %br
-  = @tournament.referee
+%div.row
+  %div.span3
+    %h4= model_class.human_attribute_name(:referee) + ':'
+    %p= @tournament.referee
+
+  %div.span3
+    %h4 Termine
+    %p keine Termine hinterlegt
+
+- if @tournament.state == 'in_preparation'
+  %h4 vorläufige Teilnehmerliste
+  %table.table.table-striped
+    %thead
+      %tr
+        %th.span1 #
+        %th.span5 Name
+        %th.span2 DWZ
+    %tbody
+      - @tournament.make_players_start_list.each_with_index do |player, idx|
+        %tr
+          %td{style: 'text-align: right'}= idx + 1
+          %td= player[0]
+          %td{style: 'text-align: right'}= player[1]
+
+- if @tournament.state == 'running'
+  %ul#the-tabulator.nav.nav-tabs
+    %li.active
+      %a{href: '#current-table'} Tabelle
+    %li
+      %a{href: '#current-cross-table'} Kreuztabelle
+    %li
+      %a{href: '#appointments'} Spieltage
+  %div.tab-content
+    %div#current-table.tab-pane.active
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.span1 #
+            %th.span5 Name
+            %th.span2 Punkte
+            %th.span2 SoBe
+        %tbody
+          - @tournament.make_table_array.each_with_index do |player, idx|
+            %tr
+              %td{style: 'text-align: right'}= idx + 1
+              %td= player[1]
+              %td{style: 'text-align: right'}= player[2]
+              %td{style: 'text-align: right'} –
+    %div#current-cross-table.tab-pane
+      %table.table.table-striped
+        %thead
+          %tr
+            %th{style: 'width: 150px;'} &nbsp;
+            - @tournament.tournament_players.each do |player|
+              %th
+                %div.rotate270= "#{player.first_name} #{player.last_name}"
+            %th{class: 'result-points-head'} Punkte
+            %th{class: 'current-place-head'} Platz
+        %tbody
+          - @tournament.tournament_players.each_with_index do |player, idx1|
+            %tr{'data-row' => idx1.to_s}
+              %td= "#{player.first_name} #{player.last_name}"
+              -  @tournament.make_table_array.each_with_index do |combatand, idx2|
+                %td.game-result{style: "background-color: #{idx1 == idx2 ? '#888' : '#fff'}"}
+                  = player.result[combatand[0]] == 0.5 ? '½' : player.result[combatand[0]] if player.result[combatand[0]].present?
+              %td.result-points= @tournament.make_table_array[idx1][2]
+              %td.current-place= @tournament.make_table_array[idx1][3].blank? ? '' : @tournament.make_table_array[idx1][3]
+    %div#appointments.tab-pane
+      %p Es sind akeine Termine und Rundenbegegnungen hinterlegt.
 
 .form-actions
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament
-  = link_to 'Turnier starten', start_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), tournament_path(@tournament), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger' if can? :delete, @tournament
+  = link_to t('.edit', :default => t('helpers.links.edit')), edit_tournament_path(@tournament), :class => 'btn' if can?(:edit, @tournament) && %w{in_preparation running}.include?(@tournament.state)
+  = link_to 'Turnier starten', start_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament if can?(:edit, @torunament) && @tournament.state == 'in_preparation'
+  = link_to 'Turnier abschließen', finish_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament if can?(:edit, @tournament) && @tournament.state == 'running'
+  = link_to 'Turnier archivieren', archive_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament if can?(:edit, @tournament) && %w{finished running}.include?(@tournament.state)
+  = link_to t('.destroy', :default => t('helpers.links.destroy')), tournament_path(@tournament), :method => 'delete', :confirm => t('.confirm', :default => t('helpers.links.confirm', :default => 'Are you sure?')), :class => 'btn btn-danger' if can? :delete, @tournament

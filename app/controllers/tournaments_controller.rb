@@ -1,8 +1,8 @@
 # encoding : utf-8
 
 class TournamentsController < ApplicationController
-  before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create, :start]
-  load_and_authorize_resource :only => [:new, :create, :destroy,:edit,:update, :start]
+  before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create, :start, :finish, :archive]
+  load_and_authorize_resource :only => [:new, :create, :destroy,:edit,:update, :start, :finish, :archive]
 
   def index
     @tournaments = Tournament.all
@@ -16,6 +16,7 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find params[:id]
+    @players = @tournament.make_table_array
     respond_to do |format|
       format.json { render :json => @tournament }
       format.xml  { render :xml => @tournament }
@@ -26,6 +27,16 @@ class TournamentsController < ApplicationController
   def start
     @tournament.run!
     redirect_to action: :edit
+  end
+
+  def finish
+    @tournament.finish!
+    redirect_to action: :show
+  end
+
+  def archive
+    @tournament.archive!
+    redirect_to action: :show
   end
 
   def new

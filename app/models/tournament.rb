@@ -51,6 +51,10 @@ class Tournament < ActiveRecord::Base
     Tournament.where{state == 'archived'}
   end
 
+  def make_players_start_list
+    self.tournament_players.map{|player| ["#{player.fide_title.blank? ? '' : player.fide_title + ' '}#{player.first_name} #{player.last_name}", player.dwz]}
+  end
+
   def make_table_array
     buffer = self.tournament_players.map{|p| [p.id, "#{p.first_name} #{p.last_name}", p.result[:points], p.result[:place].blank? ? 1 : p.result[:place]]}.sort_by{|p| -p[2]}
     points = buffer[0][2]

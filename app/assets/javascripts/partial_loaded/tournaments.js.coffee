@@ -39,6 +39,10 @@ $ ->
   $('#nobody-wins').click ->
     edit_result('0:0')
 
+  $('#the-tabulator a').click (e) ->
+    e.preventDefault()
+    $(this).tab('show')
+
 edit_result = (result_type) ->
   tournament_id = $('#tournament-table').data('tournament_id')
   id1 = $('#white-player').data('player-id')

@@ -201,7 +201,7 @@ de:
       edit: Bearbeiten
       show: Einzelansicht
       print: 'Drucken (PDF)'
-      destroy: Löschen
+      destroy: "Löschen"
       confirm: Sind Sie sicher?
       add_subform: Hinzufügen
       back: Zurück zur Liste
