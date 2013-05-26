@@ -46,7 +46,7 @@
     - member = User.with_role('stellv. Abt.-leiter').first
     = render 'user_address', member: member if member.present?
   %div.span4
-    %h4 Jugendleiter
+    %h4 Spielleiter
     - member = User.with_role('Spielleiter').first
     = render 'user_address', member: member if member.present?
   %div.span4
