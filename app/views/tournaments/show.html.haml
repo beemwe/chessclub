@@ -50,7 +50,7 @@
             %tr
               %td{style: 'text-align: right'}= idx + 1
               %td= player[1]
-              %td{style: 'text-align: right'}= player[2]
+              %td{style: 'text-align: right'}= number_with_precision player[2], precision: 1
               %td{style: 'text-align: right'} –
     %div#current-cross-table.tab-pane
       %table.table.table-striped
@@ -69,8 +69,10 @@
               -  @tournament.make_table_array.each_with_index do |combatand, idx2|
                 %td.game-result{style: "background-color: #{idx1 == idx2 ? '#888' : '#fff'}"}
                   = player.result[combatand[0]] == 0.5 ? '½' : player.result[combatand[0]] if player.result[combatand[0]].present?
-              %td.result-points= @tournament.make_table_array[idx1][2]
-              %td.current-place= @tournament.make_table_array[idx1][3].blank? ? '' : @tournament.make_table_array[idx1][3]
+              %td.result-points= number_with_precision(@tournament.make_table_array[idx1][2].to_f, precision: 1)
+              %td.current-place
+                - if @tournament.make_table_array[idx1][3].present?
+                  = @tournament.make_table_array[idx1][3]
     %div#appointments.tab-pane
       %p Es sind akeine Termine und Rundenbegegnungen hinterlegt.
 

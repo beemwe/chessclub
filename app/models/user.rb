@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   #  Include Paperclip
-  has_attached_file :avatar, styles: { medium: '300x300>', thumb: '100x100>' }
+  has_attached_file :avatar, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'avatars/:style/missing.png'
 
   # Setup accessible (or protected) attributes for your model
                   attr_accessor :login

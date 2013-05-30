@@ -25,7 +25,7 @@
       Fax:  +49 (8141) 290 984
       %br
       E-Mail:
-      =link_to 'info(at)tus-ffb.de', 'mail:info@tus-ffb.de'
+      = mail_to 'info@tus-ffb.de', nil, :replace_at => '(at)', :class => 'email'
   %div.span4
     %h4 Verantwortlich für jornalistische und redaktionelle Inhalte:
     %p

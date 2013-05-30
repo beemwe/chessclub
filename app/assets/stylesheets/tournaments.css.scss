@@ -1,3 +1,38 @@
 // Place all the styles related to the tournaments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.rotate270 {
+  -moz-transform:rotate(-90deg);
+  -moz-transform-origin: top left;
+  -webkit-transform: rotate(-90deg);
+  -webkit-transform-origin: top left;
+  -o-transform: rotate(-90deg);
+  -o-transform-origin:  top left;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  display: block;
+  width: 2em;
+  white-space: nowrap;
+  line-height: 2.5em;
+  margin: 150px 5px 0px 5px;
+}
+
+#result-dialog {
+  display: none;
+}
+
+td.game-result {
+  border: 1px solid #777777;
+  text-align: center;
+}
+
+td.result-points, td.current-place {
+  text-align: right;
+  padding-right: 5px;
+}
+
+th.result-points-head, th.current-place-head {
+  text-align: center;
+  width: 70px;
+  vertical-align: bottom;
+}
+
