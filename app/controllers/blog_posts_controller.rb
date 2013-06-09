@@ -1,10 +1,11 @@
 # encoding: utf-8
 class BlogPostsController < ApplicationController
-  load_and_authorize_resource :blog_post, :except => [:show]
+  load_and_authorize_resource :blog_post, :except => [:index, :show]
 
   # GET /blog_posts
   # GET /blog_posts.json
   def index
+    @blog_posts = BlogPost.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @blog_posts }

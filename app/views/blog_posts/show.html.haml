@@ -13,14 +13,13 @@
     = '(am ' + l(@blog_post.published_at, :format => :long) + ' veröffentlicht)'
 
 
-%div.row
-  %div#comment-area.span6
-    %h4 Kommentare zu diesem Artikel
-    = comments_for @blog_post
-  %div#images-area.span6
-    %h4 weitere Bilder zu diesem Artikel
+#comment-area.span6
+  %h4 Kommentare zu diesem Artikel
+  = comments_for @blog_post
+#images-area.span6
+  %h4 weitere Bilder zu diesem Artikel
 
-.form-actions
+.form-actions.span12
   = link_to t('.back', :default => t('helpers.links.back')), :back, :class => 'btn'
   - if @blog_post.id.present?
     - if can? :manage, BlogPost

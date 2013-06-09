@@ -7,16 +7,17 @@
       %th= model_class.human_attribute_name(:title)
       %th= model_class.human_attribute_name(:published_at)
       %th= model_class.human_attribute_name(:author_id)
-      %th=t '.actions', :default => t("helpers.actions")
+      %th=t '.actions', :default => t("helpers.actions") if current_user.present?
   %tbody
     - @blog_posts.each do |blogpost|
       %tr
         %td= link_to blogpost.title, blog_post_path(blogpost)
         %td= l blogpost.published_at unless blogpost.published_at.blank?
         %td= blogpost.author.first_last_name
-        %td
-          = link_to "<i class=\"icon-edit\"></i> #{t('.edit', :default => t("helpers.links.edit"))}".html_safe, 'editor' + blog_post_path(blogpost), :class => 'btn btn-mini'
-          = link_to "<i class=\"icon-bullhorn\"></i> #{t('.publish')}".html_safe, publish_blog_post_path(blogpost), :class => 'btn btn-mini' if blogpost.published_at.blank? && (current_user.role?(:administrator) || (current_user.role?(:author) && blogpost.author_id != current_user.id))
-          = link_to "<i class=\"icon-trash\"></i> #{t('.destroy', :default => t("helpers.links.destroy"))}".html_safe, blog_post_path(blogpost), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
+        - if current_user.present?
+          %td
+            = link_to "<i class=\"icon-edit\"></i> #{t('.edit', :default => t("helpers.links.edit"))}".html_safe, 'editor' + blog_post_path(blogpost), :class => 'btn btn-mini' if current_user.role?(:administrator)
+            = link_to "<i class=\"icon-bullhorn\"></i> #{t('.publish')}".html_safe, publish_blog_post_path(blogpost), :class => 'btn btn-mini' if blogpost.published_at.blank? && (current_user.role?(:administrator) || (current_user.role?(:author) && blogpost.author_id != current_user.id))
+            = link_to "<i class=\"icon-trash\"></i> #{t('.destroy', :default => t("helpers.links.destroy"))}".html_safe, blog_post_path(blogpost), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
 
-= link_to "<i class=\"icon-file\"></i> #{t('.new', :default => t("helpers.links.new"))}".html_safe, 'editor' + new_blog_post_path, :class => 'btn btn-primary'
+= link_to "<i class=\"icon-file\"></i> #{t('.new', :default => t("helpers.links.new"))}".html_safe, 'editor' + new_blog_post_path, :class => 'btn btn-primary' if current_user.present? && (current_user.role?(:administrator) || current_user.role?(:author))
