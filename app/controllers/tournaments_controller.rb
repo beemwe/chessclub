@@ -2,7 +2,7 @@
 
 class TournamentsController < ApplicationController
   before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create, :start, :finish, :archive]
-  load_and_authorize_resource :only => [:new, :create, :destroy,:edit,:update, :start, :finish, :archive]
+  load_and_authorize_resource :only => [:new, :create, :destroy,:edit, :update, :start, :finish, :archive]
 
   def index
     @tournaments = Tournament.all
@@ -16,7 +16,7 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find params[:id]
-    @players = @tournament.make_table_array
+    # @players = @tournament.make_table_array
     respond_to do |format|
       format.json { render :json => @tournament }
       format.xml  { render :xml => @tournament }

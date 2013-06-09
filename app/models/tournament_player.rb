@@ -3,7 +3,7 @@ class TournamentPlayer < ActiveRecord::Base
 
   belongs_to :tournament
 
-  validates_presence_of :last_name, :first_name
+  # validates_presence_of :last_name, :first_name
 
   serialize :result, Hash
 

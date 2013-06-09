@@ -13,20 +13,32 @@
     %h4 Termine
     %p keine Termine hinterlegt
 
-- if @tournament.state == 'in_preparation'
-  %h4 vorläufige Teilnehmerliste
-  %table.table.table-striped
-    %thead
-      %tr
-        %th.span1 #
-        %th.span5 Name
-        %th.span2 DWZ
-    %tbody
-      - @tournament.make_players_start_list.each_with_index do |player, idx|
-        %tr
-          %td{style: 'text-align: right'}= idx + 1
-          %td= player[0]
-          %td{style: 'text-align: right'}= player[1]
+- if @tournament.state == 'in_preparation' && !@tournament.tournament_players.empty?
+  %ul#the-tabulator.nav.nav-tabs
+    %li.active
+      %a{href: '#players'} vorl. Teilnehmerliste
+    - if @tournament.invitation.present?
+      %li
+        %a{href: '#call-out'} Ausschreibung
+    - if @tournament.rules.present?
+      %li
+        %a{href: '#rules'} Turnierordnung
+  %div.tab-content
+    %div#players.tab-pane.active
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.span1 #
+            %th.span5 Name
+            %th.span2 DWZ
+        %tbody
+          - @tournament.make_players_start_list.each_with_index do |player, idx|
+            %tr
+              %td{style: 'text-align: right'}= idx + 1
+              %td= player[0]
+              %td{style: 'text-align: right'}= player[1]
+    %div#call-out.tab-pane= @tournament.invitation.blank? ? 'keine Ausschreibung hinterlegt!' : @tournament.invitation
+    %div#rules.tab-pane= @tournament.rules.blank? ? 'keine Turnierordnung hinterlegt!' : @tournament.rules
 
 - if %w{running finished archived}.include? @tournament.state
   %ul#the-tabulator.nav.nav-tabs
@@ -36,6 +48,10 @@
       %a{href: '#current-cross-table'} Kreuztabelle
     %li
       %a{href: '#appointments'} Spieltage
+    %li
+      %a{href: '#call-out'} Ausschreibung
+    %li
+      %a{href: '#rules'} Turnierordnung
   %div.tab-content
     %div#current-table.tab-pane.active
       %table.table.table-striped
@@ -46,13 +62,14 @@
             %th.span2 Punkte
             %th.span2 SoBe
         %tbody
-          - @tournament.make_table_array.sort_by{|p| -p[2]}.each_with_index do |player, idx|
+          - @tournament.make_ranking_list.sort_by{|p| -p[2]}.each_with_index do |player, idx|
             %tr
               %td{style: 'text-align: right'}= idx + 1
               %td= player[1]
               %td{style: 'text-align: right'}= number_with_precision player[2], precision: 1
               %td{style: 'text-align: right'} –
     %div#current-cross-table.tab-pane
+
       %table.table.table-striped
         %thead
           %tr
@@ -66,19 +83,23 @@
           - @tournament.tournament_players.each_with_index do |player, idx1|
             %tr{'data-row' => idx1.to_s}
               %td= "#{player.first_name} #{player.last_name}"
-              -  @tournament.make_table_array.each_with_index do |combatand, idx2|
+              -  @tournament.make_ranking_list.each_with_index do |combatand, idx2|
                 %td.game-result{style: "background-color: #{idx1 == idx2 ? '#888' : '#fff'}"}
                   = player.result[combatand[0]] == 0.5 ? '½' : player.result[combatand[0]] if player.result[combatand[0]].present?
-              %td.result-points= number_with_precision(@tournament.make_table_array[idx1][2].to_f, precision: 1)
+              %td.result-points= number_with_precision(@tournament.make_ranking_list[idx1][2].to_f, precision: 1)
               %td.current-place
-                - if @tournament.make_table_array[idx1][3].present?
-                  = @tournament.make_table_array[idx1][3]
+                - if @tournament.make_ranking_list[idx1][3].present?
+                  = @tournament.make_ranking_list[idx1][3]
     %div#appointments.tab-pane
-      %p Es sind akeine Termine und Rundenbegegnungen hinterlegt.
+      %p Es sind keine Termine und Rundenbegegnungen hinterlegt.
+    %div#call-out.tab-pane
+      %div= @tournament.invitation || 'keine Ausschreibung hinterlegt!'
+    %div#rules.tab-pane
+      %div= @tournament.rules || 'keine Turnierordnung hinterlegt!'
 
 .form-actions
   = link_to t('.edit', :default => t('helpers.links.edit')), edit_tournament_path(@tournament), :class => 'btn' if can?(:edit, @tournament) && %w{in_preparation running}.include?(@tournament.state)
-  = link_to 'Turnier starten', start_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament if can?(:edit, @torunament) && @tournament.state == 'in_preparation'
+  = link_to 'Turnier starten', start_tournament_path(@tournament), :class => 'btn' if can?(:edit, @tournament) && @tournament.state == 'in_preparation'
   = link_to 'Turnier abschließen', finish_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament if can?(:edit, @tournament) && @tournament.state == 'running'
   = link_to 'Turnier archivieren', archive_tournament_path(@tournament), :class => 'btn' if can? :edit, @tournament if can?(:edit, @tournament) && %w{finished running}.include?(@tournament.state)
   = link_to t('.destroy', :default => t('helpers.links.destroy')), tournament_path(@tournament), :method => 'delete', :confirm => t('.confirm', :default => t('helpers.links.confirm', :default => 'Are you sure?')), :class => 'btn btn-danger' if can? :delete, @tournament

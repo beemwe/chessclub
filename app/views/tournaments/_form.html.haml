@@ -1,8 +1,12 @@
 = simple_form_for @tournament, :html => { :class => 'form-vertical' } do |f|
-  = f.input :title
-  = f.input :modus, :as => :select, :collection => Tournament::MODI
-  = f.input :rounds, :as => :integer
-  = f.input :referee
+  %div.row
+    .span3= f.input :title
+    .span3= f.input :modus, :as => :select, :collection => Tournament::MODI
+    .span3= f.input :rounds, :as => :integer
+    .span3= f.input :referee, as: :select, collection: User.with_role(:turnierleiter).map {|u| [u.first_last_name]}
+  .row.subformset
+    .span6= f.input :rules
+    .span6= f.input :invitation
 
   = field_set_tag "Teilnehmer #{link_to_add_association('hinzufügen', f, :tournament_players, {id: 'add-subform', class: 'btn', 'data-association-insertion-node' => '#players', 'data-association-insertion-method' => :append })}".html_safe do
     %div.row

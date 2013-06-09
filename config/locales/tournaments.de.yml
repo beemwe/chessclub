@@ -10,5 +10,7 @@ de:
         modus: Modus
         rounds: Rundenanz.
         state: Status
+        rules: Turnierordnung
+        invitation: Ausschreibung
         referee: Turnierleiter
         created_at: erstellt

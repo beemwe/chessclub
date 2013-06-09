@@ -20,6 +20,10 @@ class Ability
       can :manage, Tournament
     end
 
+    if user.has_role? :turnierleiter
+      can :manage, Tournament, :referee => user.first_last_name
+    end
+
     if user.has_role? :mannschaftsführer
 
     end

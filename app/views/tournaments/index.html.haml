@@ -22,7 +22,7 @@
         %td= tournament.referee
         %td=l tournament.created_at, :format => :short
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_tournament_path(tournament), :class => 'btn btn-mini'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), tournament_path(tournament), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_tournament_path(tournament), :class => 'btn btn-mini' if can? :manage, tournament
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), tournament_path(tournament), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger' if can? :manage, tournament
 
-= link_to t('.new', :default => t("helpers.links.new")), new_tournament_path, :class => 'btn btn-primary'
+= link_to t('.new', :default => t("helpers.links.new")), new_tournament_path, :class => 'btn btn-primary' if can? :create, Tournament
