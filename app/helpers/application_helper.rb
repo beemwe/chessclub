@@ -12,6 +12,11 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def set_active_menu_item(controller)
+    "#{controller == params[:controller] ? 'active' : ''}".html_safe
+  end
+
+
 =begin
 
   Wird nicht mehr benötigt, erledigt jetzt das Gem Cocoon!

@@ -27,4 +27,5 @@ class ApplicationController < ActionController::Base
 
     flash.discard  # don't want the flash to appear when you reload page
   end
+
 end
