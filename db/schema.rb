@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130526082850) do
+ActiveRecord::Schema.define(:version => 20130603180657) do
 
   create_table "blog_articles", :force => true do |t|
     t.string   "title"
@@ -191,6 +191,8 @@ ActiveRecord::Schema.define(:version => 20130526082850) do
     t.string   "referee"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "rules"
+    t.text     "invitation"
   end
 
   create_table "users", :force => true do |t|
