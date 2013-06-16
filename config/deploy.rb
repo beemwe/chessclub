@@ -3,8 +3,8 @@ require 'bundler/capistrano'
 load 'deploy/assets'
 
 set :scm,             :git
-set :repository, 'ssh://beemwe@walterdl.hopto.org/var/repositories/schachclub.git'
-set :branch, 'origin/master'
+set :repository, 'git://github.com/beemwe/chessclub.git'
+set :branch, 'github/master'
 set :migrate_target,  :current
 set :ssh_options,     { :forward_agent => true }
 set :rails_env, 'production'
@@ -67,7 +67,7 @@ namespace :deploy do
 
   desc 'Update the deployed code.'
   task :update_code, :except => { :no_release => true } do
-    run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
+    run "cd #{current_path}; git fetch github; git reset --hard #{branch}"
     finalize_update
   end
 
