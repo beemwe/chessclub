@@ -1,5 +1,5 @@
 class TournamentPlayer < ActiveRecord::Base
-  attr_accessible :dwz, :first_name, :last_name, :fide_title
+  attr_accessible :dwz, :first_name, :last_name, :fide_title, :registrar
 
   belongs_to :tournament
 

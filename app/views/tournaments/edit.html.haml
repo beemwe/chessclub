@@ -2,7 +2,7 @@
 
 - if @tournament.state == 'in_preparation'
   .page-header
-    %h1=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human, :default => "Edit #{model_class.model_name.human}")
+    %h1=t '.title', :default => t('helpers.title.edit', :model => model_class.model_name.human, :default => "Edit #{model_class.model_name.human}")
   = render :partial => "form"
 - elsif @tournament.state == 'running'
   .page-header

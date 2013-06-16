@@ -24,21 +24,6 @@ class TournamentsController < ApplicationController
     end
   end
 
-  def start
-    @tournament.run!
-    redirect_to action: :edit
-  end
-
-  def finish
-    @tournament.finish!
-    redirect_to action: :show
-  end
-
-  def archive
-    @tournament.archive!
-    redirect_to action: :show
-  end
-
   def new
     respond_to do |format|
       format.json { render :json => @tournament }
@@ -102,6 +87,21 @@ class TournamentsController < ApplicationController
     respond_to_not_found(:json, :xml, :html)
   end
 
+  def start
+    @tournament.run!
+    redirect_to action: :edit
+  end
+
+  def finish
+    @tournament.finish!
+    redirect_to action: :show
+  end
+
+  def archive
+    @tournament.archive!
+    redirect_to action: :show
+  end
+
   def create
     @tournament = Tournament.new(params[:tournament])
 
@@ -155,6 +155,10 @@ class TournamentsController < ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:json, :xml, :html)
+  end
+
+  def register_player_form
+    @tournament = Tournament.find params[:id]
   end
 
   protected

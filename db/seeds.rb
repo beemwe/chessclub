@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+TournamentPlayer.all.each do |t|
+  t.registrar = 'Spielleiter'
+  t.save
+end

@@ -1,13 +1,7 @@
+%h1 Teilnehmer registrieren
 = simple_form_for @tournament, :html => { :class => 'form-vertical' } do |f|
-  %div.row
-    .span3= f.input :title
-    .span3= f.input :modus, :as => :select, :collection => Tournament::MODI
-    .span3= f.input :rounds, :as => :integer, disabled: (@tournament.modus != 'SwissSystem')
-    .span3= f.input :referee, as: :select, collection: User.with_role(:turnierleiter).map {|u| [u.first_last_name]}
-  .row.subformset
-    .span6= f.input :rules
-    .span6= f.input :invitation
 
+  = f.input :registrar
   = field_set_tag "Teilnehmer #{link_to_add_association('hinzufügen', f, :tournament_players, {id: 'add-subform', class: 'btn', 'data-association-insertion-node' => '#players', 'data-association-insertion-method' => :append })}".html_safe do
     %div.row
       %div.span4 Vorname
@@ -19,7 +13,7 @@
       = f.simple_fields_for :tournament_players, html: {class: 'subform_set'} do |tournament_player|
         = render 'tournament_player_fields', f: tournament_player
 
-
   .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+    = button_tag 'Teilnehmer regitrieren', :class => 'btn btn-primary'
     = link_to t('helpers.submit.cancel'), :back, :class => 'btn'
+

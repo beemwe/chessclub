@@ -7,12 +7,15 @@ class Tournament < ActiveRecord::Base
   has_many :tournament_players, dependent: :destroy
   accepts_nested_attributes_for :tournament_players, :reject_if => :all_blank, :allow_destroy => true
 
-  attr_accessible :modus, :rounds, :state, :title, :referee, :tournament_players_attributes, :rules, :invitation
+  attr_accessible :modus, :rounds, :state, :title, :referee, :tournament_players_attributes, :rules, :invitation, :registrar
   validates_presence_of :title, :modus
 
   attr_accessor :ranking_list
+  attr_accessor :registrar
 
-  MODI = [%w(Rutschsystem EasyRobinRound), %w(Vollrundensystem RobinRound), ['doppelrund. Vollsystem', 'DoubleRobinRound'], ['K.O. System', 'KoSystem'], ['Schweizer System', 'SwissSystem']]
+  serialize :events, Hash
+
+  MODI = [%w(Rutschsystem EasyRobinRound), %w(Vollrundensystem RobinRound), ['doppelrund. Vollsystem', 'DoubleRobinRound'], ['K.O. System', 'KoSystem'], ['K.O. System m. Trostrunde', 'KoSystem+'], ['Schweizer System', 'SwissSystem']]
 
   state_machine do
     state :in_preparation
@@ -51,8 +54,13 @@ class Tournament < ActiveRecord::Base
   def self.actives
     Tournament.where{state != 'archived'}
   end
+
   def self.archive
     Tournament.where{state == 'archived'}
+  end
+
+  def registered_players
+    self.tournament_players.where(registrar: 'Bernd M. Walter')
   end
 
   def make_players_start_list

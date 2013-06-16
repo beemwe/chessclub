@@ -26,10 +26,11 @@ Schachclub::Application.routes.draw do
 
   resources :users
   resources :tournaments do
-    member { get :start}
-    member { get :finish}
-    member { get :archive}
-    member { post :edit_result}
+    member { get :start }
+    member { get :finish }
+    member { get :archive }
+    member { post :edit_result }
+    member { get :register_player_form }
   end
 
   resources :teams

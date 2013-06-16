@@ -1,23 +1,23 @@
 # config/deploy.rb 
-require "bundler/capistrano"
+require 'bundler/capistrano'
 load 'deploy/assets'
 
 set :scm,             :git
-set :repository,      "ssh://beemwe@walterdl.hopto.org/var/repositories/schachclub.git"
-set :branch,          "origin/master"
+set :repository, 'ssh://beemwe@walterdl.hopto.org/var/repositories/schachclub.git'
+set :branch, 'origin/master'
 set :migrate_target,  :current
 set :ssh_options,     { :forward_agent => true }
-set :rails_env,       "production"
-set :deploy_to,       "/var/rails/tusffbschach"
+set :rails_env, 'production'
+set :deploy_to, '/var/rails/tusffbschach'
 set :normalize_asset_timestamps, false
 
-set :user,            "schachclub"
-set :group,           "unicorn"
+set :user, 'schachclub'
+set :group, 'unicorn'
 set :use_sudo,        false
 
-role :web,    "tusffb-schach.de"
-role :app,    "tusffb-schach.de"
-role :db,     "tusffb-schach.de", :primary => true
+role :web,    'tusffb-schach.de'
+role :app, 'tusffb-schach.de'
+role :db,     'tusffb-schach.de', :primary => true
 
 set(:latest_release)  { fetch(:current_path) }
 set(:release_path)    { fetch(:current_path) }
@@ -30,21 +30,21 @@ set(:previous_revision) { capture("cd #{current_path}; git rev-parse --short HEA
 default_environment["RAILS_ENV"] = 'production'
 
 # Use our ruby-1.9.2-p290@my_site gemset
-default_environment["PATH"]         = "usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach/bin:/usr/local/rvm/gems/ruby-1.9.3-p327@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p327/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-default_environment["GEM_HOME"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach"
-default_environment["GEM_PATH"]     = "/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach:/usr/local/rvm/gems/ruby-1.9.3-p327@global"
-default_environment["RUBY_VERSION"] = "ruby-1.9.3-p327"
+default_environment['PATH']         = 'usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach/bin:/usr/local/rvm/gems/ruby-1.9.3-p327@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p327/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+default_environment['GEM_HOME']     = '/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach'
+default_environment['GEM_PATH']     = '/usr/local/rvm/gems/ruby-1.9.3-p327@tusffbschach:/usr/local/rvm/gems/ruby-1.9.3-p327@global'
+default_environment['RUBY_VERSION'] = 'ruby-1.9.3-p327'
 
 default_run_options[:shell] = 'bash'
 
 namespace :deploy do
-  desc "Deploy your application"
+  desc 'Deploy your application'
   task :default do
     update
     restart
   end
 
-  desc "Setup your git-based deployment app"
+  desc 'Setup your git-based deployment app'
   task :setup, :except => { :no_release => true } do
     dirs = [deploy_to, shared_path]
     dirs += shared_children.map { |d| File.join(shared_path, d) }
@@ -65,13 +65,13 @@ namespace :deploy do
     migrate
   end
 
-  desc "Update the deployed code."
+  desc 'Update the deployed code.'
   task :update_code, :except => { :no_release => true } do
     run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
     finalize_update
   end
 
-  desc "Update the database (overwritten to avoid symlink)"
+  desc 'Update the database (overwritten to avoid symlink)'
   task :migrations do
     transaction do
       update_code
@@ -100,35 +100,35 @@ namespace :deploy do
     end
   end
 
-  desc "Zero-downtime restart of Unicorn"
+  desc 'Zero-downtime restart of Unicorn'
   task :restart, :except => { :no_release => true } do
     file = "#{shared_path}/tmp/pids/unicorn.chess.pid"
     run "if [[ -f #{file} ]]; then kill -s USR2 `cat #{file}`; else cd #{current_path} && bundle exec unicorn_rails -c /var/rails/tusffbschach/current/config/unicorn.rb -D; fi"
   end
 
-  desc "Start unicorn"
+  desc 'Start unicorn'
   task :start, :except => { :no_release => true } do
     run "cd #{current_path}; bundle exec unicorn_rails -c /var/rails/tusffbschach/current/config/unicorn.rb -D"
   end
 
-  desc "Stop unicorn"
+  desc 'Stop unicorn'
   task :stop, :except => { :no_release => true } do
     run "kill -s QUIT `cat #{shared_path}/tmp/pids/unicorn.chess.pid`"
   end  
 
   namespace :rollback do
-    desc "Moves the repo back to the previous version of HEAD"
+    desc 'Moves the repo back to the previous version of HEAD'
     task :repo, :except => { :no_release => true } do
-      set :branch, "HEAD@{1}"
+      set :branch, 'HEAD@{1}'
       deploy.default
     end
 
-    desc "Rewrite reflog so HEAD@{1} will continue to point to at the next previous release."
+    desc 'Rewrite reflog so HEAD@{1} will continue to point to at the next previous release.'
     task :cleanup, :except => { :no_release => true } do
       run "cd #{current_path}; git reflog delete --rewrite HEAD@{1}; git reflog delete --rewrite HEAD@{1}"
     end
 
-    desc "Rolls back to the previously deployed version."
+    desc 'Rolls back to the previously deployed version.'
     task :default do
       rollback.repo
       rollback.cleanup

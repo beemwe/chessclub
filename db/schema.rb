@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130603180657) do
+ActiveRecord::Schema.define(:version => 20130609174551) do
 
   create_table "blog_articles", :force => true do |t|
     t.string   "title"
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(:version => 20130603180657) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.text     "result"
+    t.string   "registrar"
   end
 
   create_table "tournaments", :force => true do |t|
@@ -193,6 +194,7 @@ ActiveRecord::Schema.define(:version => 20130603180657) do
     t.datetime "updated_at", :null => false
     t.text     "rules"
     t.text     "invitation"
+    t.text     "events"
   end
 
   create_table "users", :force => true do |t|
