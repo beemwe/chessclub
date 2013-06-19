@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
                                   :avatar, :address, :zip, :location, :phone, :mobile, :gender, :status,
                                   :login, :role_ids
 
-  has_many :blog_articles, :foreign_key => 'author_id'
+  #has_many :blog_articles, :foreign_key => 'author_id'
   has_many :teams, :foreign_key => 'leader_id'
 
   has_and_belongs_to_many :roles

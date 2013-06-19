@@ -1,0 +1,41 @@
+<div id="blog_post_file_uploader"></div>
+<script type="text/javascript">
+    var uploader = new qq.FileUploader({
+        element: document.getElementById('blog_post_file_uploader'),
+        action: '<%= add_files_blog_post_path(@blog_post) %>',
+        params: { "authenticity_token": "<%= form_authenticity_token %>" },
+        customHeaders: { "X-File-Upload": "true" },
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+        sizeLimit: 0, // max size
+        minSizeLimit: 0, // min size
+        abortOnFailure: false, // Fail all files if one doesn't meet the criteria
+
+        // set to true to output server response to console
+        debug: true,
+
+        template: '<div class="qq-uploader">' +
+            '<div id="inner-images-area" class="qq-upload-drop-area">' +
+            '  <%= escape_javascript(render partial: 'blog_posts/inner_images') %>' +
+            '</div>' +
+            '<div id="btn-diashow" class= "btn-diashow btn"><i class="icon-play"></i>&nbsp;Diashow</div>' +
+            '<div class="qq-upload-button btn" style="margin: 10px 0;"><i class="icon-upload-alt"></i>&nbsp;{uploadButtonText}</div>' +
+            '<ul class="qq-upload-list"></ul>' +
+            '</div>',
+
+
+        // events
+        // you can return false to abort submit
+        onSubmit: function(id, fileName){},
+        onProgress: function(id, fileName, loaded, total){},
+        onComplete: function(id, fileName, responseJSON){
+            $.getScript("<%= get_files_blog_post_path(@blog_post) %>")
+        },
+        onCancel: function(id, fileName){},
+        onError: function(id, fileName, xhr){},
+
+        messages: {
+            // error messages, see qq.FileUploaderBasic for content
+        },
+        showMessage: function(message){ alert(message); }
+    });
+</script>

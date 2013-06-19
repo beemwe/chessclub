@@ -12,6 +12,9 @@ Schachclub::Application.routes.draw do
     collection { put :mercury_create }
     member { put :mercury_update }
     member { get :publish }
+    post :add_files, on: :member
+    get :get_files, on: :member
+    get :get_slideshow, on: :member
   end
 
   resources :leagues

@@ -463,3 +463,21 @@ $(window).bind('mercury:saved', function() {
     loc = Mercury.redirectUrl
     window.location = loc
 });
+
+$(document).on('click', 'div#btn-diashow', function () {
+    $('div#dlg-diashow').dialog("open");
+});
+
+$(document).ready( function() {
+    jQuery('div#dlg-diashow').dialog({
+        modal: true,
+        width: 1000,
+        resizable: false,
+        autoOpen: false,
+        closeText: 'Schließen',
+        open: function(event, ui) {
+            var ident = $('div#dlg-diashow').data('ident');
+            $.getScript('/blog_posts/' + ident + '/get_slideshow');
+        }
+    });
+})

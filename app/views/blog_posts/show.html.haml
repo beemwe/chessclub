@@ -17,7 +17,23 @@
   %h4 Kommentare zu diesem Artikel
   = comments_for @blog_post
 #images-area.span6
-  %h4 weitere Bilder zu diesem Artikel
+  %h4
+    weitere Bilder zu diesem Artikel
+    - if can? :manage, @blog_post
+      = render partial: 'blog_posts/fileuploader'
+    - else
+      %div#inner-images-area
+        = render partial: 'blog_posts/inner_images'
+      %div#btn-diashow.btn Diashow
+    %div#dlg-diashow{'data-ident' => @blog_post.id}
+      %div#slideshow.carousel.slide
+        %div.carousel-inner
+          <div class="active item">…</div>
+          <div class="item">…</div>
+          <div class="item">…</div>
+        <!-- Carousel nav -->
+        %a.carousel-control.left{href: '#slideshow',  'data-slide' => 'prev'} ‹
+        %a.carousel-control.right{href: '#slideshow',  'data-slide'=>'next'}›
 
 .form-actions.span12
   = link_to t('.back', :default => t('helpers.links.back')), :back, :class => 'btn'

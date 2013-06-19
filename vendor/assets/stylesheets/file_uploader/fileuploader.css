@@ -1,0 +1,10 @@
+.qq-upload-drop-area {
+    min-height: 100px;
+}
+div#inner-images-area img{
+    margin-bottom: 5px;
+}
+
+div#btn-diashow {
+    margin-right: 10px;
+}

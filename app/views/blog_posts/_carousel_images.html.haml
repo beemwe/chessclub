@@ -1,0 +1,3 @@
+- if @blog_post.id.present?
+  - @blog_post.blog_post_files.each_with_index do |image, idx|
+    %div{class: "item#{idx == 0 ? ' active' : ''}"}= image_tag image.attachment.url :slideshow

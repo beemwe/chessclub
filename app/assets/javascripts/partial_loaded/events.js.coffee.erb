@@ -17,9 +17,9 @@ $(document).ready ->
     header: {
       left: 'prev,next today'
       center: 'title',
-      right: 'month,agendaWeek,agendaDay'
+      right: 'agendaList,month,agendaWeek,agendaDay'
     },
-    defaultView: 'agendaWeek',
+    defaultView: 'month',
     slotMinutes: 60,
     loading: (bool) ->
       if bool then $('#loading').show else $('#loading').hide
