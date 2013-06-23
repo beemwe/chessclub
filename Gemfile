@@ -11,6 +11,7 @@ gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-hotkeys-rails'
+gem 'jquery-fileupload-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

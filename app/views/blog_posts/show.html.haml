@@ -18,29 +18,30 @@
   = comments_for @blog_post
 #images-area.span6
   %h4
-    weitere Bilder zu diesem Artikel
-    - if can? :manage, @blog_post
-      = render partial: 'blog_posts/fileuploader'
-    - else
-      %div#inner-images-area
-        = render partial: 'blog_posts/inner_images'
+    = "#{@blog_post.blog_post_files.count > 0 ? 'Weitere' : 'Keine weiteren'} Bilder zu diesem Artikel"
+  - if can? :manage, @blog_post
+    =# render partial: 'blog_posts/fileuploader'
+  - else
+    %div#inner-images-area
+      = render partial: 'blog_posts/inner_images'
+    - if @blog_post.blog_post_files.count > 0
       %div#btn-diashow.btn Diashow
-    %div#dlg-diashow{'data-ident' => @blog_post.id}
-      %div#slideshow.carousel.slide
-        %div.carousel-inner
-          <div class="active item">…</div>
-          <div class="item">…</div>
-          <div class="item">…</div>
-        <!-- Carousel nav -->
-        %a.carousel-control.left{href: '#slideshow',  'data-slide' => 'prev'} ‹
-        %a.carousel-control.right{href: '#slideshow',  'data-slide'=>'next'}›
+  %div#dlg-diashow{'data-ident' => @blog_post.id}
+    %div#slideshow.carousel.slide
+      %div.carousel-inner
+        <div class="active item">…</div>
+        <div class="item">…</div>
+        <div class="item">…</div>
+      <!-- Carousel nav -->
+      %a.carousel-control.left{href: '#slideshow',  'data-slide' => 'prev'} ‹
+      %a.carousel-control.right{href: '#slideshow',  'data-slide'=>'next'}›
 
 .form-actions.span12
   = link_to t('.back', :default => t('helpers.links.back')), :back, :class => 'btn'
   - if @blog_post.id.present?
     - if can? :manage, BlogPost
-      = link_to( t('.edit', :default => t('helpers.links.edit')), "/editor" + blog_post_path(@blog_post), id: "edit_link", class: 'btn btn-primary', data: {save_url: mercury_update_blog_post_path(@blog_post), redirect_url: blog_post_path(@blog_post)} )
-      = link_to( t('.destroy', :default => t('helpers.links.destroy')), blog_post_path(@blog_post), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger' )
+      = link_to( t('.edit', :default => t('helpers.links.edit')), '/editor' + blog_post_path(@blog_post), id: 'edit_link', class: 'btn btn-primary', data: {save_url: mercury_update_blog_post_path(@blog_post), redirect_url: blog_post_path(@blog_post)} )
+      = link_to( t('.destroy', :default => t('helpers.links.destroy')), blog_post_path(@blog_post), :method => 'delete', :confirm => t('.confirm', :default => t('helpers.links.confirm', :default => 'Are you sure?')), :class => 'btn btn-danger' )
   - elsif can? :manage, BlogPost
-    = link_to( t('.edit', :default => t('helpers.links.new')), "#", id: "edit_link", class: 'btn btn-primary', data: {save_url: mercury_create_blog_posts_path, redirect_url: blog_posts_path} )
+    = link_to( t('.edit', :default => t('helpers.links.new')), '#', id: 'edit_link', class: 'btn btn-primary', data: {save_url: mercury_create_blog_posts_path, redirect_url: blog_posts_path} )
 

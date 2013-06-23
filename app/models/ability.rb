@@ -12,6 +12,7 @@ class Ability
 
     if user.has_role? :autor
       can :manage, BlogPost, :author_id => user.id
+      can :create, BlogPost
     else
       can :read, BlogPost
     end
