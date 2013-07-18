@@ -14,6 +14,6 @@ class BlogPost < ActiveRecord::Base
   validates_presence_of :title
 
   def self.recent
-    BlogPost.where('published_at IS NOT NULL').order('created_at DESC, published_at DESC').limit(8)
+    BlogPost.where('published_at IS NOT NULL').order('created_at DESC, published_at DESC').limit(7)
   end
 end
