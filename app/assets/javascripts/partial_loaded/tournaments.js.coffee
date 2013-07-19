@@ -22,6 +22,13 @@ $ ->
         $('#black-player').text(name2).data('player-id', id2)
     })
 
+  $('#nominate-player').click ->
+    $('#player-dialog').dialog({
+      title: 'Spieler nachmelden',
+      modal: true,
+      width: 1201
+    })
+
   $('#white-wins').click ->
     edit_result('1:0')
   $('#black-wins').click ->

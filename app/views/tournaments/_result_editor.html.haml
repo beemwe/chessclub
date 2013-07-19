@@ -14,6 +14,10 @@
           = player.result[combatand[0]].present? ? (player.result[combatand[0]] == 0.5 ? '½' : player.result[combatand[0]]) : ''
       %td.result-points{id: "result-points-#{@players[idx1][0]}"}= @players[idx1][2]
       %td.current-place{id: "current-place-#{@players[idx1][0]}"}= @players[idx1][3].blank? ? '' : @players[idx1][3]
+
+%div.form-actions
+  = link_to 'Spieler nachmelden', '#', id: 'nominate-player', class: 'btn'
+
 %div#result-dialog
   %p
     %span#white-player weiß
@@ -30,3 +34,22 @@
     &nbsp;
     &nbsp;
     = link_to '0:0', '#', id: 'nobody-wins', class: 'btn'
+
+%div#player-dialog
+  = simple_form_for @tournament, :html => { :class => 'form-vertical' } do |f|
+    %div.row
+      %div.span4 Vorname
+      %div.span4 Name
+      %div.span1 Titel
+      %div.span1 DWZ
+      %div.span2= ''
+    #players
+      = f.simple_fields_for :tournament_players, html: {class: 'subform_set'} do |tournament_player|
+        %div.row{:class => 'subformset nested-fields'}
+          %div.span4= tournament_player.input :first_name, label: false
+          %div.span4= tournament_player.input :last_name, label: false
+          %div.span1= tournament_player.input :fide_title, label: false
+          %div.span1= tournament_player.input :dwz, label: false
+          %div.span2= link_to_remove_association '<i class="icon-trash"></i> entfernen'.html_safe, f, :class => 'btn'
+    .form-actions
+      = f.button :submit, :class => 'btn btn-primary'
