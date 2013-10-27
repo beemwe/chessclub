@@ -1,0 +1,6 @@
+.nested-fields.form-inline
+  = f.input :board_position
+  = f.input :organization_player_id, as: :select, collection: team.player_selection
+  = f.hidden_field :team_id, value: team.id
+  = f.hidden_field :league_id, value: team.league_id
+  = link_to_remove_association 'entfernen', f, :class => 'btn'

@@ -1,0 +1,8 @@
+= simple_form_for(@club) do |f|
+  .form-inputs
+    =f.input :zps
+    =f.input :name
+  .form-actions
+    = f.button :submit, 'Speichern & Neu', :class => 'btn-primary' if @club.new_record?
+    = f.button :submit, 'Speichern', :class => 'btn'
+    = link_to t('.cancel', :default => t('helpers.links.cancel')), clubs_path, :class => 'btn'

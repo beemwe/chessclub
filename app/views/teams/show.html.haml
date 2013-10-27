@@ -1,18 +1,105 @@
 - model_class = Team
 .page-header
-  %h1=t '.title', :team => @team.name, :league => @team.league
-  %h2= "in der Saison #{@team.season}"
+  %h1=t '.title', team: @team.name, league: @team.league.name
+  %h2= "in der Saison #{@team.league.season}"
 
-%p
-  %strong= model_class.human_attribute_name(:board_count) + ':'
-  %br
-  = @team.board_count
-%p
-  %strong= model_class.human_attribute_name(:subs_bench) + ':'
-  %br
-  = @team.subs_bench
+  %ul#the-tabulator.nav.nav-tabs
+    %li.active
+      %a{href: '#team-player'} Aufstellung
+    %li
+      %a{href: '#combat-days'} Spieltage
+    %li
+      %a{href: '#result-table'} Tabelle
+  .tab-content
+    #team-player.tab-pane.active
+      .row
+        .span5
+          %table.table.table-striped{style: 'table-layout: auto;'}
+            %thead
+              %tr
+                %th.span1 #
+                %th.span5 Name
+                %th.span2 DWZ
+            %tbody
+              - @team.league.boards.times do |i|
+                - @team_player = @team.league.get_team_player(@team.id, i + 1)
+                %tr
+                  %td= "Brett #{i + 1}"
+                  %td= "#{@team_player.fide_title + ' ' if @team_player.fide_title.present?} #{@team_player.first_name} #{@team_player.last_name}" if @team_player.present?
+                  %td.numeric= @team_player.dwz > 0 ? @team_player.dwz : '----' if @team_player.present?
+        .span5
+          %table.table.table-striped{style: 'table-layout: auto;'}
+            %thead
+              %tr
+                %th.span1 #
+                %th.span5 Name
+                %th.span2 DWZ
+            %tbody
+              - @team.league.subs_bench.times do |i|
+                - @team_player = @team.league.get_team_player(@team.id, i + @team.league.boards + 1)
+                %tr
+                  %td= "Ersatz #{i + 1}"
+                  %td= "#{@team_player.fide_title + ' ' if @team_player.fide_title.present?} #{@team_player.first_name} #{@team_player.last_name}" if @team_player.present?
+                  %td.numeric= @team_player.dwz > 0 ? @team_player.dwz : '----'  if @team_player.present?
+    #combat-days.tab-pane
+      - @team.league.combatdays.each_with_index do |combatday, idx|
+        %h3
+          %span= "#{idx + 1}. Spieltag"
+          %span.smaller= "am #{l(combatday.starttime, :format => :long)}"
+        %table.table.table-striped{style: 'table-layout: auto;'}
+          %thead
+            %tr
+              %th.span4
+              %th.span1
+              %th.span4
+              %th.span1 Ergebnis
+              %th.span2 Aktionen
+          %tbody
+            - Combat.where(league_id: @team.league.id, combat_day_id: combatday.id).each do |combat|
+              %tr
+                %td{style: "#{combat.home_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat.home_team_name
+                %td -
+                %td{style: "#{combat.guest_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat.guest_team_name
+                %td.center= combat.result
+                %td.center= link_to 'Kampfbericht', '#', class: 'btn btn-small show-combat-report', 'data-combat-id' => combat.id if combatday.starttime < Time.now
+
+    #result-table.tab-pane
+      %h3 Aktuelle Tabelle
+      - ranked_teams = @team.league.get_ranked_teams
+      %table.table.table-striped{style: 'table-layout: auto;'}
+        %thead
+          %tr
+            %th #
+            %th Mannschaft
+            - @team.league.teams.count.times do |idx|
+              %th= idx + 1
+            %th MP
+            %th BP
+        %tbody
+          - ranked_teams.each_with_index do |team, idx|
+            %tr{style: "#{team.name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}
+              %td.numeric= idx + 1
+              %td= team.name
+              - @team.league.teams.count.times do |idx|
+                %td.center= ranked_teams[idx].results_hash[team.id]
+              %td.numeric= team.points
+              %td.center= team.board_points
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), teams_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_team_path(@team), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), team_path(@team), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger'
+  = link_to t('.back', default: t('helpers.links.back')), root_path, id: 'cancel_btn', class: 'btn'
+
+#dlg-combat-report{style: 'display:none;'}
+  %table.table.table-striped{style: 'table-layout:auto;'}
+    %thead
+      %tr
+        %th
+        %th
+        %th
+        %th
+    %tbody
+      - 8.times do |idx|
+        %tr
+          %td{id: "homeboard-#{idx}"}
+          %td -
+          %td{id: "guestboard-#{idx}"}
+          %td{id: "result-#{idx}"}

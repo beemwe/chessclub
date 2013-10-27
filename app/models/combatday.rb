@@ -1,6 +1,7 @@
 # encoding:utf-8
 class Combatday < Event
-  belongs_to :team
+  belongs_to :league
+  has_many :combats
 
   attr_accessor :combat_date
   #attr_accessor :home_game
@@ -16,8 +17,17 @@ class Combatday < Event
 
   def combat_date=(value)
     time_value = Time.parse(value)
-    self.starttime = time_value.beginning_of_day + 10.hours
-    self.endtime = time_value.beginning_of_day + 16.hours
+    logger.info "parsed Time: #{I18n.l(time_value, :format => :long)}"
+    if self.league.blank?
+      kick_off = %w(10, 0)
+      durance = 6
+    else
+      kick_off = self.league.kick_off.split(':')
+      durance = self.league.durance
+    end
+
+    self.starttime = time_value.beginning_of_day + kick_off[0].to_i.hours + kick_off[1].to_i.minutes
+    self.endtime = self.starttime + durance.hours
     self.category = 'battle'
   end
 

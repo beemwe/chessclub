@@ -1,64 +1,37 @@
 # encoding:utf-8
 class Team < ActiveRecord::Base
   belongs_to :leader, :class_name => 'User'
-  has_many :combatdays, :dependent => :destroy
+  belongs_to :league
 
-  attr_accessible :age_limit, :board_count, :gender, :league, :name, :subs_bench, :season, :leader_id,
-                  :combatdays_attributes
-  accepts_nested_attributes_for :combatdays, :reject_if => :reject_combat_days, :allow_destroy => true
+  has_many :club_teams
+  has_many :clubs,  through: :club_teams
 
-  include ActiveRecord::Transitions
+  has_many :organization_players, through: :team_players
 
-  before_create :set_name_from_attributes
+  attr_accessible :league_id, :name, :dewis_club_id, :club_ids, :results_hash
+
+  serialize :results_hash
 
   ROMAN_NUMBERS = %w(I II III IV V VI VII VIII IX X XII XIII XIV XV)
 
-  state_machine do
-    state :created
-    state :team_announced
-    state :season_started
-    state :finished
-    state :archived
-
-    event :announce_team do
-      transitions :to => :team_announced, :from => [:created]
+  def self.club_selection(district_code)
+    start_id = 0
+    end_id = 0
+    if district_code.blank?
+      start_id = 0
+      end_id =  0
+    elsif district_code < 100
+      start_id = district_code * 1000
+      end_id =  start_id + 999
+    elsif district_code < 1000
+      start_id = district_code * 100
+      end_id = start_id + 99
     end
-    event :board_report do
-      transitions :to => :board_report, :from => [:team_reported]
-    end
-    event :start_season do
-      transitions :to => :season_started, :from => [:board_reported]
-    end
-    event :archive do
-      transitions :to => :archived, :from => [:season_started]
-    end
+    Club.where('zps BETWEEN ? AND ?', start_id, end_id).map{|c| [c.name, c.id]}
   end
 
-  def state_name
-    case self.state
-      when 'created'
-        result = "nicht gemeldet"
-      when 'team_announced'
-        result = "keine Brettfolge gemeldet"
-      when 'season_started'
-        result = "Saison läuft"
-      when 'finished'
-        result = "Saison abgeschlossen"
-      when 'archived'
-        result = "archiviert"
-    end
-    result
-  end
-
-  def state?(state)
-    self.state.to_sym == state
-  end
-
-  def self.actives
-    Team.where{state != 'archived'}.order('name')
-  end
-  def self.archive
-    Team.where{state == 'archived'}.order('name')
+  def player_selection
+    OrganizationPlayer.where(dewis_club_id: self.clubs.map{|c| c.zps}).order('last_name, first_name').map{|op| ["#{op.fide_title}#{' ' if op.fide_title.present?}#{op.last_name}, #{op.first_name} #{op.dwz}", op.id]}
   end
 
   protected
@@ -70,19 +43,26 @@ class Team < ActiveRecord::Base
     used_age_limit = self.age_limit || ''
     others = Team.where{(season == used_season) & (id != used_id) & (age_limit == used_age_limit) & (gender == used_gender)}
 
-    if used_age_limit == "Senioren"
-      addition = used_gender == '0' ? " #{used_age_limit}" : " Seniorinnen"
+    if used_age_limit == 'Senioren'
+      addition = used_gender == '0' ? " #{used_age_limit}" : ' Seniorinnen'
     elsif used_age_limit != ""
       addition = " #{used_age_limit}#{used_gender == '0' ? '' : ' Mädchen'}"
     else
       addition = used_gender == '0' ? '' : ' Damen'
     end
 
-    lfd = others.count > 0 ? " #{ROMAN_NUMBERS[others.count]}" : ""
+    lfd = others.count > 0 ? " #{ROMAN_NUMBERS[others.count]}" : ''
     self.name = "TuS Fürstenfeldbruck#{addition}#{lfd}"
   end
 
-  def reject_combat_days(attributed)
-    attributed['title'].blank? || attributed['combat_date'].blank?
+
+
+  def self.actives
+    Team.joins(:league).where('LOWER(teams.name) LIKE "tus fürstenfeldbruck%" AND leagues.state != "deletion"').order(:name)
   end
+
+  def self.archive
+    Team.joins(:league).where('LOWER(teams.name) LIKE "tus fürstenfeldbruck%" AND leagues.state = "deletion"').order('season DESC, name ASC')
+  end
+
 end

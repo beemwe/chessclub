@@ -1,4 +1,7 @@
 Schachclub::Application.routes.draw do
+  resources :clubs
+
+
   opinio_model
 
     namespace :mercury do
@@ -19,6 +22,8 @@ Schachclub::Application.routes.draw do
 
   resources :leagues
 
+  resources :organization_players
+
   resources :blog_articles
   # devise_for :users, :path_prefix => 'devise'
   devise_for :users, :controllers => {:sessions => 'sessions'}, :path_prefix => 'devise'
@@ -38,6 +43,7 @@ Schachclub::Application.routes.draw do
 
   resources :teams
   match 'teams/:id/announce_team' => 'teams#announce_team', :as => :announce_team, :method => :get
+  match 'teams/:id/show_combat_report/:combat_id' => 'teams#show_combat_report', :as => :show_combat_report, :method => :get
 
   get "welcome/index"
   get "impressum" => 'welcome#imprint'

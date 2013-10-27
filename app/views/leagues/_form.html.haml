@@ -1,10 +1,143 @@
 = simple_form_for @league, :html => { :class => 'form-horizontal' } do |f|
-  = f.input :name
-  = f.input :scraper_link
-  = f.input :boards
-  = f.input :subs_bench
-  = f.input :age_limit
-  = f.input :girls_only
+  - if @league.state?(:preparation)
+    .row
+      .span3= f.input :name
+      .span3= f.input :season, input_html: {style: 'width: 90px;'}
+      .span3= f.input :boards, input_html: {style: 'width: 30px;'}
+      .span3= f.input :subs_bench, input_html: {style: 'width: 30px;'}
+    .row
+      .span3= f.input :age_limit, input_html: {style: 'width: 80px;'}
+      .span3= f.input :girls_only
+      .span3= f.input :district_code, input_html: {style: 'width: 80px;'}
+      .span3= f.input :scraper_link
+    .row
+      .span3
+      .span3
+      .span3= f.input :kick_off, input_html: {style: 'width: 80px;'}
+      .span3= f.input :durance, input_html: {style: 'width: 80px;'}
+
+    .row
+      .span6
+        %h2
+          Mannschaften erfassen
+          = link_to_add_association '<i class="icon-plus"></i>'.html_safe , f, :teams, {:render_options => {:wrapper => :inline}, :class => 'btn', 'data-association-insertion-node' => '#teams', 'data-association-insertion-method' => :append }
+        #teams
+          = f.simple_fields_for :teams, wrapper: :inline do |t|
+            = render 'team_fields', :f => t
+      .span6
+        %h2
+          Spieltage erfassen
+          = link_to_add_association '<i class="icon-plus"></i>'.html_safe , f, :combatdays, {:render_options => {:wrapper => :inline}, :class => 'btn', 'data-association-insertion-node' => '#combat-days-1', 'data-association-insertion-method' => :append }
+        #combat-days-1
+          = f.simple_fields_for :combatdays, wrapper: :inline do |gd|
+            = render 'combatday_fields', :f => gd
+  - if @league.state?(:team_announcement)
+    #team-players
+      %h2 Mannschaften erfassen
+      %ul#the-tabulator.nav.nav-tabs
+        - @league.teams.each do |t|
+          %li{class: "#{'active' if t.id == @league.teams.first.id}" }
+            %a{href: "#team#{t.id}"}= t.name
+      %div.tab-content
+        - @league.teams.each do |t|
+          %div{id: "team#{t.id}", class: "tab-pane#{' active' if t.id == @league.teams.first.id}"}
+            %div{id: "teamplayer#{t.id}"}
+              = f.simple_fields_for :team_players, wrapper: :inline do |tp|
+                = render 'team_player_fields', :f => tp, :team => t if t.id == tp.object.team_id
+            = link_to_add_association '<i class="icon-plus">&nbsp;Eintrag hinzufügen</i>'.html_safe , f, :team_players,
+                                      {:render_options => {:wrapper => :inline, :locals => {:team => t}},
+                                      :class => 'btn', 'data-association-insertion-node' => "#teamplayer#{t.id}",
+                                      'data-association-insertion-method' => :append }
+  - if @league.state?(:planning)
+    #team-labels
+      %h2 Rundenplanung
+      %h2
+        - @league.teams.each do |team|
+          %span.label.label-default.combatand{id: "team-#{team.id}", 'data-team-id' => team.id, 'data-team-name' => team.name}= team.name
+        - if @league.teams.count % 2 != 0
+          %span.label.label-default Spielfrei
+      %ul#the-tabulator.nav.nav-tabs
+        - @league.combatdays.each do |cd|
+          %li{class: cd.id == @league.combatdays.first.id ? 'active' : ''}
+            %a{href: "#combatday#{cd.id}"}= cd.title
+      %div.tab-content
+        - team_counter = @league.teams.count / 2
+        - @league.combatdays.each_with_index do |cd, idx|
+          %div{id: "combatday#{cd.id}", class: "tab-pane#{' active' if cd.id == @league.combatdays.first.id}" }
+            %table.table.table-striped
+              %thead
+                %tr
+                  %th Heimmannschaft
+                  %th{style: 'width: 50px;'}
+                  %th Gastmannschaft
+              %tbody
+                -(team_counter).times do |i|
+                  %tr
+                    %td.team-container{'data-game' => i + 1}
+                      - the_combat = @league.combats[idx * team_counter + i]
+                      - the_combat = Combat.new(league_id: @league.id, combat_day_id: cd.id) if the_combat.blank?
+                      %p#team-name= the_combat.home_team_name
+                      %input{type: :hidden, name: "league[combats_attributes][#{idx * team_counter + i}][id]", value: the_combat.id, class: 'combat-id', id: "league_combats_attributes_#{idx * team_counter + i}_id"}
+                      %input{type: :hidden, name: "league[combats_attributes][#{idx * team_counter + i}][home_team_id]", value: the_combat.home_team_id, class: 'team-id', id: "league_combats_attributes_#{idx * team_counter + i}_home_team_id"}
+                      %input{type: :hidden, name: "league[combats_attributes][#{idx * team_counter + i}][home_team_name]", value: the_combat.home_team_name, class: 'team-name', id: "league_combats_attributes_#{idx * team_counter + i}_home_team_name"}
+                    %td{style: 'text-align: center;'}= '-'
+                    %td.team-container{'data-game' => i + 1}
+                      %p#team-name= the_combat.guest_team_name
+                      %input{type: :hidden, name: "league[combats_attributes][#{idx * team_counter + i}][guest_team_id]", value: the_combat.guest_team_id, class: 'team-id', id: "league_combats_attributes_#{idx * team_counter + i}_guest_team_id"}
+                      %input{type: :hidden, name: "league[combats_attributes][#{idx * team_counter + i}][guest_team_name]", value: the_combat.guest_team_name, class: 'team-name', id: "league_combats_attributes_#{idx * team_counter + i}_guest_team_name"}
+
+  - if @league.state?(:execution)
+    %h2 Kampfberichte erfassen
+    - @league.get_open_combats.each_with_index do |combat, idx|
+      - unless combat.id == @league.get_open_combats.first.id
+        %hr
+      .row
+        .span8
+          %table.table.table-striped{:style => 'table-layout:auto;', id: "editor-#{combat.id}"}
+            %thead
+              %tr
+                %th #
+                %th= combat.home_team_name
+                %th -
+                %th= combat.guest_team_name
+                %th{id: "game-result-#{combat.id}", style: 'width:100px;'}= combat.result
+            %tbody
+              - 8.times do |i|
+                %tr
+                  %td
+                    = "Brett #{i + 1}"
+                    %input{type: :hidden, name: "league[combats_attributes][#{idx}][id]", value: combat.id, class: 'combat-id', id: "league_combats_attributes_#{idx}_id"}
+                  %td.home-team-container{'data-name-container' => combat.try("homeboard_#{i + 1}")}
+                    %input{type: :hidden, name: "league[combats_attributes][#{idx}][homeboard_#{i + 1}]", value: combat.try("homeboard_#{i + 1}"), class: 'homeplayer-name', id: "league_combats_attributes_#{idx}_homeboard_#{i + 1}"}
+                  %td.center -
+                  %td.guest-team-container{'data-name-container' => combat.try("guestboard_#{i + 1}")}
+                    %input{type: :hidden, name: "league[combats_attributes][#{idx}][guestboard_#{i + 1}]", value: combat.try("guestboard_#{i + 1}"), class: 'guestplayer-name', id: "league_combats_attributes_#{idx}_guestboard_#{i + 1}"}
+                  %td.center{style: 'width:100px;'}
+                    %select{name: "league[combats_attributes][#{idx}][result_#{i + 1}]",
+                            id: "league_combats_attributes_#{idx}_result_#{i + 1}",
+                            class: 'result-editor', style: 'width: 70px;',
+                            'data-combat-id' => combat.id,
+                            'data-idx' => idx}
+                      %option
+                      %option{value: '1:0', selected: combat.try("result_#{i + 1}") == '1:0'} 1:0
+                      %option{value: '0:1', selected: combat.try("result_#{i + 1}") == '0:1'} 0:1
+                      %option{value: '½:½', selected: combat.try("result_#{i + 1}") == '½:½'} ½:½
+                      %option{value: '1:0 kl', selected: combat.try("result_#{i + 1}") == '1:0 kl'} 1:0 kl
+                      %option{value: '0:1 kl', selected: combat.try("result_#{i + 1}") == '0:1 kl'} 0:1 kl
+                      %option{value: '0:0', selected: combat.try("result_#{i + 1}") == '0:0'} 0:0
+          %input{type: :hidden, name: "league[combats_attributes][#{idx}][result]", value: combat.try('result'), id: "league_combats_attributes_#{idx}_result"}
+        .span2
+          - @league.get_all_team_player(combat.home_team_id).each do |player|
+            %p
+              %span.label.label-default.home-player{'data-playername' => "#{player.organization_player.first_name} #{player.organization_player.last_name}"}= "#{player.organization_player.first_name} #{player.organization_player.last_name}"
+        .span2
+          - @league.get_all_team_player(combat.guest_team_id).each do |player|
+            %p
+              %span.label.label-default.guest-player{'data-playername' => "#{player.organization_player.first_name} #{player.organization_player.last_name}"}= "#{player.organization_player.first_name} #{player.organization_player.last_name}"
+
   .form-actions
-    = f.button :submit, :class => 'btn-primary'
+    = f.button :submit, 'Speichern', :class => 'btn-primary'
+    = f.button :submit, 'Speichern & Mannschaftsmeldung', :class => 'btn' if @league.state == 'preparation'
+    = f.button :submit, 'Speichern & Rundenplan', :class => 'btn' if @league.state == 'team_announcement'
+    = f.button :submit, 'Speichern & Saisonbeginn', :class => 'btn' if @league.state == 'planning'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), leagues_path, :class => 'btn'

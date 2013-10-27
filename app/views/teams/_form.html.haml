@@ -7,13 +7,6 @@
     = f.input :league
     = f.input :gender, :as => :boolean, :value => "Damen", :label => 'Damen?'
     = f.input :age_limit, :collection => ['U12', 'U14', 'U16', 'U18', 'Senioren']
-  - if @team.state?(:team_announced)
-    %h2
-      Spieltage erfassen
-      = link_to_add_association '<i class="icon-plus"></i>'.html_safe , f, :combatdays, {:render_options => {:wrapper => :inline}, :class => 'btn', 'data-association-insertion-node' => '#combatdays', 'data-association-insertion-method' => :append }
-    #combatdays
-      = f.simple_fields_for :combatdays, wrapper: :inline do |gd|
-        = render 'combatday_fields', :f => gd
   - if @team.state?(:season_started)
     %h2 Ergebnisse eintragen
   .form-actions

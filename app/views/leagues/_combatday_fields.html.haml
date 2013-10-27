@@ -1,5 +1,4 @@
 .nested-fields.form-inline
   = f.input :title
-  = f.input :combat_date, as: :date_picker
-  = f.input :home_game, as: :boolean
+  = f.input :combat_date, as: :date_picker, input_html: {style: 'width: 100px;'}
   = link_to_remove_association 'entfernen', f, :class => 'btn'

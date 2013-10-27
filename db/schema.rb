@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130616160655) do
+ActiveRecord::Schema.define(:version => 20131027183706) do
 
   create_table "blog_articles", :force => true do |t|
     t.string   "title"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(:version => 20130616160655) do
 
   add_index "blog_posts", ["slug"], :name => "index_blogs_on_slug"
 
+  create_table "club_teams", :force => true do |t|
+    t.integer  "club_id"
+    t.integer  "team_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "club_teams", ["club_id"], :name => "index_club_teams_on_club_id"
+  add_index "club_teams", ["team_id"], :name => "index_club_teams_on_team_id"
+
   create_table "clubs", :force => true do |t|
     t.string   "name"
     t.integer  "zps"
@@ -53,6 +63,43 @@ ActiveRecord::Schema.define(:version => 20130616160655) do
     t.boolean  "delete_flag"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.integer  "team_id"
+  end
+
+  create_table "combats", :force => true do |t|
+    t.integer  "league_id"
+    t.integer  "combat_day_id"
+    t.integer  "home_team_id"
+    t.integer  "guest_team_id"
+    t.string   "home_team_name"
+    t.string   "guest_team_name"
+    t.string   "homeboard_1"
+    t.string   "homeboard_2"
+    t.string   "homeboard_3"
+    t.string   "homeboard_4"
+    t.string   "homeboard_5"
+    t.string   "homeboard_6"
+    t.string   "homeboard_7"
+    t.string   "homeboard_8"
+    t.string   "guestboard_1"
+    t.string   "guestboard_2"
+    t.string   "guestboard_3"
+    t.string   "guestboard_4"
+    t.string   "guestboard_5"
+    t.string   "guestboard_6"
+    t.string   "guestboard_7"
+    t.string   "guestboard_8"
+    t.string   "result"
+    t.string   "result_1"
+    t.string   "result_2"
+    t.string   "result_3"
+    t.string   "result_4"
+    t.string   "result_5"
+    t.string   "result_6"
+    t.string   "result_7"
+    t.string   "result_8"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "comments", :force => true do |t|
@@ -89,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20130616160655) do
     t.string   "place"
     t.integer  "owner_id"
     t.string   "category"
-    t.integer  "team_id"
+    t.integer  "league_id"
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
@@ -110,12 +157,19 @@ ActiveRecord::Schema.define(:version => 20130616160655) do
     t.integer  "subs_bench"
     t.integer  "age_limit"
     t.boolean  "girls_only"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
+    t.text     "teams"
+    t.text     "gaming_days"
+    t.string   "state"
+    t.string   "season"
+    t.integer  "district_code"
+    t.string   "kick_off"
+    t.decimal  "durance",       :precision => 5, :scale => 2
   end
 
   create_table "mercury_images", :force => true do |t|
@@ -132,6 +186,26 @@ ActiveRecord::Schema.define(:version => 20130616160655) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "organization_players", :force => true do |t|
+    t.string   "index"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "fide_title"
+    t.integer  "pkz"
+    t.string   "status"
+    t.integer  "birth_year"
+    t.integer  "dwz"
+    t.integer  "elo"
+    t.string   "club"
+    t.integer  "club_id"
+    t.integer  "dewis_club_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "gender"
+  end
+
+  add_index "organization_players", ["index"], :name => "index_organization_players_on_index"
 
   create_table "players", :force => true do |t|
     t.string   "first_name"
@@ -166,18 +240,32 @@ ActiveRecord::Schema.define(:version => 20130616160655) do
     t.integer "user_id"
   end
 
+  create_table "team_players", :force => true do |t|
+    t.integer  "team_id"
+    t.integer  "organization_player_id"
+    t.text     "results"
+    t.float    "points"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.integer  "league_id"
+    t.integer  "board_position"
+  end
+
+  add_index "team_players", ["organization_player_id"], :name => "index_team_players_on_organization_player_id"
+  add_index "team_players", ["team_id"], :name => "index_team_players_on_team_id"
+
   create_table "teams", :force => true do |t|
     t.string   "name"
-    t.integer  "board_count"
-    t.integer  "subs_bench"
-    t.string   "league"
-    t.string   "gender"
-    t.string   "age_limit"
-    t.string   "state"
-    t.string   "season"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "leader_id"
+    t.integer  "league_id"
+    t.integer  "position"
+    t.decimal  "points",             :precision => 10, :scale => 0
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+    t.integer  "dewis_club_id"
+    t.string   "board_points"
+    t.decimal  "board_points_plus",  :precision => 5,  :scale => 1
+    t.decimal  "board_points_minus", :precision => 5,  :scale => 1
+    t.text     "results_hash"
   end
 
   create_table "tournament_players", :force => true do |t|

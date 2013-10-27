@@ -15,7 +15,17 @@ de:
         age_limit: Altersgrenze
         created_at: erstellt
         team_sizes: Mannschaftsgröße
+        state: Status
+        teams: Mannschaften
+        gaming_dates: Termine
   leagues:
+    state:
+      preparation: In Vorbereitung
+      team_announcement: Mannschaftsmeldungen
+      planning: Terminplanung
+      execution: Ergebniserfassung
+      deletion: abgeschlossen
+
     index:
       title: Alle Verbandsligen
     show:

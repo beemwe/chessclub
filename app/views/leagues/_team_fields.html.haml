@@ -1,0 +1,4 @@
+.nested-fields.form-inline
+  = f.input :name
+  = f.association :clubs, as: :select, collection: Team.club_selection(@league.district_code)
+  = link_to_remove_association 'entfernen', f, :class => 'btn'

@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
                                   :avatar, :address, :zip, :location, :phone, :mobile, :gender, :status,
                                   :login, :role_ids
 
-  #has_many :blog_articles, :foreign_key => 'author_id'
   has_many :teams, :foreign_key => 'leader_id'
 
   has_and_belongs_to_many :roles
@@ -71,10 +70,9 @@ class User < ActiveRecord::Base
   def get_dsb_player_data
     return "false" if self.dsb_id.blank?
     begin
-      doc = Nokogiri::HTML(open("http://www.schachbund.de/dwz/db/spieler.html?zps=#{self.dsb_id}&template=/template/drucker.tpl"))
-      doc.at_xpath("html//body//div//table")['width'] = '100%'
-      doc.at_css(".baustelle")['style'] = 'display:none'
-      result = doc.to_html.html_safe
+      doc = Nokogiri::HTML(open("http://www.schachbund.de/spieler.html?pkz=#{self.dsb_id}&template=/template/drucker.tpl"))
+      dwz = doc.at_xpath('//*[@id="dewis"]/div/p[4]')
+      result = dwz.to_s.split(' ')[3].to_i
     rescue Exception => exc
       result = "Fehler beim Zugriff auf den Server des Deutschen Schachbunds: <br>#{exc.message}".html_safe
     end

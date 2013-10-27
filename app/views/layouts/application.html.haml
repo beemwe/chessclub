@@ -73,7 +73,6 @@
                       = f.input :login, :style=>'margin-bottom: 15px;', :placeholder=>'Benutzername oder E-Mail'
                       = f.input :password, :as => :password, :style => 'margin-bottom: 15px;', :placeholder => 'Kennwort'
                       = f.input :remember_me, :as => :bool, :label => false
-                      =# f.button :submit, '<i class="icon-book"></i> Anmelden'.html_safe, :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
                       = button_tag '<i class="icon-signin"></i> Anmelden'.html_safe, :class => 'btn btn-primary', :style => 'margin-bottom: 15px;'
                     = link_to t('devise.actions.forgot_password'), new_password_path(resource_name)
             - else

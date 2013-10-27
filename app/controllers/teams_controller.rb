@@ -15,6 +15,7 @@ class TeamsController < ApplicationController
   # GET /teams/1.json
   def show
     @team = Team.find(params[:id])
+    # @team_player = @team.league.get_all_team_player(@team.id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -92,5 +93,9 @@ class TeamsController < ApplicationController
       format.html { redirect_to teams_url }
       format.json { head :no_content }
     end
+  end
+
+  def show_combat_report
+    @combat = Combat.find params[:combat_id]
   end
 end

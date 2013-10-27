@@ -1,0 +1,18 @@
+= simple_form_for @organization_player, :html => { :class => 'form-horizontal' } do |f|
+  .row
+    .span2= f.input :fide_title, input_html: {style: 'width: 90px;'}
+    .span5= f.input :last_name, input_html: {style: 'width: 300px;'}
+    .span5= f.input :first_name, input_html: {style: 'width: 300px;'}
+  .row
+    .span4= f.input :birth_year
+    .span4= f.input :gender
+    .span4= f.input :status
+  .row
+    .span3= f.input :pkz
+    .span3= f.input :dewis_club_id
+    .span3= f.input :dwz
+    .span3= f.input :elo
+
+  .form-actions
+    = f.button :submit, 'Speichern', :class => 'btn-primary'
+    = link_to t('.cancel', :default => t('helpers.links.cancel')), leagues_path, :class => 'btn'
