@@ -87,3 +87,8 @@ capybara-*html
 #rvm
 .rvmrc
 .rvmrc.*
+
+
+old_cap
+old_cap/*
+config/database.yml

@@ -1,6 +1,6 @@
 $('#desc_dialog').dialog('destroy');
 $('#edit_event_dialog').html('<%= escape_javascript(render(partial: 'form', :locals => {:remote => true}))%>');
-$('input.date-time-entry').datetimeEntry({datetimeFormat: 'D.O.Y - H:M'})
+// $('input.date-time-entry').datetimeEntry({datetimeFormat: 'D.O.Y - H:M'})
 $('#edit_event_dialog').dialog({
     title: 'Event bearbeiten',
     modal: true,

@@ -36,7 +36,17 @@ production:
   encoding: utf8
   reconnect: false
   socket: /var/run/mysqld/mysqld.sock
-  database: schachclub
+  database: schachclub_production
+  pool: 5
+  username: schachclub
+  password: KZ9zHxpZqHjHNL2D
+
+staging:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  socket: /var/run/mysqld/mysqld.sock
+  database: schachclub_staging
   pool: 5
   username: schachclub
   password: KZ9zHxpZqHjHNL2D

@@ -58,3 +58,17 @@ $ ->
       result_guest = "" + result_guest + '½'
     $(combat_id).text "" + result_home + " : " + result_guest
     $(input_field).val("" + result_home + " : " + result_guest)
+
+$(document).ready( () ->
+  $('#teams').bind('cocoon:after-insert', (e, insert_item) ->
+    insert_item.find('input')[0].focus()
+  )
+  $('#combat-days-1').bind('cocoon:after-insert', (e, insert_item) ->
+    $('.date_picker input').datepicker({
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      showButtonPanel: true
+    })
+    insert_item.find('input')[0].focus()
+  )
+)

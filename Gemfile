@@ -27,7 +27,10 @@ group :assets do
 end
 
 group :development do
-  gem 'capistrano'
+  gem 'capistrano', '~> 3.0', require: false
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm', '~> 0.0.3'
 end
 
 gem 'haml'

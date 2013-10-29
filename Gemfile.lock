@@ -43,6 +43,12 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 0.0.23)
+    capistrano-bundler (1.0.0)
+      capistrano (>= 3.0.0.pre)
+    capistrano-rails (1.0.0)
+      capistrano
+    capistrano-rvm (0.0.3)
+      capistrano
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.2)
@@ -224,7 +230,10 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   cancan
-  capistrano
+  capistrano (~> 3.0)
+  capistrano-bundler
+  capistrano-rails
+  capistrano-rvm (~> 0.0.3)
   cocoon (>= 1.1)
   coffee-rails (~> 3.2.1)
   devise
