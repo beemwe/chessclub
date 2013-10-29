@@ -1,0 +1,13 @@
+namespace :mysql do
+  desc 'Copys a database into another.'
+  task :copy_production_db do
+    on roles(:db) do
+      db_config = YAML.load(File.read('config/database.yml'))
+      # source = db_config['production']['database']
+      source = 'schachclub'
+      target = db_config['staging']['database']
+      execute "mysqldump #{source} > ~/daten.sql -u root -pTDVGRd89qj"
+      execute "mysql #{target} < ~/daten.sql -u root -pTDVGRd89qj"
+    end
+  end
+end

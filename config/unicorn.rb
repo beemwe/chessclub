@@ -1,13 +1,13 @@
 # config/unicorn.rb
-base_path = '/var/rails/tusffbschach'
+base_path = '/var/rails/tusffbschach_stage'
 # Set environment to development unless something else is specified
-env = ENV["RAILS_ENV"] || "production"
+env = ENV['RAILS_ENV'] || 'staging'
 worker_processes 2
 listen "#{base_path}/shared/tmp/sockets/unicorn.chess.sock", :backlog => 64
 preload_app true
 timeout 30
 pid "#{base_path}/shared/tmp/pids/unicorn.chess.pid"
-if env == "production"
+if env == 'production' || env == 'staging'
   working_directory "#{base_path}/current"
   user 'schachclub', 'unicorn'
   shared_path = "#{base_path}/shared"
