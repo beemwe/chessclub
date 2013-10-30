@@ -3,10 +3,10 @@ base_path = '/var/rails/tusffbschach_stage'
 # Set environment to development unless something else is specified
 env = ENV['RAILS_ENV'] || 'staging'
 worker_processes 2
-listen "#{base_path}/shared/tmp/sockets/unicorn.chess.sock", :backlog => 64
+listen "#{base_path}/shared/tmp/sockets/unicorn.tusffbschach.sock", :backlog => 64
 preload_app true
 timeout 30
-pid "#{base_path}/shared/tmp/pids/unicorn.chess.pid"
+pid "#{base_path}/shared/tmp/pids/unicorn.tusffbschach.pid"
 if env == 'production' || env == 'staging'
   working_directory "#{base_path}/current"
   user 'schachclub', 'unicorn'
@@ -19,7 +19,7 @@ before_fork do |server, worker|
   if defined?(ActiveRecord::Base)
     ActiveRecord::Base.connection.disconnect!
   end
-  old_pid = "#{base_path}/shared/tmp/pids/unicorn.chess.pid.oldbin"
+  old_pid = "#{base_path}/shared/tmp/pids/unicorn.tusffbschach.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
