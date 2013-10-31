@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131027183706) do
+ActiveRecord::Schema.define(:version => 20131031165811) do
 
   create_table "blog_articles", :force => true do |t|
     t.string   "title"
@@ -56,13 +56,13 @@ ActiveRecord::Schema.define(:version => 20131027183706) do
 
   create_table "clubs", :force => true do |t|
     t.string   "name"
-    t.integer  "zps"
+    t.string   "zps",                  :limit => 5
     t.string   "country_organization"
     t.string   "region_organisation"
     t.string   "county_organization"
     t.boolean  "delete_flag"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "team_id"
   end
 
