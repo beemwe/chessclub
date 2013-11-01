@@ -64,4 +64,13 @@ namespace :dewis do
     end
   end
 
+  desc 'Update all players from all clubs of a district'
+  task :update_all_club_players, [:zps] => :environment do |t, args|
+    zps = args[:zps]
+    Club.where('zps LIKE ?', zps + '%').map{|c| c.zps}.each do |zps|
+      Rake::Task['dewis:update_club_players'].reenable
+      Rake::Task['dewis:update_club_players'].invoke(zps)
+    end
+  end
+
 end
