@@ -15,7 +15,9 @@ $ ->
   $('.home-player').draggable({ opacity: 0.35, revert: 'invalid', cursor: 'move', helper: 'clone' })
   $('.guest-player').draggable({ opacity: 0.35, revert: 'invalid', cursor: 'move', helper: 'clone' })
   $(".home-team-container").droppable({ accept: ".home-player", create: ( event, ui ) ->
-    if $(this).data('name-container').length > 0
+    name_container = $(this).data('name-container')
+    name_container ||= ''
+    if name_container.length > 0
       selector = 'span[data-playername="' + $(this).data('name-container') + '"]'
       $(selector).first().position( { of: $(this), my: 'left middle', at: 'left middle' } )
   })
@@ -25,7 +27,9 @@ $ ->
     $(this).children('input.homeplayer-name').val(ui.draggable.data('playername'))
   )
   $(".guest-team-container").droppable({ accept: ".guest-player", create: ( event, ui ) ->
-    if $(this).data('name-container').length > 0
+    name_container = $(this).data('name-container')
+    name_container ||= ''
+    if name_container.length > 0
       selector = 'span[data-playername="' + $(this).data('name-container') + '"]'
       $(selector).first().position( { of: $(this), my: 'left middle', at: 'left middle' } )
   })
