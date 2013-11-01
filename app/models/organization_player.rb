@@ -21,7 +21,7 @@ class OrganizationPlayer < ActiveRecord::Base
     player.update_attributes dewis_club_id: data[1], status: data[3], last_name: data[4], first_name: data[5],
                              gender: data[6], birth_year: data[8].to_i, dwz: data[10].to_i, elo: data[12].to_i,
                              fide_title: data[13]
-    result += data[4] + ', ' + data[5] + ' ( ' + player.id  + ')'
+    result += data[4] + ', ' + data[5] + ' ( ' + player.id.to_s  + ')'
 
     result
   end
@@ -31,7 +31,11 @@ class OrganizationPlayer < ActiveRecord::Base
     self.status = 'A' if self.status.blank?
     self.index = self.club_id.to_s + self.pkz.to_s + self.status
     club = Club.find_by_zps self.dewis_club_id
-    self.club_id = club.id
-    self.club = club.name
+    if club.present?
+      self.club_id = club.id
+      self.club = club.name
+    else
+      false
+    end
   end
 end
