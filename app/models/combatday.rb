@@ -18,13 +18,16 @@ class Combatday < Event
   def combat_date=(value)
     time_value = Time.parse(value)
     logger.info "parsed Time: #{I18n.l(time_value, :format => :long)}"
-    if self.league.blank?
-      kick_off = %w(10, 0)
-      durance = 6
-    else
+
+    begin
       kick_off = self.league.kick_off.split(':')
       durance = self.league.durance
+    rescue
+      kick_off = %w(10, 0)
+      durance = 6
     end
+
+
 
     self.starttime = time_value.beginning_of_day + kick_off[0].to_i.hours + kick_off[1].to_i.minutes
     self.endtime = self.starttime + durance.hours

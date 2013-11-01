@@ -56,6 +56,9 @@ class LeaguesController < ApplicationController
   # PUT /leagues/1.json
   def update
     @league = League.find(params[:id])
+    @league.kick_off = params[:kick_off] if params[:kick_off]
+    @league.durance = params[:durance] if params[:durance]
+
     if params[:commit] == 'Speichern & Mannschaftsmeldung'
       @league.finish_preparation!
     end
