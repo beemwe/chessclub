@@ -12,7 +12,7 @@ set :branch, :master
 set :scm, :git
 
 set :format, :pretty
-set :log_level, :debug # :info # :debug
+set :log_level, :info # :info # :debug
 set :pty, true
 
 # set :linked_files, %w{config/database.yml}
