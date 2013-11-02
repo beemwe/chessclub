@@ -41,6 +41,9 @@ class LeaguesController < ApplicationController
   # POST /leagues.json
   def create
     @league = League.new(params[:league])
+    @league.kick_off = params[:kick_off] if params[:kick_off]
+    @league.durance = params[:durance] if params[:durance]
+
     respond_to do |format|
       if @league.save
         format.html { redirect_to @league, notice: 'League was successfully created.' }

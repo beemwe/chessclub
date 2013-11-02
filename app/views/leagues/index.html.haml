@@ -5,10 +5,11 @@
   %thead
     %tr
       %th{:style => 'width:40%'}= model_class.human_attribute_name(:name)
-      %th{:style => 'width:10%'}= model_class.human_attribute_name(:boards)
-      %th{:style => 'width:10%'}= model_class.human_attribute_name(:subs_bench)
-      %th{:style => 'width:10%'}= model_class.human_attribute_name(:age_limit)
-      %th{:style => 'width:10%'}= model_class.human_attribute_name(:girls_only)
+      %th{:style => 'width:8%'}= model_class.human_attribute_name(:boards)
+      %th{:style => 'width:8%'}= model_class.human_attribute_name(:subs_bench)
+      %th{:style => 'width:8%'}= model_class.human_attribute_name(:age_limit)
+      %th{:style => 'width:8%'}= model_class.human_attribute_name(:girls_only)
+      %th{:style => 'width:8%'}= model_class.human_attribute_name(:state)
       %th{:style => 'width:20%'}=t '.actions', :default => t("helpers.actions")
   %tbody
     - @leagues.each do |league|
@@ -19,6 +20,7 @@
         %td.numeric= league.subs_bench
         %td= league.age_limit.blank? || league.age_limit == 0 ? 'keine' : league.age_limit < 60 ? "U#{league.age_limit}" : 'Senioren'
         %td= league.girls_only? ? 'ja' : 'nein'
+        %td= league.state_name
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_league_path(league), :class => 'btn btn-mini'
           = link_to t('.destroy', :default => t("helpers.links.destroy")), league_path(league), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'

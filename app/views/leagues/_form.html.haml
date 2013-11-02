@@ -41,7 +41,7 @@
       %div.tab-content
         - @league.teams.each do |t|
           %div{id: "team#{t.id}", class: "tab-pane#{' active' if t.id == @league.teams.first.id}"}
-            %div{id: "teamplayer#{t.id}"}
+            %div{id: "teamplayer#{t.id}", class: 'team-player-form'}
               = f.simple_fields_for :team_players, wrapper: :inline do |tp|
                 = render 'team_player_fields', :f => tp, :team => t if t.id == tp.object.team_id
             = link_to_add_association '<i class="icon-plus">&nbsp;Eintrag hinzufügen</i>'.html_safe , f, :team_players,
