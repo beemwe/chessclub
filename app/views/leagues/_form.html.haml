@@ -33,7 +33,7 @@
             = render 'combatday_fields', :f => gd
   - if @league.state?(:team_announcement)
     #team-players
-      %h2 Mannschaften erfassen
+      %h2 Brettfolgen erfassen
       %ul#the-tabulator.nav.nav-tabs
         - @league.teams.each do |t|
           %li{class: "#{'active' if t.id == @league.teams.first.id}" }
@@ -46,7 +46,7 @@
                 = render 'team_player_fields', :f => tp, :team => t if t.id == tp.object.team_id
             = link_to_add_association '<i class="icon-plus">&nbsp;Eintrag hinzufügen</i>'.html_safe , f, :team_players,
                                       {:render_options => {:wrapper => :inline, :locals => {:team => t}},
-                                      :class => 'btn', 'data-association-insertion-node' => "#teamplayer#{t.id}",
+                                      :class => 'btn add-fields', 'data-association-insertion-node' => "#teamplayer#{t.id}",
                                       'data-association-insertion-method' => :append }
   - if @league.state?(:planning)
     #team-labels
@@ -102,7 +102,7 @@
                 %th= combat.guest_team_name
                 %th{id: "game-result-#{combat.id}", style: 'width:100px;'}= combat.result
             %tbody
-              - 8.times do |i|
+              - @league.boards.times do |i|
                 %tr
                   %td
                     = "Brett #{i + 1}"

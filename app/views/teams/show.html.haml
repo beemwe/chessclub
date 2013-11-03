@@ -86,7 +86,8 @@
               %td.center= team.board_points
 
 .form-actions
-  = link_to t('.back', default: t('helpers.links.back')), root_path, id: 'cancel_btn', class: 'btn'
+  = link_to 'Zurück zur Startseite', root_path, id: 'cancel_btn', class: 'btn'
+  = link_to 'Liga bearbeiten', edit_league_path(@team.league_id), id: 'edit_league_btn', class: 'btn' if can? :manage, :league
 
 #dlg-combat-report{style: 'display:none;'}
   %table.table.table-striped{style: 'table-layout:auto;'}
@@ -97,7 +98,7 @@
         %th
         %th
     %tbody
-      - 8.times do |idx|
+      - @team.league.boards.times do |idx|
         %tr
           %td{id: "homeboard-#{idx}"}
           %td -

@@ -1,4 +1,7 @@
 class LeaguesController < ApplicationController
+  before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create]
+  load_and_authorize_resource :only => [:new, :create, :destroy,:edit, :update]
+
   # GET /leagues
   # GET /leagues.json
   def index
@@ -24,7 +27,7 @@ class LeaguesController < ApplicationController
   # GET /leagues/new
   # GET /leagues/new.json
   def new
-    @league = League.new
+    # @league = League.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +37,13 @@ class LeaguesController < ApplicationController
 
   # GET /leagues/1/edit
   def edit
-    @league = League.find(params[:id])
+    # @league = League.find(params[:id])
   end
 
   # POST /leagues
   # POST /leagues.json
   def create
-    @league = League.new(params[:league])
+    # @league = League.new(params[:league])
     @league.kick_off = params[:kick_off] if params[:kick_off]
     @league.durance = params[:durance] if params[:durance]
 
@@ -58,9 +61,16 @@ class LeaguesController < ApplicationController
   # PUT /leagues/1
   # PUT /leagues/1.json
   def update
-    @league = League.find(params[:id])
+    # @league = League.find(params[:id])
     @league.kick_off = params[:kick_off] if params[:kick_off]
     @league.durance = params[:durance] if params[:durance]
+
+    team_player_attrs = params[:team_players_attributes]
+    if team_player_attrs.present?
+      team_player_attrs.each_with_index do |tp, idx|
+
+      end
+    end
 
     if params[:commit] == 'Speichern & Mannschaftsmeldung'
       @league.finish_preparation!
@@ -88,7 +98,7 @@ class LeaguesController < ApplicationController
   # DELETE /leagues/1
   # DELETE /leagues/1.json
   def destroy
-    @league = League.find(params[:id])
+    # @league = League.find(params[:id])
     @league.destroy
 
     respond_to do |format|
@@ -96,4 +106,12 @@ class LeaguesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  protected
+
+  def accessible_roles
+    @accessible_roles = League.accessible_by(current_ability,:read)
+  end
+
+
 end
