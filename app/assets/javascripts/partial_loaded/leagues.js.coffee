@@ -56,10 +56,16 @@ $ ->
         guest_result += 0.5
     result_home = Math.floor(home_result)
     if result_home < home_result
-      result_home = "" + result_home + '½'
+      if result_home == 0
+        result_home = '½'
+      else
+        result_home = "" + result_home + '½'
     result_guest = Math.floor(guest_result)
     if result_guest < guest_result
-      result_guest = "" + result_guest + '½'
+      if result_guest == 0
+        result_guest = '½'
+      else
+        result_guest = "" + result_guest + '½'
     $(combat_id).text "" + result_home + " : " + result_guest
     $(input_field).val("" + result_home + " : " + result_guest)
 

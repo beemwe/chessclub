@@ -135,37 +135,37 @@ class League < ActiveRecord::Base
         home_board_points = result[0].gsub(/½/, '.5').to_f
         guest_board_points = result[1].gsub(/½/, '.5').to_f
         if home_board_points > guest_board_points
-          if home_board_points > 3.5
+          if home_board_points >= self.boards / 2
             home_team_points = 3
           else
             home_team_points = 2
           end
           guest_team_points = 0
         elsif home_board_points < guest_board_points
-          if guest_board_points > 3.5
+          if guest_board_points >= self.boards / 2
             guest_team_points = 3
           else
             guest_team_points = 2
           end
           home_team_points = 0
-        elsif (home_board_points == guest_board_points) && (home_board_points == 4)
+        elsif (home_board_points == guest_board_points) && (home_board_points == self.boards / 2)
           home_team_points = 1
           guest_team_points = 1
         end
 
         team = teams.find { |t| t.id == combat.home_team_id }
-        team.points = home_team_points
-        team.board_points_plus = home_board_points
-        team.board_points_minus = guest_board_points
-        team.board_points = "#{home_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½')}:#{guest_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½')}"
-        team.results_hash[combat.guest_team_id] = guest_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½')
+        team.points += home_team_points
+        team.board_points_plus += home_board_points
+        team.board_points_minus += guest_board_points
+        team.board_points = "#{team.board_points_plus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}:#{team.board_points_minus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}"
+        team.results_hash[combat.guest_team_id] = guest_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')
 
         team = teams.find { |t| t.id == combat.guest_team_id }
-        team.points = guest_team_points
-        team.board_points_plus = guest_board_points
-        team.board_points_minus = home_board_points
-        team.board_points = "#{guest_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½')}:#{home_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½')}"
-        team.results_hash[combat.home_team_id] = home_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½')
+        team.points += guest_team_points
+        team.board_points_plus += guest_board_points
+        team.board_points_minus += home_board_points
+        team.board_points = "#{team.board_points_plus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}:#{team.board_points_minus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}"
+        team.results_hash[combat.home_team_id] = home_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')
       end
     end
     true
