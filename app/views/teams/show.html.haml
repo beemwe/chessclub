@@ -93,14 +93,14 @@
   %table.table.table-striped{style: 'table-layout:auto;'}
     %thead
       %tr
-        %th
-        %th
-        %th
-        %th
+        %th{style: 'width: 40%;'}
+        %th{style: 'width: 5%;'}
+        %th{style: 'width: 40%;'}
+        %th{style: 'width: 15%;'}
     %tbody
       - @team.league.boards.times do |idx|
         %tr
           %td{id: "homeboard-#{idx}"}
           %td -
           %td{id: "guestboard-#{idx}"}
-          %td{id: "result-#{idx}"}
+          %td.center{id: "result-#{idx}"}
