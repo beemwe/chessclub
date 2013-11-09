@@ -15,7 +15,6 @@ $ ->
       modal: true,
       width: 450,
       open: (event, ui) ->
-
-        $.getScript('/teams/0/show_combat_report/' + combat_id)
+        $.getScript('/mannschaften/0/show_combat_report/' + combat_id)
     })
 
