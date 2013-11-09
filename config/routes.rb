@@ -1,14 +1,19 @@
 Schachclub::Application.routes.draw do
-  resources :clubs
-
 
   opinio_model
 
-    namespace :mercury do
-      resources :images
-    end
+  resources :clubs
+  resources :teams
+  match 'teams/:id/announce_team' => 'teams#announce_team', :as => :announce_team, :method => :get
+  match 'teams/:id/show_combat_report/:combat_id' => 'teams#show_combat_report', :as => :show_combat_report, :method => :get
 
-  mount Mercury::Engine => '/'
+  resources :tournaments do
+    member { get :start }
+    member { get :finish }
+    member { get :archive }
+    member { post :edit_result }
+    member { get :register_player_form }
+  end
 
   resources :blog_posts do
     opinio
@@ -20,11 +25,14 @@ Schachclub::Application.routes.draw do
     get :get_slideshow, on: :member
   end
 
+  namespace :mercury do
+    resources :images
+  end
+
   resources :leagues
 
   resources :organization_players
 
-  resources :blog_articles
   # devise_for :users, :path_prefix => 'devise'
   devise_for :users, :controllers => {:sessions => 'sessions'}, :path_prefix => 'devise'
   devise_scope :user do
@@ -33,22 +41,11 @@ Schachclub::Application.routes.draw do
   end
 
   resources :users
-  resources :tournaments do
-    member { get :start }
-    member { get :finish }
-    member { get :archive }
-    member { post :edit_result }
-    member { get :register_player_form }
-  end
 
-  resources :teams
-  match 'teams/:id/announce_team' => 'teams#announce_team', :as => :announce_team, :method => :get
-  match 'teams/:id/show_combat_report/:combat_id' => 'teams#show_combat_report', :as => :show_combat_report, :method => :get
+  get 'welcome/index'
+  get 'impressum' => 'welcome#imprint'
 
-  get "welcome/index"
-  get "impressum" => 'welcome#imprint'
-
-  get "kalender" => 'events#index'
+  get 'kalender' => 'events#index'
   resources :events do
     member { post :resize}
     member { post :move}
@@ -111,4 +108,9 @@ Schachclub::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  ActionDispatch::Routing::Translator.translate_from_file('config/locales/routes.yml')
+
+  mount Mercury::Engine => '/'
+
 end

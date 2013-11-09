@@ -1,0 +1,8 @@
+de:
+  routes:
+    clubs: vereine
+    leagues: ligaverwaltung
+    teams: mannschaften
+    tournaments: turniere
+    blog_posts: artikel
+    new: neu

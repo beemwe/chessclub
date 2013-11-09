@@ -7,6 +7,14 @@ gem 'exception_notification'
 
 gem 'mysql2'
 
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'jquery-hotkeys-rails'
+gem 'jquery-fileupload-rails'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -16,14 +24,6 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
-
-  gem 'less-rails'
-  gem 'twitter-bootstrap-rails'
-
-  gem 'jquery-rails'
-  gem 'jquery-ui-rails'
-  gem 'jquery-hotkeys-rails'
-  gem 'jquery-fileupload-rails'
 
   gem 'uglifier', '>= 1.0.3'
 
@@ -37,6 +37,7 @@ group :development do
   gem 'haml-rails', '>= 0.3.4'
 end
 
+gem 'rails-translate-routes'
 gem 'haml'
 gem 'simple_form'
 gem 'cocoon', '>=1.1'

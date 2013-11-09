@@ -56,14 +56,14 @@
                 = link_to raw('<i class="icon-group"></i> Mannschaften<b class="caret"></b>').html_safe, '#', {class: 'dropdown-toggle', 'data-toggle' => 'dropdown'}
                 %ul.dropdown-menu
                   - Team.actives.each do |t|
-                    %li= link_to t.name, team_path(t.id)
+                    %li= link_to t.name, team_path(t)
                   - if Team.archive.count > 0
                     %li.dropdown
                       = link_to raw('Archiv <i class="icon-arrow-right"></i>'), '#'
                       %ul.dropdown-menu
                         - Team.archive.each do |t_archived|
                           %li= link_to t_archived.name, team_path(t_archived.id)
-              %li{class: set_active_menu_item('events')}= link_to '<i class="icon-calendar"></i> Kalender'.html_safe, '/kalender'
+              %li{class: set_active_menu_item('events')}= ilink_to 'calendar', 'Kalender', '/kalender'
             - if !user_signed_in?
               %ul#login-area.nav.pull-right
                 %li.dropdown
@@ -86,7 +86,7 @@
           .alert.alert-error= alert
       .content
         .row
-          %div{:class => "span12"}
+          %div{:class => 'span12'}
             = yield
       %footer
         %p

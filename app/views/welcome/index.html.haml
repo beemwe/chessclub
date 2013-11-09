@@ -20,7 +20,7 @@
           %li Jugend-/Fortgeschrittenentraining, jeden Freitag, von 15:00 - 18:00 Uhr
           %li
             weitere Veranstaltungen, Ligakämpfe etc. findest Du im
-            %strong=link_to 'Kalender', kalender_path
+            %strong=link_to 'Kalender', '/kalender'
         im Vereinsheim des TuS Fürstenfeldbruck,
         %br
         Auf der Lände 2, 82256 Fürstenfeldbruck
@@ -30,7 +30,7 @@
         = image_tag 'gesamtjugend1_th.jpg', :style => 'width: 349px; height: 250px;'
 
   %div#braingames.span3
-    %h4 1. Brucker Schnellschach Open
+    %h5 1. Brucker Schnellschach Open
     = link_to image_tag('braingames.png'), 'http://ffbopen.bplaced.net/?page_id=59', class:'external', target: '_self'
     %p{:style => 'margin-top: 10px;'}
       Alle Ergenbisse, Bilder usw. findet ihr auf
@@ -53,6 +53,6 @@
     %div.span3
       %h4 Weitere Artikel
       %br
-      %p Ältere Artikel findest Du hier...
+      %p Alle bisherigen Artikel sind hier zu finden:
       %p= link_to '<i class="icon-tint"></i> Archiv'.html_safe, blog_posts_path, :class => 'btn btn-mini'
 

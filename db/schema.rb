@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131031165811) do
+ActiveRecord::Schema.define(:version => 20131109103225) do
 
   create_table "blog_articles", :force => true do |t|
     t.string   "title"
@@ -266,7 +266,10 @@ ActiveRecord::Schema.define(:version => 20131031165811) do
     t.decimal  "board_points_plus",  :precision => 5,  :scale => 1
     t.decimal  "board_points_minus", :precision => 5,  :scale => 1
     t.text     "results_hash"
+    t.string   "slug"
   end
+
+  add_index "teams", ["slug"], :name => "index_teams_on_slug", :unique => true
 
   create_table "tournament_players", :force => true do |t|
     t.integer  "tournament_id"

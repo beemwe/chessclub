@@ -10,6 +10,10 @@ class Team < ActiveRecord::Base
 
   attr_accessible :league_id, :name, :dewis_club_id, :club_ids, :results_hash
 
+  extend FriendlyId
+  friendly_id :name, :use => [:slugged, :history]
+
+
   serialize :results_hash
 
   ROMAN_NUMBERS = %w(I II III IV V VI VII VIII IX X XII XIII XIV XV)
