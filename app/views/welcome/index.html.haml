@@ -50,4 +50,9 @@
             %small{:style => 'font-size: 12px;color: black;'}= "von #{@blogposts[i].author.first_last_name} im #{l @blogposts[i].created_at, :format => '%B %Y'}"
           %p= @blogposts[i].subtitle
           %p= link_to '<i class="icon-book"></i> weiterlesen...'.html_safe, blog_post_path(@blogposts[i]), :class => 'btn btn-mini'
+    %div.span3
+      %h4 Weitere Artikel
+      %br
+      %p Ältere Artikel findest Du hier...
+      %p= link_to '<i class="icon-tint"></i> Archiv'.html_safe, blog_posts_path, :class => 'btn btn-mini'
 

@@ -16,6 +16,14 @@ module ApplicationHelper
     "#{controller == params[:controller] ? 'active' : ''}".html_safe
   end
 
+  #Implemntierung des Helpers ilink_to für das anzeigen von Buttons zur Anwendungsstueuerung
+  def ilink_to(icon_name = nil, name = nil, options = nil, html_options = {}, &block)
+    html_options[:class] ||= ''
+    html_options[:class] += ' btn'
+
+    link_to "<i class=\"icon-#{icon_name}\"></i> #{name}".html_safe, options, html_options, block
+  end
+
 
 =begin
 

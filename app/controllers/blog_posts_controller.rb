@@ -6,7 +6,7 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts
   # GET /blog_posts.json
   def index
-    @blog_posts = BlogPost.all
+    @blog_posts = BlogPost.for_index(current_user).page(params[:page]).per(15)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @blog_posts }
