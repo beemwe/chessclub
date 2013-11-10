@@ -1,7 +1,7 @@
 - model_class = BlogPost
 .page-header
   %h1=t '.title', :default => model_class.model_name.human
-%table.table.table-striped
+%table.table.table-striped{style: 'table-layout: auto;'}
   %thead
     %tr
       %th= model_class.human_attribute_name(:title)
