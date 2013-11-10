@@ -1,5 +1,5 @@
 - content_for :title, 'Willkommen beim TuS FFB - Schach'
-%header#header{:class => "header hero-unit page-header hidden-phone", :style => "background-image: url(/assets/tus-logo.png); background-repeat: no-repeat; background-position: 90% 50%;"}
+%header#header{:class => 'header hero-unit page-header hidden-phone', :style => 'background-image: url(/assets/tus-logo.png); background-repeat: no-repeat; background-position: 90% 50%;'}
   %div.row-fluid
     %div.span8
       %h1#logo= link_to 'TuS Fürstenfeldbruck', root_path
@@ -36,9 +36,7 @@
       Alle Ergenbisse, Bilder usw. findet ihr auf
       %strong= link_to 'dieser Seite', 'http://ffbopen.bplaced.net/?page_id=59', class: 'external', target: '_self'
     %p
-      Auch an dieser Stelle nochmals vielen
-      Dank an Sponsor, die Stadt Fürstenfeld-
-      bruck, die vielen freiwilligen Helfer und nicht zuletzt die vielen Spieler, die zu uns gefunden haben. Bis nächstes Jahr!
+      Auch an dieser Stelle nochmals vielen Dank an Sponsor, die Stadt Fürsten- feldbruck, die vielen freiwilligen Helfer und nicht zuletzt die vielen Spieler, die zu uns gefunden haben. Bis nächstes Jahr!
 - if @blogposts.size > 0
   %div.row{style: 'margin-top:15px;padding-top:15px;border-top:2px solid #ccc;'}
     - (0..7).each do |i|

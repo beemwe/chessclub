@@ -54,6 +54,7 @@ gem 'fullcalendar-rails'
 gem 'paperclip'
 gem 'friendly_id'
 gem 'opinio'
+gem 'google-analytics-rails'
 
 gem 'better_errors'
 gem 'binding_of_caller'

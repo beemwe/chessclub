@@ -80,6 +80,7 @@ GEM
     friendly_id (4.0.10.1)
       activerecord (>= 3.0, < 4.0)
     fullcalendar-rails (1.6.4.0)
+    google-analytics-rails (0.0.4)
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -242,6 +243,7 @@ DEPENDENCIES
   exception_notification
   friendly_id
   fullcalendar-rails
+  google-analytics-rails
   haml
   haml-rails (>= 0.3.4)
   jquery-fileupload-rails

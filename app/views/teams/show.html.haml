@@ -5,13 +5,13 @@
 
   %ul#the-tabulator.nav.nav-tabs
     %li.active
-      %a{href: '#team-player'} Aufstellung
-    %li
       %a{href: '#combat-days'} Spieltage
     %li
       %a{href: '#result-table'} Tabelle
+    %li
+      %a{href: '#team-player'} Aufstellung
   .tab-content
-    #team-player.tab-pane.active
+    #team-player.tab-pane
       .row
         .span5
           %table.table.table-striped{style: 'table-layout: auto;'}
@@ -41,7 +41,7 @@
                   %td= "Ersatz #{i + 1}"
                   %td= "#{@team_player.fide_title + ' ' if @team_player.fide_title.present?} #{@team_player.first_name} #{@team_player.last_name}" if @team_player.present?
                   %td.numeric= @team_player.dwz > 0 ? @team_player.dwz : '----'  if @team_player.present?
-    #combat-days.tab-pane
+    #combat-days.tab-pane.active
       - @team.league.combatdays.each_with_index do |combatday, idx|
         %h3
           %span= "#{idx + 1}. Spieltag"

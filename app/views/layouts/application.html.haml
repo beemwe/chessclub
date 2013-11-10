@@ -31,6 +31,7 @@
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag 'application' #, :debug => true
     = javascript_include_tag "partial_loaded/#{params[:controller]}" # if File.exists?("#{Rails.root}/app/assets/javascripts/partial_loaded/#{params[:controller]}")
+    = analytics_init if Rails.env.staging? || Rails.env.production?
   %body
     .navbar.navbar-fixed-top
       .navbar-inner

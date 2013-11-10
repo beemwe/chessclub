@@ -82,5 +82,6 @@ Schachclub::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
-
+  # Tracker ID for the Google-Analytics used by gem 'google-analytics-rails'
+  GA.tracker = 'UA-45606930-1'
 end
