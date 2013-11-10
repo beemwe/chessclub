@@ -7,7 +7,7 @@
       %th= model_class.human_attribute_name(:title)
       %th= model_class.human_attribute_name(:published_at)
       %th= model_class.human_attribute_name(:author_id)
-      %th=t '.actions', :default => t("helpers.actions") if current_user.present?
+      %th=t '.actions', :default => t('helpers.actions') if current_user.present?
   %tbody
     - @blog_posts.each do |blogpost|
       %tr
@@ -16,10 +16,10 @@
         %td= blogpost.author.first_last_name
         - if current_user.present?
           %td
-            = ibutton_to 'edit', t('.edit', :default => t('helpers.links.edit')), 'editor' + blog_post_path(blogpost), :class => 'btn-mini' if current_user.role?(:administrator)
+            = ibutton_edit 'editor' + blog_post_path(blogpost) if current_user.role?(:administrator) || (current_user.role?(:author) && blogpost.author_id == current_user.id)
             = ibutton_to 'bullhorn', t('.publish'), publish_blog_post_path(blogpost), :class => 'btn-mini' if blogpost.published_at.blank? && (current_user.role?(:administrator) || (current_user.role?(:author) && blogpost.author_id != current_user.id))
-            = ibutton_to 'trash', t('.destroy', :default => t('helpers.links.destroy')), blog_post_path(blogpost), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn-mini btn-danger'
+            = ibutton_delete blog_post_path(blogpost) if (current_user.role?(:administrator) || (current_user.role?(:author) && blogpost.author_id == current_user.id))
 
 .row
-  = ibutton_to 'pencil', t('.new', :default => t('helpers.links.new')), 'editor' + new_blog_post_path, :class => 'btn-primary' if current_user.present? && (current_user.role?(:administrator) || current_user.role?(:author))
+  .span3= ibutton_new 'editor' + new_blog_post_path if current_user.present? && (current_user.role?(:administrator) || current_user.role?(:author))
   #paginator.span9= paginate @blog_posts

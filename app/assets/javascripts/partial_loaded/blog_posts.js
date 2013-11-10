@@ -460,8 +460,8 @@ $(window).bind('mercury:ready', function() {
 
 $(window).bind('mercury:saved', function() {
     var loc;
-    loc = Mercury.redirectUrl
-    window.location = loc
+    loc = Mercury.redirectUrl;
+    window.location = loc;
 });
 
 $(document).on('click', 'div#btn-diashow', function () {

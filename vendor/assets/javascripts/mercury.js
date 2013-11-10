@@ -459,5 +459,9 @@ $(window).bind('mercury:ready', function() {
     link.hide();
 });
 $(window).bind('mercury:saved', function() {
-    window.location = window.location.href.replace(/\/editor\//i, '/');
+    //window.location = window.location.href.replace(/\/editor\//i, '/');
+    var loc;
+    loc = Mercury.redirectUrl;
+    // alert("redirect!");
+    window.location = loc;
 });

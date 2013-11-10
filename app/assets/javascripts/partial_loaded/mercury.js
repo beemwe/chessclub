@@ -447,7 +447,7 @@ window.Mercury = {
   // ## Debug Mode
   //
   // Turning debug mode on will log events and other various things (using console.debug if available).
-  debug: false
+  debug: true
 
 };
 
@@ -461,7 +461,6 @@ $(window).bind('mercury:ready', function() {
 
 $(window).bind('mercury:saved', function() {
   var loc;
-  loc = Mercury.redirectUrl
-  // alert("redirect!");
-  window.location = loc
+  loc = Mercury.redirectUrl;
+  window.location = loc;
 });
