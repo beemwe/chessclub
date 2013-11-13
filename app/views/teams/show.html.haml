@@ -44,7 +44,7 @@
     #combat-days.tab-pane.active
       - @team.league.combatdays.each_with_index do |combatday, idx|
         %h3
-          %span= "#{idx + 1}. Spieltag"
+          %span= "#{idx + 1}. Runde"
           %span.smaller= "am #{l(combatday.starttime, :format => :long)}"
         %table.table.table-striped{style: 'table-layout: auto;'}
           %thead
