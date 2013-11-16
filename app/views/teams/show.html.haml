@@ -80,8 +80,10 @@
             %tr{style: "#{team.name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}
               %td.numeric= idx + 1
               %td= team.name
-              - @team.league.teams.count.times do |idx|
-                %td.center= ranked_teams[idx].results_hash[team.id]
+              - @team.league.teams.count.times do |idy|
+                %td.center
+                  = ranked_teams[idy].results_hash[team.id]
+                  = '**' if idx == idy
               %td.numeric= team.points
               %td.center= team.board_points
 
