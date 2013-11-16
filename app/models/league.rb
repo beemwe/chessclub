@@ -154,18 +154,11 @@ class League < ActiveRecord::Base
         end
 
         team = teams.find { |t| t.id == combat.home_team_id }
-        team.points += home_team_points
-        team.board_points_plus += home_board_points
-        team.board_points_minus += guest_board_points
-        team.board_points = "#{team.board_points_plus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}:#{team.board_points_minus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}"
-        team.results_hash[combat.guest_team_id] = guest_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')
+        team.set_results(home_team_points, home_board_points, guest_board_points, combat.guest_team_id)
 
         team = teams.find { |t| t.id == combat.guest_team_id }
-        team.points += guest_team_points
-        team.board_points_plus += guest_board_points
-        team.board_points_minus += home_board_points
-        team.board_points = "#{team.board_points_plus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}:#{team.board_points_minus.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')}"
-        team.results_hash[combat.home_team_id] = home_board_points.to_s.gsub(/.0/, '').gsub(/.5/, '½').gsub(/0½/, '½')
+        team.set_results(guest_team_points, guest_board_points, home_board_points, combat.home_team_id)
+
       end
     end
     true

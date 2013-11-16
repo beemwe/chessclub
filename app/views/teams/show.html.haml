@@ -57,9 +57,9 @@
           %tbody
             - Combat.where(league_id: @team.league.id, combat_day_id: combatday.id).each do |combat|
               %tr
-                %td{style: "#{combat.home_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat.home_team_name
+                %td{style: "#{combat.home_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat_report_link combat, true
                 %td -
-                %td{style: "#{combat.guest_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat.guest_team_name
+                %td{style: "#{combat.guest_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat_report_link combat, false
                 %td.center= combat.result
                 %td.center= link_to 'Kampfbericht', '#', class: 'btn btn-small show-combat-report', 'data-combat-id' => combat.id if combatday.starttime < Time.now
 

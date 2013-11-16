@@ -38,6 +38,15 @@ class Team < ActiveRecord::Base
     OrganizationPlayer.where(dewis_club_id: self.clubs.map{|c| c.zps}).order('last_name, first_name').map{|op| ["#{op.fide_title}#{' ' if op.fide_title.present?}#{op.last_name}, #{op.first_name} #{op.dwz}", op.id]}
   end
 
+  def set_results(team_points, our_board_points, their_board_points, combatand_id)
+    puts "team_points: #{team_points}, our_board_points: #{our_board_points}, their_board_points: #{their_board_points}, combatand_id: #{combatand_id}"
+    self.points += team_points
+    self.board_points_plus += our_board_points
+    self.board_points_minus += their_board_points
+    self.board_points = "#{self.board_points_plus.to_f.to_result}:#{self.board_points_minus.to_f.to_result}"
+    self.results_hash[combatand_id] = their_board_points.to_f.to_result
+  end
+
   protected
 
   def set_name_from_attributes
