@@ -16,5 +16,6 @@ $ ->
       width: 450,
       open: (event, ui) ->
         $.getScript('/mannschaften/0/show_combat_report/' + combat_id)
+        $('.ui-dialog .ui-dialog-titlebar-close span').css('margin', '-8px 0 0 -8px')
     })
 

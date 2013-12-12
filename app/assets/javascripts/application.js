@@ -12,13 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
-//= require jquery-hotkeys
 //= require own_functions
 //= require twitter/bootstrap
 //= require datetimeentry/jquery.datetimeentry
 //= require datetimeentry/jquery.datetimeentry-de
 //= require twitter/bootstrap.js
+//= require jquery.ui.all
+//= require jquery-hotkeys
 //= require cocoon
 //= require_directory .
 

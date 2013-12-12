@@ -21,6 +21,11 @@ $(document).ready ->
     },
     defaultView: 'month',
     slotMinutes: 60,
+    columnFormat: {
+      month: 'ddd',    # Mon
+      week: 'ddd d. M.', # Mon 9/7
+      day: 'dddd d. M.'  # Monday 9/7
+    },
     loading: (bool) ->
       if bool then $('#loading').show else $('#loading').hide
     ,
@@ -68,7 +73,9 @@ deleteFullCalendarEvent = (event) ->
       modal: true,
       width: 500
       resizable: false,
-      closeText: 'Schließen'
+      open: (event, ui) ->
+        $('.ui-dialog .ui-dialog-titlebar-close span').css('margin', '-8px 0 0 -8px')
+      ,
       close: (event, ui) ->
         $(this).dialog('destroy')
         $('#calendar').fullCalendar('render');
@@ -98,7 +105,9 @@ showEventDetails = (event, jsEvent, view) ->
     modal: true,
     width: 500,
     resizable: false,
-    closeText: 'Schließen'
+    open: (event, ui) ->
+      $('.ui-dialog .ui-dialog-titlebar-close span').css('margin', '-8px 0 0 -8px')
+    ,
     close: (event, ui) -> $('#desc_dialog').dialog('destroy')
   })
 
@@ -113,6 +122,9 @@ resizeEvent = (event, dayDelta, minuteDelta, revertFunc) ->
       modal: true,
       width: 500
       resizable: false,
+      open: (event, ui) ->
+        $('.ui-dialog .ui-dialog-titlebar-close span').css('margin', '-8px 0 0 -8px')
+      ,
       close: (event, ui) ->
         $(this).dialog('destroy')
         $('#calendar').fullCalendar('refetchEvents')
@@ -136,7 +148,9 @@ moveEvent = (event, dayDelta, minuteDelta, allDay) ->
       modal: true,
       width: 500
       resizable: false,
-      closeText: '<i class="glyphicon glyphicon-remove" />'
+      open: (event, ui) ->
+        $('.ui-dialog .ui-dialog-titlebar-close span').css('margin', '-8px 0 0 -8px')
+      ,
       close: (event, ui) ->
         $(this).dialog('destroy')
         $('#calendar').fullCalendar('refetchEvents')
