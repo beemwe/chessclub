@@ -96,9 +96,8 @@ resizeEvent = (event, dayDelta, minuteDelta, revertFunc) ->
   })
 
 moveEvent = (event, dayDelta, minuteDelta, allDay) ->
-  $.ajax({
+  $.post({
       data: 'title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&all_day=' + allDay,
       dataType: 'script',
-      type: 'post',
       url: "/events/" + event.id + "/move"
   });

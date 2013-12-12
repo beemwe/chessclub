@@ -12,7 +12,6 @@
  *= require jquery.ui.all
  *= require_directory .
  *= require datetimeentry/jquery.datetimeentry
- *= require jquery.fileupload-ui
  *= require_self
  *= require welcome
  *= require teams
@@ -24,12 +23,6 @@
 .table {
     table-layout: fixed;
 }
-table.table th {text-align: center;}
-table.table td, table.table th {overflow: hidden; white-space: nowrap;}
-table.table td.numeric {text-align: right;}
-
-input.numeric {text-align: right;}
-
 #diashow {
     position: relative;
     height: 250px;

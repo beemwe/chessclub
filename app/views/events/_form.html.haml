@@ -10,6 +10,9 @@
     = f.input :starttime, :as => :date_time_entry
     = f.input :endtime, :as => :date_time_entry
     = f.input :period, :as => :select, :collection => @event.repeat_collection, :selected => @event.event_series.blank? ? 'Does not repeat' : @event.event_series.period if @event.new_record?
+  - else
+    = f.input :starttime, as: :date_time_entry
+    = f.input :endtime, :as => :date_time_entry
   = f.input :description, :input_html => {:rows => 5}
   .form-actions
     - if @event.event_series_id.blank?

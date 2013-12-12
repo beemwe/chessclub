@@ -9,8 +9,10 @@
   %div#create_event
 %div#edit_event_dialog{:style => 'display:none;'}
 %div#event_type_selector{:style => 'display:none;'}
-  = simple_form_for 'event', :method => :delete, :html => { :class => 'form-horizontal' }, :remote => true do |f|
+  = simple_form_for 'event', :html => { :class => 'form-horizontal' }, :remote => true do |f|
     = f.input :event_selection, :as => :radio_buttons, :label => 'Auswahl', :collection => [['Nur diesen Event', 'this'], ['Alle zukünftigen Events (excl. diesem)', 'future'], ['Gesamte Event-Serie', 'true'] ]
+    = f.input :minute_delta, as: :hidden
+    = f.input :day_delta, as: :hidden
     %br
     %br
     = f.button :submit, 'Auswahl Löschen', :class => 'btn btn-danger'

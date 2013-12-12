@@ -62,3 +62,13 @@ $(document).ready( () ->
       $('ul#login-area li').removeClass('open')
   )
 )
+
+$(document).ajaxComplete( (event, request) ->
+  flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'))
+  if(!flash)
+    return;
+  if(flash.notice)
+    $('section#flash-messages').html("<div class=\"alert alert-success\">" + flash.notice + "</div>").show().delay(6000).fadeOut("slow")
+  if(flash.error)
+    $('section#flash-messages').html("<div class=\"alert alert-error\">" + flash.error + "</div>").show().delay(6000).fadeOut("slow")
+)

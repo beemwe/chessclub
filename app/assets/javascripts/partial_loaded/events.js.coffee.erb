@@ -106,12 +106,13 @@ resizeEvent = (event, dayDelta, minuteDelta, revertFunc) ->
   if event.recurring
     $('#event_type_selector > form').attr({'method': 'post', 'action': "events/#{event.id}/resize"})
     $('#event_type_selector > form input[name*="commit"]').val('Auswahl verändern')
+    $('#event_type_selector > form input#event_minute_delta').val(minuteDelta)
+    $('#event_type_selector > form input#event_day_delta').val(dayDelta)
     $("#event_type_selector").dialog({
       title: "#{event.title} verändern",
       modal: true,
       width: 500
       resizable: false,
-      closeText: 'Schließen'
       close: (event, ui) ->
         $(this).dialog('destroy')
         $('#calendar').fullCalendar('refetchEvents')
@@ -128,19 +129,21 @@ moveEvent = (event, dayDelta, minuteDelta, allDay) ->
   if event.recurring
     $('#event_type_selector > form').attr({'method': 'post', 'action': "events/#{event.id}/move"})
     $('#event_type_selector > form input[name*="commit"]').val('Auswahl verschieben')
+    $('#event_type_selector > form input#event_minute_delta').val(minuteDelta)
+    $('#event_type_selector > form input#event_day_delta').val(dayDelta)
     $("#event_type_selector").dialog({
       title: "#{event.title} verschieben",
       modal: true,
       width: 500
       resizable: false,
-      closeText: 'Schließen'
+      closeText: '<i class="glyphicon glyphicon-remove" />'
       close: (event, ui) ->
         $(this).dialog('destroy')
         $('#calendar').fullCalendar('refetchEvents')
     })
   else
     $.ajax({
-        data: "title=#{event.title}&day_delta=#{dayDelta}&minute_delta=#{minuteDelta}&all_day=#{allDay}",
+        data: "event[title]=#{event.title}&event[day_delta]=#{dayDelta}&event[minute_delta]=#{minuteDelta}&event[all_day]=#{allDay}",
         dataType: 'script',
         type: 'post',
         url: "/events/#{event.id}/move"

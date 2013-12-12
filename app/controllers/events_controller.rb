@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 class EventsController < ApplicationController
 
   before_filter :get_user
@@ -38,7 +40,7 @@ class EventsController < ApplicationController
         if success
           redirect_to :action => :index
         else
-          #flash.alert = t('activemodel.notice.could_not_create', :model => Event.model_name.human)
+          # flash.alert = t('activemodel.notice.could_not_create', :model => Event.model_name.human)
           render :action => :new
         end
       end
@@ -72,16 +74,17 @@ class EventsController < ApplicationController
       @event = Event.find_by_id params[:id]
       if @event
         if params[:event].present? && params[:event][:event_selection] == 'true' # gesamte Event-serie
-          @event.event_series.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.starttime))
-          @event.event_series.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
-          @event.event_series.all_day = params[:all_day]
+          @event.event_series.starttime = (params[:event][:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.starttime))
+          @event.event_series.endtime = (params[:event][:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
+          @event.event_series.all_day = params[:event][:all_day]
           @event.event_series.save
         end
 
-        @event.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.starttime))
-        @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
-        @event.all_day = params[:all_day]
+        @event.starttime = (params[:event][:minute_delta].to_i).minutes.from_now((params[:event][:day_delta].to_i).days.from_now(@event.starttime))
+        @event.endtime = (params[:event][:minute_delta].to_i).minutes.from_now((params[:event][:day_delta].to_i).days.from_now(@event.endtime))
+        @event.all_day = params[:event][:all_day]
         @event.save
+        flash[:notice] = 'Zeitänderung übernommen!'
       end
    end
   end
@@ -91,8 +94,9 @@ class EventsController < ApplicationController
     if can? :manage, Event
       @event = Event.find_by_id params[:id]
       if @event
-        @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
+        @event.endtime = (params[:event][:minute_delta].to_i).minutes.from_now((params[:event][:day_delta].to_i).days.from_now(@event.endtime))
         @event.save
+        flash[:notice] = 'Zeitänderung übernommen!'
       end
     end
   end

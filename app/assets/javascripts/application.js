@@ -18,10 +18,10 @@
 //= require twitter/bootstrap
 //= require datetimeentry/jquery.datetimeentry
 //= require datetimeentry/jquery.datetimeentry-de
-//= require jquery-fileupload
 //= require twitter/bootstrap.js
 //= require cocoon
 //= require_directory .
 
 /*
 */
+
