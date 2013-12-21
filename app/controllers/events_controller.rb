@@ -60,7 +60,7 @@ class EventsController < ApplicationController
 
 
   def show
-    @events = Event.all :conditions => ["starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'"]
+    @events = Event.accessible_by(current_ability).all :conditions => ["starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'"]
     events = []
     @events.each do |event|
       the_cat = event.category.present? ? event.category : 'none'

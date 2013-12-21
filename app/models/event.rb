@@ -5,6 +5,8 @@ class Event < ActiveRecord::Base
 
   validates_presence_of :title, :starttime, :endtime
 
+  resourcify
+
   belongs_to :event_series
 
   REPEATS = [[I18n.t('period_options.no_repeat'), 'Does not repeat'],
