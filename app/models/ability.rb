@@ -31,6 +31,8 @@ class Ability
 
     if user.has_role? :administrator
       can :mangage, Event
+    elsif user.has_role? [:abteilungsleiter, :jugendleiter]
+      can :read, Event
     else
       can :read, Event, category: Event::CATEGORIES.reject {|e| e[1] == 'birthday'}
     end

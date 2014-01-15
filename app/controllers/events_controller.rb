@@ -6,14 +6,7 @@ class EventsController < ApplicationController
   respond_to :html, :js, :json
 
   def new
-    if cannot? :manage, Event
-      respond_to do |format|
-        format.js { render :new do |page|
-          page << '$(\'#calendar\').fullCalendar( \'refetchEvents\' )'
-        end }
-        format.html { redirect_to :action => :index }
-      end
-    else
+    if can? :manage, Event
       startDate = Time.now.beginning_of_hour
       @event = Event.new(:owner_id => current_user.id, :starttime => startDate, :endtime => 1.hour.since(startDate), :period => 'Does not repeat')
       @event.starttime = Time.parse(params[:start_time][0,21]) if params[:start_time]
@@ -22,6 +15,13 @@ class EventsController < ApplicationController
       respond_to do |format|
         format.js
         format.html
+      end
+    else
+      respond_to do |format|
+        format.js { render :new do |page|
+          page << '$(\'#calendar\').fullCalendar( \'refetchEvents\' )'
+        end }
+        format.html { redirect_to :action => :index }
       end
     end
   end
