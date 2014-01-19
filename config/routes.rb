@@ -40,6 +40,12 @@ Schachclub::Application.routes.draw do
     match '/user_menu', to: 'sessions#user_menu'
   end
 
+  namespace :api do
+    namespace :v1  do
+      resources :tokens,:only => [:create, :destroy]
+    end
+  end
+
   resources :users
 
   get 'welcome/index'

@@ -1,5 +1,2 @@
-=# f.hidden_field "league[combats_attributes][#{idx * @league.teams.count + i}][home_team_id]", id: "hidden-id-field-#{idx * @league.teams.count + i}"
-=# f.hidden_field "league[combats_attributes][#{idx * @league.teams.count + i}][home_team_name]", id: "hidden-text-field-#{idx * @league.teams.count + i}"
-
 = f.input :home_team_id, as: :hidden, input_html: {class: 'team_id'}
 = f.input :home_team_name, as: :hidden, input_html: {class: 'team-name'}
