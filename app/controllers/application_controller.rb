@@ -5,7 +5,11 @@ class ApplicationController < ActionController::Base
   after_filter :flash_to_headers
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    respond_to do |format|
+      format.html {redirect_to root_url, :alert => exception.message}
+      format.json {render text: '{error: You are not logged in.}', status: :not_found}
+    end
+
   end
 
   def respond_to_not_found(*types)

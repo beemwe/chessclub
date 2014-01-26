@@ -60,7 +60,7 @@ gem 'better_errors'
 gem 'binding_of_caller'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'jbuilder'
 
 # To use debugger
 # gem 'debugger'

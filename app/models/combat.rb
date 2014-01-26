@@ -10,4 +10,8 @@ class Combat < ActiveRecord::Base
 
   belongs_to :combatday, foreign_key: :combat_day_id
 
+  def self.find_open_combats
+    Combat.joins(:combatday).where("(combats.result = '' or combats.result is null) and events.starttime < :start", {start: Time.now})
+  end
+
  end
