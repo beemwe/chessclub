@@ -111,6 +111,7 @@
 
 #dlg-edit-combat-report{style: 'display:none;'}
   = simple_form_for :combat, url: {action: 'update_combat_report', id: @team.id, combat_id: 0}, id: 'combat-report-form' do |f|
+    = f.input 'result', as: :hidden
     %table.table.table-striped{style: 'table-layout:auto;'}
       %thead
         %tr
