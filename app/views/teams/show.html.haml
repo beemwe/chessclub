@@ -61,7 +61,9 @@
                 %td -
                 %td{style: "#{combat.guest_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat_report_link combat, false
                 %td.center= combat.result
-                %td.center= link_to 'Kampfbericht', '#', class: 'btn btn-small show-combat-report', 'data-combat-id' => combat.id if combatday.starttime < Time.now
+                %td.center
+                  = link_to 'Kampfbericht', '#', class: 'btn btn-small show-combat-report', 'data-combat-id' => combat.id if combatday.starttime < Time.now
+                  = link_to 'editieren', '#', class: 'btn btn-small edit-combat-report', 'data-team-id' => @team.id, 'data-combat-id' => combat.id if combatday.starttime < Time.now && can?(Combat, :manage)
 
     #result-table.tab-pane
       %h3 Aktuelle Tabelle
@@ -106,3 +108,35 @@
           %td -
           %td{id: "guestboard-#{idx}"}
           %td.center{id: "result-#{idx}"}
+
+#dlg-edit-combat-report{style: 'display:none;'}
+  = simple_form_for :combat, url: {action: 'update_combat_report', id: @team.id, combat_id: 0}, id: 'combat-report-form' do |f|
+    %table.table.table-striped{style: 'table-layout:auto;'}
+      %thead
+        %tr
+          %th{style: 'width: 40%;', id: 'home-team-name'}
+          %th{style: 'width: 5%;'}
+          %th{style: 'width: 40%;', id: 'guest-team-name'}
+          %th{style: 'width: 15%;', id: 'combat-result'}
+      %tbody
+        - @team.league.boards.times do |idx|
+          %tr
+            %td{id: "home-board-#{idx}"}= f.input "homeboard_#{idx + 1}", label: false
+            %td -
+            %td{id: "guest-board-#{idx}"}= f.input "guestboard_#{idx + 1}", label: false
+            %td.center{id: "result--#{idx}"}
+              %select{name: "combat[result_#{idx + 1}]",
+                      id: "combat_result-#{idx + 1}",
+                      class: 'result-editor', style: 'width: 75px;',
+                      'data-combat-id' => 0,
+                      'data-idx' => idx + 1}
+                %option
+                %option{value: '1:0'} 1:0
+                %option{value: '0:1'} 0:1
+                %option{value: '½:½'} ½:½
+                %option{value: '1:0 kl'} 1:0 kl
+                %option{value: '0:1 kl'} 0:1 kl
+                %option{value: '0:0'} 0:0
+
+    .form-actions
+      = f.button :submit, :class => 'btn-primary'

@@ -98,4 +98,23 @@ class TeamsController < ApplicationController
   def show_combat_report
     @combat = Combat.find params[:combat_id]
   end
+
+  def edit_combat_report
+    @combat = Combat.find params[:combat_id]
+    @team_id =  params[:id]
+  end
+
+  def update_combat_report
+    @combat = Combat.find params[:combat_id]
+    @team = Team.find params[:id]
+    respond_to do |format|
+      if @combat.update_attributes(params[:combat])
+        format.html { redirect_to @team, notice: 'Der Mannschaftskampf wurde erfolgreich gespeichert.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to @team, error: 'Der Mannschaftskampf konnte nicht gespeichert werden.' }
+        format.json { render json: @combat.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end

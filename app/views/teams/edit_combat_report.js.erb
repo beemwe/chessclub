@@ -1,0 +1,44 @@
+$('#dlg-edit-combat-report form.combat').get(0).setAttribute('action', '<%= update_combat_report_path(@team_id, @combat.id) %>');
+$('#home-team-name').text('<%= @combat.home_team_name %>');
+$('#guest-team-name').text('<%= @combat.guest_team_name %>');
+$('#combat-result').text('<%= @combat.result %>');
+$('#combat_homeboard_1').val('<%= @combat.homeboard_1 %>');
+$('#combat_homeboard_2').val('<%= @combat.homeboard_2 %>');
+$('#combat_homeboard_3').val('<%= @combat.homeboard_3 %>');
+$('#combat_homeboard_4').val('<%= @combat.homeboard_4 %>');
+$('#combat_homeboard_5').val('<%= @combat.homeboard_5 %>');
+$('#combat_homeboard_6').val('<%= @combat.homeboard_6 %>');
+$('#combat_homeboard_7').val('<%= @combat.homeboard_7 %>');
+$('#combat_homeboard_8').val('<%= @combat.homeboard_8 %>');
+$('#combat_guestboard_1').val('<%= @combat.guestboard_1 %>');
+$('#combat_guestboard_2').val('<%= @combat.guestboard_2 %>');
+$('#combat_guestboard_3').val('<%= @combat.guestboard_3 %>');
+$('#combat_guestboard_4').val('<%= @combat.guestboard_4 %>');
+$('#combat_guestboard_5').val('<%= @combat.guestboard_5 %>');
+$('#combat_guestboard_6').val('<%= @combat.guestboard_6 %>');
+$('#combat_guestboard_7').val('<%= @combat.guestboard_7 %>');
+$('#combat_guestboard_8').val('<%= @combat.guestboard_8 %>');
+$('#combat_result-1 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_1 %>';
+}).prop('selected', true);
+$('#combat_result-2 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_2 %>';
+}).prop('selected', true);
+$('#combat_result-3 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_3 %>';
+}).prop('selected', true);
+$('#combat_result-4 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_4 %>';
+}).prop('selected', true);
+$('#combat_result-5 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_5 %>';
+}).prop('selected', true);
+$('#combat_result-6 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_6 %>';
+}).prop('selected', true);
+$('#combat_result-7 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_7 %>';
+}).prop('selected', true);
+$('#combat_result-8 option').filter(function() {
+    return $(this).text() == '<%= @combat.result_8 %>';
+}).prop('selected', true);
