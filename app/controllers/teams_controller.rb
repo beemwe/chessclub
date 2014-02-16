@@ -108,7 +108,7 @@ class TeamsController < ApplicationController
     @combat = Combat.find params[:combat_id]
     @team = Team.find params[:id]
     respond_to do |format|
-      if @combat.update_attributes(params[:combat])
+      if @combat.update_attributes(params[:combat]) && @team.league.save
         format.html { redirect_to @team, notice: 'Der Mannschaftskampf wurde erfolgreich gespeichert.' }
         format.json { head :no_content }
       else
