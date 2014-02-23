@@ -5,6 +5,7 @@ Schachclub::Application.routes.draw do
   resources :clubs
   resources :teams
   match 'teams/:id/announce_team' => 'teams#announce_team', :as => :announce_team, :method => :get
+  # match 'teams/:id/combatday/:combat_id' => 'teams#show', :as => :show_combatday_anchor, :method => :get
   match 'teams/:id/show_combat_report/:combat_id' => 'teams#show_combat_report', :as => :show_combat_report, :method => :get
   match 'teams/:id/edit_combat_report/:combat_id' => 'teams#edit_combat_report', :as => :edit_combat_report, :method => :get
   post 'teams/:id/update_combat_report/:combat_id' => 'teams#update_combat_report', :as => :update_combat_report
