@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140119080545) do
+ActiveRecord::Schema.define(:version => 20140223131443) do
 
   create_table "blog_articles", :force => true do |t|
     t.string   "title"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(:version => 20140119080545) do
 
   create_table "combats", :force => true do |t|
     t.integer  "league_id"
-    t.integer  "combat_day_id"
+    t.integer  "combatday_id"
     t.integer  "home_team_id"
     t.integer  "guest_team_id"
     t.string   "home_team_name"
