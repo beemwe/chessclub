@@ -111,7 +111,7 @@ class TeamsController < ApplicationController
       if @combat.update_attributes(params[:combat]) && @team.league.save
         format.html do
           flash[:notice] = 'Der Mannschaftskampf wurde erfolgreich gespeichert.'
-          redirect_to team_path(@team.id, anchor: "combatday-#{@combat.combat_day_id}")
+          redirect_to team_path(@team.id, anchor: "combatday-#{@combat.combatday_id}")
         end
         format.json { head :no_content }
       else

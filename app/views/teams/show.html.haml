@@ -55,7 +55,7 @@
               %th.span1 Ergebnis
               %th.span2 Aktionen
           %tbody
-            - Combat.where(league_id: @team.league.id, combat_day_id: combatday.id).each do |combat|
+            - Combat.where(league_id: @team.league.id, combatday_id: combatday.id).each do |combat|
               %tr
                 %td{style: "#{combat.home_team_name.starts_with?('TuS Fürstenfeldbruck') ? 'color: red;' : 'color: #333'}"}= combat_report_link combat, true
                 %td -
