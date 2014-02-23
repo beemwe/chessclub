@@ -119,6 +119,7 @@ class League < ActiveRecord::Base
   def calculate_team_ranking
     teams = self.teams
     teams.each do |t|
+      t.position = nil
       t.points = 0
       t.board_points = ''
       t.board_points_plus = 0
@@ -160,6 +161,10 @@ class League < ActiveRecord::Base
         team.set_results(guest_team_points, guest_board_points, home_board_points, combat.home_team_id)
 
       end
+    end
+    get_ranked_teams.each_with_index do |t, idx|
+      t.position = idx + 1
+      t.save
     end
     true
   end
