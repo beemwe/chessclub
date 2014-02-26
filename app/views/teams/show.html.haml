@@ -42,7 +42,7 @@
                   %td= "#{@team_player.fide_title + ' ' if @team_player.fide_title.present?} #{@team_player.first_name} #{@team_player.last_name}" if @team_player.present?
                   %td.numeric= @team_player.dwz > 0 ? @team_player.dwz : '----'  if @team_player.present?
     #combat-days.tab-pane.active
-      - @team.league.combatdays.sort{|a, b| a.title <=> b.title}.each do |combatday|
+      - @team.league.combatdays.sort{|a, b| a.starttime <=> b.starttime}.each do |combatday|
         %h3{id: "combatday-#{combatday.id}", class: 'combat-day'}
           %span= combatday.title
           %span.smaller= "am #{l(combatday.starttime, :format => :long)}"
